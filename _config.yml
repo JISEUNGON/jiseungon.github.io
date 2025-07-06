@@ -1,3 +1,12 @@
 title: Seungeon's blog
 include:
   - docs
+theme: just-the-docs
+lang: en
+timezone: Asia/Seoul
+social:
+  email: djs9844@naver.com
+  name: SeungeonEonJi
+paginate: 5
+nav_enabled: true
+#color_scheme: dark

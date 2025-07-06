@@ -2,6 +2,8 @@
 layout: post
 title: "How to Install Jekyll"
 date: 2025-07-06
+parent: Jekyll
+nav_order: 1
 ---
 # How to install jekyll in mac
 ```bash
@@ -73,4 +75,16 @@ date: 2025-07-06
 # How to start jekyll in local
 ```bash
 bundle exec jekyll serve
+```
+
+# Set the just-the-docs
+```bash
+# Gemfile
+gem "just-the-docs"
+```
+
+```bash
+# _config.yml
+theme: just-the-docs
+
 ```
