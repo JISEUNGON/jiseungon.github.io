@@ -43,21 +43,21 @@
   },"6": {
     "doc": "git-command",
     "title": "git checkout",
-    "content": "git checkout branchName git checkout -b &lt;branch name&gt; //브랜치 생성 및 이 git checkout -d &lt;branch name&gt; //delete branch git push origin &lt;branch namem&gt; //원격 저장소로 전송 전에는 다른 사용자들이 사용 불 . ",
+    "content": "git checkout branchName git checkout -b &lt;branch name&gt; //브랜치 생성 및 이 git checkout -d &lt;branch name&gt; //delete branch git push origin &lt;branch namem&gt; //원격 저장소로 전송 전에는 다른 사용자들이 사용 불가 . ",
     "url": "/docs/git/command.html#git-checkout",
     
     "relUrl": "/docs/git/command.html#git-checkout"
   },"7": {
     "doc": "git-command",
     "title": "git add",
-    "content": ". | 변경된 파일을 인덱스(staging area)에 추 | . git add . =&gt; 해당 폴더의 모든 파일을 더하겠다 git add file_name =&gt; 해당 파일만 더하겠다 git add -i //파일을 추가할 때 대화식으로 추가하 . ",
+    "content": ". | 변경된 파일을 인덱스(staging area)에 추가 | . git add . =&gt; 해당 폴더의 모든 파일을 더하겠다 git add file_name =&gt; 해당 파일만 더하겠다 git add -i //파일을 추가할 때 대화식으로 추가하 . ",
     "url": "/docs/git/command.html#git-add",
     
     "relUrl": "/docs/git/command.html#git-add"
   },"8": {
     "doc": "git-command",
     "title": "git commit",
-    "content": ". | 실제 변경 내용을 확정 | HEAD에 반영 | 원격 저장소에는 반영이 안된다. | . ",
+    "content": ". | 실제 변경 내용을 확정 | HEAD에 반영 | 원격 저장소에는 반영이 안된다. | git push를 해야 remote에 반영된다. | . ",
     "url": "/docs/git/command.html#git-commit",
     
     "relUrl": "/docs/git/command.html#git-commit"
@@ -71,14 +71,14 @@
   },"10": {
     "doc": "git-command",
     "title": "git pull",
-    "content": ". | 로컬 저장소를 원격 저장소와 동기화 | . git pull . ",
+    "content": ". | 로컬 저장소를 원격 저장소와 동기화 | git pull = git fetch &amp;&amp; git merge . | 변경사항을 가져오고 현재 브랜치를 remote 브랜치로 업데이트한다. | . | . git pull . ",
     "url": "/docs/git/command.html#git-pull",
     
     "relUrl": "/docs/git/command.html#git-pull"
   },"11": {
     "doc": "git-command",
     "title": "git push",
-    "content": ". | HEAD의 변경 내역을 서버로 올린다. git push origin master . | . ",
+    "content": ". | HEAD의 변경 내역을 서버로 올린다. git push origin master # upstream을생성하지 않았을 때 사용 . | . ",
     "url": "/docs/git/command.html#git-push",
     
     "relUrl": "/docs/git/command.html#git-push"
@@ -92,249 +92,256 @@
   },"13": {
     "doc": "git-command",
     "title": "git merge",
-    "content": ". | 소스 파일을 병합 git merge =&gt; 변경 사항들을 병합 git merge &lt;branch name&gt; //브랜치에 있는 변경 내용을 현재 브랜치에 병합(현재 branch is a branch name is master) . | . ",
+    "content": ". | 소스 파일을 병합 git merge =&gt; 변경 사항들을 병합 git merge &lt;branch name&gt; //브랜치에 있는 변경 내용을 현재 브랜치에 병합(현재 branch is a branch name is master) # ex) Current branch is dev git merge master # master 내용을 dev에 합친다. | . ",
     "url": "/docs/git/command.html#git-merge",
     
     "relUrl": "/docs/git/command.html#git-merge"
   },"14": {
+    "doc": "git-command",
+    "title": "reset 그림",
+    "content": ". ",
+    "url": "/docs/git/command.html#reset-%EA%B7%B8%EB%A6%BC",
+    
+    "relUrl": "/docs/git/command.html#reset-그림"
+  },"15": {
     "doc": "git-command",
     "title": "git status",
     "content": ". | 현재 폴더 상태를 나타낸다. git reset --hard HEAD : HEAD로 되돌리기 | . git reset --merge : branch|merging 풀기 . ",
     "url": "/docs/git/command.html#git-status",
     
     "relUrl": "/docs/git/command.html#git-status"
-  },"15": {
+  },"16": {
     "doc": "git-command",
     "title": "Git Conflict",
     "content": ". | 충돌 발생 시 충돌 부분을 수정해서 merge git diff &lt;원래 브랜치&gt; &lt;비교 대상 브랜치&gt; //변경사항 비 git fetch --all git reset --hard origin/master git pull origin/master . | . ",
     "url": "/docs/git/command.html#git-conflict",
     
     "relUrl": "/docs/git/command.html#git-conflict"
-  },"16": {
+  },"17": {
     "doc": "git-command",
     "title": "git log",
     "content": ". | 로컬 변경 내용 되돌리기 | . ",
     "url": "/docs/git/command.html#git-log",
     
     "relUrl": "/docs/git/command.html#git-log"
-  },"17": {
+  },"18": {
     "doc": "git-command",
     "title": "Rebase",
     "content": "브랜치 업데이트 . git rebase staging . ",
     "url": "/docs/git/command.html#rebase",
     
     "relUrl": "/docs/git/command.html#rebase"
-  },"18": {
+  },"19": {
     "doc": "git-command",
     "title": "git-command",
     "content": " ",
     "url": "/docs/git/command.html",
     
     "relUrl": "/docs/git/command.html"
-  },"19": {
+  },"20": {
     "doc": "Git 개념",
     "title": "Git",
     "content": "개인과 팀의 가장 큰 차이점 . | 내가 알고 있는 내용(코드, 커밋)이 전부가 아니다. | 모든 내용은 위의 가정 하에 시작됩니다. | . 개인 프로젝트에서의 Git . | 모든 Commit 이 무슨 내용인지 알 수 있음. | Conflict 해결에 --force 와 reset --hard 이라는 치트키를 사용할 수 있음. | push / pull 에 큰 신경 쓰지 않았음. | . 팀 프로젝트에서의 Git . | 모든 Commit 이 무슨 내용인지 절대로 알 수 없음. | 따라서 Conflict 가 발생하는 경우, 관련된 모든 개발자가 확인이 필요함. | . ",
     "url": "/docs/git/git-concepts.html#git",
     
     "relUrl": "/docs/git/git-concepts.html#git"
-  },"20": {
+  },"21": {
     "doc": "Git 개념",
     "title": "Git area",
     "content": ". reset . | 코드가 날아감 | 옵션 . | soft: index 보존(add한 상태, staged 상태), 워킹 디렉터리의 파일 보존. 즉 모두 보존. | mixed: index 취소(add하기 전 상태, unstaged 상태), 워킹 디렉터리의 파일 보존 (기본 옵션) | hard: index 취소(add하기 전 상태, unstaged 상태), 워킹 디렉터리의 파일 삭제. 즉 모두 취소. | . | . git reset --hard HEAD # (해당 커밋으로 돌리겠다. 모든 코드 + 커밋을) git reset --soft HEAD # (해당 커밋으로만 돌린다.) . Revert . | reset 없이 코드를 되돌릴 수 있는 명령어 | 그에 반해 revert는 앞서 말한 것 처럼 특정 사건을 골라서 없던일로 만듭니다. 또한 앞서 말한 것처럼 과거 특정 사건을 없에주지만 revert를 했다는 이력이 남게 됩니다. | . git revert &lt;commit id&gt; . ",
     "url": "/docs/git/git-concepts.html#git-area",
     
     "relUrl": "/docs/git/git-concepts.html#git-area"
-  },"21": {
+  },"22": {
     "doc": "Git 개념",
     "title": "Git checkout",
     "content": ". ",
     "url": "/docs/git/git-concepts.html#git-checkout",
     
     "relUrl": "/docs/git/git-concepts.html#git-checkout"
-  },"22": {
+  },"23": {
     "doc": "Git 개념",
     "title": "How to clear working directory",
     "content": "git checkout -- . # Clear changes (exclude untracted files) git clean -df # remove untracted files . ",
     "url": "/docs/git/git-concepts.html#how-to-clear-working-directory",
     
     "relUrl": "/docs/git/git-concepts.html#how-to-clear-working-directory"
-  },"23": {
+  },"24": {
     "doc": "Git 개념",
     "title": "Commit type",
     "content": ". | feat: 새로운 기능 추가 | fix: 버그 수정 | docs: 문서 수정 | style: 코드 포멧팅, 세미콜론 누락, 코드 변경이 없는 경우 | refactor: 코드 리펙토링 | test: 테스트코드, 리펙토링 테스트 코드 추가 | chore: 빌드 업무 수정, 패키지 매니저 수정, .ignore 수정 등 | . ",
     "url": "/docs/git/git-concepts.html#commit-type",
     
     "relUrl": "/docs/git/git-concepts.html#commit-type"
-  },"24": {
+  },"25": {
     "doc": "Git 개념",
     "title": "upstream",
     "content": ". | local branch 와 remote branch 를 연결 | . ",
     "url": "/docs/git/git-concepts.html#upstream",
     
     "relUrl": "/docs/git/git-concepts.html#upstream"
-  },"25": {
+  },"26": {
     "doc": "Git 개념",
     "title": "origin",
     "content": "git push -u origin main //git repository에 main으로 푸쉬 --set-upstream //관계 설정 . ",
     "url": "/docs/git/git-concepts.html#origin",
     
     "relUrl": "/docs/git/git-concepts.html#origin"
-  },"26": {
+  },"27": {
     "doc": "Git 개념",
     "title": "Git 개념",
     "content": " ",
     "url": "/docs/git/git-concepts.html",
     
     "relUrl": "/docs/git/git-concepts.html"
-  },"27": {
+  },"28": {
     "doc": "git-filter-repo",
     "title": "git-filter-repo",
     "content": ". | git-filter-repo is a tool that helps tou organize your Git repository or change history | . ",
     "url": "/docs/git/git-filter-repo.html",
     
     "relUrl": "/docs/git/git-filter-repo.html"
-  },"28": {
+  },"29": {
     "doc": "git-filter-repo",
     "title": "How to install in Mac",
     "content": "brew install git-filter-repo . ",
     "url": "/docs/git/git-filter-repo.html#how-to-install-in-mac",
     
     "relUrl": "/docs/git/git-filter-repo.html#how-to-install-in-mac"
-  },"29": {
+  },"30": {
     "doc": "git-filter-repo",
     "title": "How to use git-filter-repo",
     "content": "git filter-repo --subdirectory-filter path/to/keep # When you want to organize your history by leaving only a specific directory . ",
     "url": "/docs/git/git-filter-repo.html#how-to-use-git-filter-repo",
     
     "relUrl": "/docs/git/git-filter-repo.html#how-to-use-git-filter-repo"
-  },"30": {
+  },"31": {
     "doc": "Jekyll",
     "title": "Jekyll",
     "content": "Jekyll에 대한 소개 페이지입니다. git-command . git 개념 및 command에 대한 설명이다. Read more → Git 개념 . Git이란 무엇이고 어떻게 사용하는가에 대한 설명입니다. Read more → git-filter-repo . git-filter-repo에 대한 설명 . Read more → ",
     "url": "/jekyll/",
     
     "relUrl": "/jekyll/"
-  },"31": {
+  },"32": {
     "doc": "Git",
     "title": "Git",
     "content": "Git에 대한 소개 페이지입니다. git-command . git 개념 및 command에 대한 설명이다. Read more → Git 개념 . Git이란 무엇이고 어떻게 사용하는가에 대한 설명입니다. Read more → git-filter-repo . git-filter-repo에 대한 설명 . Read more → ",
     "url": "/git/",
     
     "relUrl": "/git/"
-  },"32": {
+  },"33": {
     "doc": "문서 목록",
     "title": "👋 Seungeon의 개발 블로그",
     "content": "안녕하세요! 백엔드 개발자 Seungeon입니다. 아래는 제가 진행한 주요 프로젝트 목록입니다. My Awesome API . 사용자 인증, 게시글 CRUD, JWT 기반 로그인 기능이 포함된 API 서버입니다. | 기술 스택: Spring Boot, JPA, PostgreSQL | 사용 언어: Java | 주요 기능: 로그인, 회원가입, 게시글 | . Blog Front . Jekyll 기반 정적 블로그, GitHub Actions로 자동 배포 구성 . | 기술 스택: Jekyll, GitHub Pages | 사용 언어: Markdown, HTML, Liquid | 주요 기능: 사이드바, 검색, 문서 분류 | . ",
     "url": "/#-seungeon%EC%9D%98-%EA%B0%9C%EB%B0%9C-%EB%B8%94%EB%A1%9C%EA%B7%B8",
     
     "relUrl": "/#-seungeon의-개발-블로그"
-  },"33": {
+  },"34": {
     "doc": "문서 목록",
     "title": "문서 목록",
     "content": " ",
     "url": "/",
     
     "relUrl": "/"
-  },"34": {
+  },"35": {
     "doc": "How to Install Jekyll",
     "title": "How to install jekyll in mac",
     "content": "brew install chruby ruby-install ruby-install ruby 3.4.1 echo \"source $(brew --prefix)/opt/chruby/share/chruby/chruby.sh\" &gt;&gt; ~/.zshrc echo \"source $(brew --prefix)/opt/chruby/share/chruby/auto.sh\" &gt;&gt; ~/.zshrc echo \"chruby ruby-3.4.1\" &gt;&gt; ~/.zshrc # run 'chruby' to see actual version gem install jekyll . ",
     "url": "/docs/jekyll/install-jekyll.html#how-to-install-jekyll-in-mac",
     
     "relUrl": "/docs/jekyll/install-jekyll.html#how-to-install-jekyll-in-mac"
-  },"35": {
+  },"36": {
     "doc": "How to Install Jekyll",
     "title": "Installing bundler",
     "content": "What is Bundler . | Bundler is tool managements dependencies. | . ",
     "url": "/docs/jekyll/install-jekyll.html#installing-bundler",
     
     "relUrl": "/docs/jekyll/install-jekyll.html#installing-bundler"
-  },"36": {
+  },"37": {
     "doc": "How to Install Jekyll",
     "title": "why use Bundler??",
     "content": ". | Ruby-based projects such jekyll and github pages require multiple gems (ruby packages), and Bundler allows you to install and manage all of those dependecies automatically | Benefit is creating a reproducible environment by unifying the gem version for each project | . ",
     "url": "/docs/jekyll/install-jekyll.html#why-use-bundler",
     
     "relUrl": "/docs/jekyll/install-jekyll.html#why-use-bundler"
-  },"37": {
+  },"38": {
     "doc": "How to Install Jekyll",
     "title": "How to install bundler",
     "content": "gem install bundler . ",
     "url": "/docs/jekyll/install-jekyll.html#how-to-install-bundler",
     
     "relUrl": "/docs/jekyll/install-jekyll.html#how-to-install-bundler"
-  },"38": {
+  },"39": {
     "doc": "How to Install Jekyll",
     "title": "How to set jekyll project",
     "content": " ",
     "url": "/docs/jekyll/install-jekyll.html#how-to-set-jekyll-project",
     
     "relUrl": "/docs/jekyll/install-jekyll.html#how-to-set-jekyll-project"
-  },"39": {
+  },"40": {
     "doc": "How to Install Jekyll",
     "title": "First step",
     "content": "mkdir docs cd docs git checkout --orphan gh-pages # this branch is called gh-pages does not create history or contents git rm -rf . # removes the contents from your default branch from the working directory jekyll new --skip-bundle . # creates a jekyll site in the current directory . ",
     "url": "/docs/jekyll/install-jekyll.html#first-step",
     
     "relUrl": "/docs/jekyll/install-jekyll.html#first-step"
-  },"40": {
+  },"41": {
     "doc": "How to Install Jekyll",
     "title": "Second step",
     "content": "Edit Gemfile . Add \"#\" to the beggining of the line that starts with \"gem \"jekyll\"\" to comment out this line Remove \"#\" to the beggining of the line that starts with `gem \"github-pages\"` to comment out this line . ",
     "url": "/docs/jekyll/install-jekyll.html#second-step",
     
     "relUrl": "/docs/jekyll/install-jekyll.html#second-step"
-  },"41": {
+  },"42": {
     "doc": "How to Install Jekyll",
     "title": "Thrid step",
     "content": "bundle install Add `Gemfile.lock` into .gitignore file . ",
     "url": "/docs/jekyll/install-jekyll.html#thrid-step",
     
     "relUrl": "/docs/jekyll/install-jekyll.html#thrid-step"
-  },"42": {
+  },"43": {
     "doc": "How to Install Jekyll",
     "title": "Fourth step",
     "content": ". | Optinally, make any necessary edits to the _config.yml file. This is required for relative paths when the repository is hosted in a subdirectory. # _config.yml baseurl # the subpath of you site url # the base hostname &amp; protocol for your site domain # if you want to force HTTPS, specify the domain without the http at the start . | . ",
     "url": "/docs/jekyll/install-jekyll.html#fourth-step",
     
     "relUrl": "/docs/jekyll/install-jekyll.html#fourth-step"
-  },"43": {
+  },"44": {
     "doc": "How to Install Jekyll",
     "title": "Notice",
     "content": ". | To make it appear in the text, Put it in the _posts folder | The front-meter is essential at the top --- layout: post title: \"How to Install Jekyll\" date: 2025-07-06 --- . | . ",
     "url": "/docs/jekyll/install-jekyll.html#notice",
     
     "relUrl": "/docs/jekyll/install-jekyll.html#notice"
-  },"44": {
+  },"45": {
     "doc": "How to Install Jekyll",
     "title": "How to start jekyll in local",
     "content": "bundle exec jekyll serve . ",
     "url": "/docs/jekyll/install-jekyll.html#how-to-start-jekyll-in-local",
     
     "relUrl": "/docs/jekyll/install-jekyll.html#how-to-start-jekyll-in-local"
-  },"45": {
+  },"46": {
     "doc": "How to Install Jekyll",
     "title": "Set the just-the-docs",
     "content": "# Gemfile gem \"just-the-docs\" . # _config.yml theme: just-the-docs . ",
     "url": "/docs/jekyll/install-jekyll.html#set-the-just-the-docs",
     
     "relUrl": "/docs/jekyll/install-jekyll.html#set-the-just-the-docs"
-  },"46": {
+  },"47": {
     "doc": "How to Install Jekyll",
     "title": "How to Install Jekyll",
     "content": " ",
     "url": "/docs/jekyll/install-jekyll.html",
     
     "relUrl": "/docs/jekyll/install-jekyll.html"
-  },"47": {
+  },"48": {
     "doc": "How to use just-the-docs docs",
     "title": "Just the docs guide",
     "content": "Go just the docs . ",
     "url": "/docs/jekyll/just-the-docs.html#just-the-docs-guide",
     
     "relUrl": "/docs/jekyll/just-the-docs.html#just-the-docs-guide"
-  },"48": {
+  },"49": {
     "doc": "How to use just-the-docs docs",
     "title": "How to use just-the-docs docs",
     "content": " ",
