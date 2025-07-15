@@ -188,256 +188,452 @@
     
     "relUrl": "/docs/helm/concept.html"
   },"27": {
+    "doc": "What-is-Container-Runtime",
+    "title": "What is container runtime",
+    "content": ". | 컨테이너 런타임은 컨테이너 이미지를 실제로 실행하고 관리하는 소프트웨어입니다. | 컨테이너의 생성, 시작, 중지, 삭제 등 라이프사이클을 담당합니다. | 주요 특징 . | 컨테이너 프로세스의 격리와 자원 할당 관리 . | 자원: 네트워크, 볼륨, CPU, 메모리 등 | . | 표준 인터페이스(OCI, CRI 등) 지원 | 컨테이너의 보안, 네트워크, 스토리지 등 다양한 기능 제공 | . | . ",
+    "url": "/docs/all-container/container-runtime.html#what-is-container-runtime",
+    
+    "relUrl": "/docs/all-container/container-runtime.html#what-is-container-runtime"
+  },"28": {
+    "doc": "What-is-Container-Runtime",
+    "title": "대표적인 런타임",
+    "content": "Docker . | 설명: 초기에는 컨테이너 엔진과 런타임을 모두 포함한 올인원 솔루션이었으나, 현재는 런타임 역할을 containerd에 위임함. | 장점: . | 사용이 쉽고, 생태계(도구, 문서, 커뮤니티)가 매우 풍부함 | 로컬 개발 및 테스트에 적합 | 다양한 플랫폼 지원 | . | 단점: . | 오버헤드가 상대적으로 있음(엔진+런타임 구조) | Kubernetes와 직접 연동이 비효율적(추가 계층 필요) | . | . containerd . | 설명: . | Docker에서 분리된 경량화된 컨테이너 런타임. Kubernetes의 기본 런타임으로 채택됨. | . | 장점: . | 경량화되어 있고, 성능이 우수함 | Kubernetes와의 연동이 뛰어남(CRI 지원) | 안정적이고 대규모 환경에 적합 | . | 단점: . | Docker에 비해 직접 사용 시 기능이 제한적(빌드, 네트워크 등) | image build 명령어가 없음 | CLI 등 사용자 친화적 도구가 적음 | . | . CRI-O . | 설명: Kubernetes를 위해 설계된 매우 경량화된 컨테이너 런타임. 오직 Kubernetes와의 연동만을 목표로 함. | 장점: . | 매우 가볍고, 보안에 초점을 맞춤 | Kubernetes와의 호환성이 뛰어남 | 불필요한 기능이 없어 관리가 용이 | podman 명령어를 설치해서 쓰면 도커 명령어를 podman으로 사용 가능 | . podman images podman rmi podman ps . | 단점: . | 범용성이 떨어짐(Kubernetes 외 환경에서 사용 어려움) | 커뮤니티와 생태계가 상대적으로 작음 | . | . ",
+    "url": "/docs/all-container/container-runtime.html#%EB%8C%80%ED%91%9C%EC%A0%81%EC%9D%B8-%EB%9F%B0%ED%83%80%EC%9E%84",
+    
+    "relUrl": "/docs/all-container/container-runtime.html#대표적인-런타임"
+  },"29": {
+    "doc": "What-is-Container-Runtime",
+    "title": "개발자가 추가로 알아야 할 점",
+    "content": ". | Kubernetes 등 오케스트레이션 도구는 컨테이너 런타임과 연동하여 컨테이너를 관리함 | 런타임 선택에 따라 성능, 보안, 운영 방식이 달라질 수 있음 | OCI(Open Container Initiative) 표준을 지원하는 런타임을 사용하는 것이 호환성과 유지보수에 유리함 | 런타임은 컨테이너의 보안, 네트워크, 스토리지 등 다양한 기능에 영향을 미침 | . ",
+    "url": "/docs/all-container/container-runtime.html#%EA%B0%9C%EB%B0%9C%EC%9E%90%EA%B0%80-%EC%B6%94%EA%B0%80%EB%A1%9C-%EC%95%8C%EC%95%84%EC%95%BC-%ED%95%A0-%EC%A0%90",
+    
+    "relUrl": "/docs/all-container/container-runtime.html#개발자가-추가로-알아야-할-점"
+  },"30": {
+    "doc": "What-is-Container-Runtime",
+    "title": "What-is-Container-Runtime",
+    "content": " ",
+    "url": "/docs/all-container/container-runtime.html",
+    
+    "relUrl": "/docs/all-container/container-runtime.html"
+  },"31": {
+    "doc": "What-is-Container",
+    "title": "What is container",
+    "content": ". | 컨테이너는 애플리케이션과 그 실행에 필요한 모든 라이브러리, 설정 파일, 종속성을 하나의 패키지로 묶어, 어디서든 일관되게 실행할 수 있도록 해주는 기술입니다. | 컨테이너는 운영체제 수준에서 격리되어 실행되며, 가상머신보다 가볍고 빠릅니다. | 주요 특징 . | 애플리케이션 실행 환경을 표준화 . | web app . | node app | . | server app . | spring boot application | . | . | 빠른 배포 및 확장 가능 | 리소스 효율적(가상머신보다 오버헤드 적음) | 격리된 환경 제공(보안성↑) | . | 개발자가 알아야 할 점 . | 컨테이너는 호스트 OS의 커널을 공유함 | 컨테이너 내부와 외부의 네트워크, 파일시스템, 프로세스가 분리됨 | 대표적인 컨테이너 엔진: Docker, containerd, crio | . | . ",
+    "url": "/docs/all-container/container.html#what-is-container",
+    
+    "relUrl": "/docs/all-container/container.html#what-is-container"
+  },"32": {
+    "doc": "What-is-Container",
+    "title": "What is container image",
+    "content": ". | 컨테이너 이미지는 컨테이너를 실행하기 위한 모든 파일, 라이브러리, 설정, 코드 등을 포함한 불변(immutable)한 패키지입니다. | 이미지는 여러 계층(layer)으로 구성되어 있고, 읽기 전용입니다. | 주요 특징 . | 컨테이너 실행의 ‘설계도’ 역할 | Dockerfile 등으로 이미지를 정의하고 빌드 | 이미지 레지스트리(예: Docker Hub, Google Container Registry, harbor, docker registry)에 저장 및 배포 | . | 개발자가 알아야 할 점 . | 이미지는 계층 구조로 되어 있어, 중복된 계층은 캐싱되어 효율적 | 이미지를 작게 만들기 위해 불필요한 파일/패키지 제외 필요 | 보안 취약점이 없는 베이스 이미지를 사용하는 것이 중요 | . | . ",
+    "url": "/docs/all-container/container.html#what-is-container-image",
+    
+    "relUrl": "/docs/all-container/container.html#what-is-container-image"
+  },"33": {
+    "doc": "What-is-Container",
+    "title": "How to write a Dockerfile",
+    "content": "Dockerfile은 컨테이너 이미지를 만들기 위한 설정 파일로, 이미지 빌드 과정을 단계별로 명시합니다. ",
+    "url": "/docs/all-container/container.html#how-to-write-a-dockerfile",
+    
+    "relUrl": "/docs/all-container/container.html#how-to-write-a-dockerfile"
+  },"34": {
+    "doc": "What-is-Container",
+    "title": "기본 문법",
+    "content": ". | FROM: 베이스 이미지 지정 (필수) | RUN: 명령어 실행 (이미지 빌드 시) | COPY/ADD: 파일/디렉토리 복사 | WORKDIR: 작업 디렉토리 설정 | ENV: 환경 변수 설정 | EXPOSE: 컨테이너가 열 포트 지정(문서화 목적) | CMD/ENTRYPOINT: 컨테이너 시작 시 실행할 명령 | . ",
+    "url": "/docs/all-container/container.html#%EA%B8%B0%EB%B3%B8-%EB%AC%B8%EB%B2%95",
+    
+    "relUrl": "/docs/all-container/container.html#기본-문법"
+  },"35": {
+    "doc": "What-is-Container",
+    "title": "예시: Node.js 애플리케이션",
+    "content": "# 1. 베이스 이미지 지정 FROM node:18-alpine # 2. 작업 디렉토리 생성 및 이동 WORKDIR /app # 3. 의존성 파일 복사 및 설치 COPY package*.json ./ RUN npm install # 4. 소스 코드 복사 # COPY {local directory or file} {container directory or file} COPY . # 5. 컨테이너가 열 포트 지정(문서화 목적) EXPOSE 3000 # 6. 컨테이너 시작 시 실행할 명령 CMD [ \"npm\", \"start\" ] . ",
+    "url": "/docs/all-container/container.html#%EC%98%88%EC%8B%9C-nodejs-%EC%95%A0%ED%94%8C%EB%A6%AC%EC%BC%80%EC%9D%B4%EC%85%98",
+    
+    "relUrl": "/docs/all-container/container.html#예시-nodejs-애플리케이션"
+  },"36": {
+    "doc": "What-is-Container",
+    "title": "개발자가 알아야 할 점",
+    "content": ". | 불필요한 파일은 .dockerignore로 제외하여 이미지 용량 최소화 | 보안상 신뢰할 수 있는 베이스 이미지를 사용 | 멀티스테이지 빌드로 빌드/런타임 환경 분리 가능 | 계층 구조를 이해하고, 캐시 효율을 높이기 위해 자주 변경되는 파일은 아래쪽에 COPY | . ",
+    "url": "/docs/all-container/container.html#%EA%B0%9C%EB%B0%9C%EC%9E%90%EA%B0%80-%EC%95%8C%EC%95%84%EC%95%BC-%ED%95%A0-%EC%A0%90",
+    
+    "relUrl": "/docs/all-container/container.html#개발자가-알아야-할-점"
+  },"37": {
+    "doc": "What-is-Container",
+    "title": "What-is-Container",
+    "content": " ",
+    "url": "/docs/all-container/container.html",
+    
+    "relUrl": "/docs/all-container/container.html"
+  },"38": {
+    "doc": "All-of-docker",
+    "title": "What is docker",
+    "content": ". | Docker는 애플리케이션을 컨테이너라는 격리된 환경에서 실행할 수 있게 해주는 플랫폼입니다. 컨테이너는 애플리케이션과 그 실행에 필요한 모든 것을 하나로 묶어, 어디서든 일관되게 실행할 수 있도록 합니다. | . ",
+    "url": "/docs/all-container/docker.html#what-is-docker",
+    
+    "relUrl": "/docs/all-container/docker.html#what-is-docker"
+  },"39": {
+    "doc": "All-of-docker",
+    "title": "장점",
+    "content": ". | 컨테이너 기반 가상화 기술로, 가볍고 빠른 배포가 가능 | 이미지 기반으로 환경을 표준화하여, 개발-테스트-운영 환경 차이를 최소화 | 격리된 환경에서 여러 애플리케이션을 동시에 실행 가능 | . ",
+    "url": "/docs/all-container/docker.html#%EC%9E%A5%EC%A0%90",
+    
+    "relUrl": "/docs/all-container/docker.html#장점"
+  },"40": {
+    "doc": "All-of-docker",
+    "title": "Docker 구조",
+    "content": ". | Docker CLI: 사용자가 명령을 입력하는 도구 (docker 명령어) | Docker Daemon: 컨테이너와 이미지를 관리하는 백그라운드 서비스 | Images: 컨테이너 실행에 필요한 모든 파일과 설정을 포함한 패키지 | Containers: 실제로 실행 중인 애플리케이션 인스턴스 | Volumes: 데이터 영속성을 위한 저장소 | Networks: 컨테이너 간 통신을 위한 가상 네트워크 | . flowchart TD subgraph \"Host OS\" D1[\"Docker Daemon (dockerd)\"] C1[\"Container 1\"] C2[\"Container 2\"] IMG[\"Images\"] VOL[\"Volumes\"] NET[\"Networks\"] end CLI[\"Docker CLI (docker)\"] --&gt; D1 D1 --&gt; IMG D1 --&gt; VOL D1 --&gt; NET D1 --&gt; C1 D1 --&gt; C2 C1 -- \"Uses\" --&gt; IMG C2 -- \"Uses\" --&gt; IMG C1 -- \"Mounts\" --&gt; VOL C2 -- \"Mounts\" --&gt; VOL C1 -- \"Connects\" --&gt; NET C2 -- \"Connects\" --&gt; NET . ",
+    "url": "/docs/all-container/docker.html#docker-%EA%B5%AC%EC%A1%B0",
+    
+    "relUrl": "/docs/all-container/docker.html#docker-구조"
+  },"41": {
+    "doc": "All-of-docker",
+    "title": "How to use docker",
+    "content": ". | Docker 설치 후, 이미지를 받아 컨테이너를 실행 | . | image는 기본적으로 hub.docker.com에서 가져온다. | . | Dockerfile로 이미지를 직접 빌드하여 배포 가능 | 주요 사용 흐름: . | 이미지를 다운로드(pull) | 컨테이너 실행(run) | 상태 확인(ps) . | 컨테이너 접속(exec) | . | 중지/삭제(stop/rm) | . | . 예시: . docker pull nginx # -d option is background # --name option is create container name # -p option is port forwarding {local port}:{container port} # nginx is image docker run -d --name webserver -p 8080:80 nginx docker ps # -it: interactive # bash is command running shell docker exec -it webserver bash docker stop webserver docker rm webserver . ",
+    "url": "/docs/all-container/docker.html#how-to-use-docker",
+    
+    "relUrl": "/docs/all-container/docker.html#how-to-use-docker"
+  },"42": {
+    "doc": "All-of-docker",
+    "title": "Local Volume과 Mount 구조",
+    "content": "flowchart LR subgraph Host DIR1[\"/host/data\"] end subgraph Container DIR2[\"/container/data\"] APP[\"App\"] end DIR1 -- \"Volume Mount (-v /host/data:/container/data)\" --&gt; DIR2 APP -- \"Read/Write\" --&gt; DIR2 . 왜 volume mount를 사용하는가? . | 컨테이너는 기본적으로 휘발성(컨테이너 삭제 시 데이터도 삭제) | 호스트와 데이터를 공유하거나, 데이터 영속성을 보장하기 위해 사용 | 개발 환경에서 소스코드 실시간 반영, DB 데이터 보존 등에 활용 | . ",
+    "url": "/docs/all-container/docker.html#local-volume%EA%B3%BC-mount-%EA%B5%AC%EC%A1%B0",
+    
+    "relUrl": "/docs/all-container/docker.html#local-volume과-mount-구조"
+  },"43": {
+    "doc": "All-of-docker",
+    "title": "Port Forwarding 구조",
+    "content": "flowchart LR subgraph Host PORT1[\"Host: 8080\"] end subgraph Container PORT2[\"Container: 80\"] APP[\"Web App\"] end PORT1 -- \"-p 8080:80\" --&gt; PORT2 APP -- \"Listen\" --&gt; PORT2 . 왜 port forwarding을 사용하는가? . | 컨테이너 내부 서비스(예: 80번 포트 웹서버)를 외부(호스트)에서 접근 가능하게 함 | 여러 컨테이너가 각각 다른 포트로 외부에 서비스 제공 가능 | 개발/운영 환경에서 서비스 접근 및 테스트 용이 | . ",
+    "url": "/docs/all-container/docker.html#port-forwarding-%EA%B5%AC%EC%A1%B0",
+    
+    "relUrl": "/docs/all-container/docker.html#port-forwarding-구조"
+  },"44": {
+    "doc": "All-of-docker",
+    "title": "Docker Network란?",
+    "content": "Docker Network는 컨테이너 간 통신, 외부와의 연결을 관리하는 가상 네트워크입니다. | 컨테이너끼리 독립적이면서도 필요에 따라 서로 통신 가능 | 브리지, 호스트, 오버레이 등 다양한 네트워크 드라이버 제공 | 네트워크 격리 및 보안성 강화 | . 왜 docker network를 사용하는가? . | 여러 컨테이너가 하나의 서비스처럼 상호작용(예: 웹+DB) | 네트워크 격리로 보안성 향상 | 복잡한 서비스 아키텍처(마이크로서비스 등) 구현에 필수 | . Docker Network 구조 다이어그램 . flowchart LR NET[\"Docker Network (bridge)\"] C1[\"Container 1 (web)\"] C2[\"Container 2 (db)\"] C1 -- \"172.18.0.2\" --&gt; NET C2 -- \"172.18.0.3\" --&gt; NET NET -- \"가상 네트워크\" --- C1 NET -- \"가상 네트워크\" --- C2 . ",
+    "url": "/docs/all-container/docker.html#docker-network%EB%9E%80",
+    
+    "relUrl": "/docs/all-container/docker.html#docker-network란"
+  },"45": {
+    "doc": "All-of-docker",
+    "title": "Command of docker",
+    "content": ". | inspect image . | 이미지 상세 정보 확인 | docker inspect &lt;이미지명&gt; | . | volume mounts . | 호스트와 컨테이너 간 디렉토리/파일 공유 | docker run -v /host/path:/container/path ... | . | network . | 컨테이너 간 통신, 외부와의 연결 설정 | docker network ls, docker network create, docker run --network &lt;네트워크명&gt; | . | How to connect to host ip . | 컨테이너에서 호스트로 접근: Linux는 host.docker.internal 또는 호스트의 실제 IP 사용 | . | How to use exec . | 실행 중인 컨테이너에 명령어 실행/접속 | docker exec -it &lt;컨테이너명&gt; /bin/sh 또는 /bin/bash | . | save . | 이미지를 tar 파일로 저장(백업, 이동, 오프라인 배포 등) | docker save -o &lt;저장할파일명.tar&gt; &lt;이미지명&gt;:&lt;태그&gt; | 예시: docker save -o nginx.tar nginx:latest | . | load . | 저장된 이미지(tar 파일)를 Docker에 불러오기 | docker load -i &lt;이미지파일명.tar&gt; | 예시: docker load -i nginx.tar | . | commit . | 실행 중인 컨테이너의 상태를 새로운 이미지로 저장 | docker commit &lt;컨테이너명 또는 ID&gt; &lt;새이미지명&gt;:&lt;태그&gt; | 예시: docker commit webserver mynginx:custom | . | . ",
+    "url": "/docs/all-container/docker.html#command-of-docker",
+    
+    "relUrl": "/docs/all-container/docker.html#command-of-docker"
+  },"46": {
+    "doc": "All-of-docker",
+    "title": "All-of-docker",
+    "content": " ",
+    "url": "/docs/all-container/docker.html",
+    
+    "relUrl": "/docs/all-container/docker.html"
+  },"47": {
     "doc": "Git 개념",
     "title": "Git",
     "content": "개인과 팀의 가장 큰 차이점 . | 내가 알고 있는 내용(코드, 커밋)이 전부가 아니다. | 모든 내용은 위의 가정 하에 시작됩니다. | . 개인 프로젝트에서의 Git . | 모든 Commit 이 무슨 내용인지 알 수 있음. | Conflict 해결에 --force 와 reset --hard 이라는 치트키를 사용할 수 있음. | push / pull 에 큰 신경 쓰지 않았음. | . 팀 프로젝트에서의 Git . | 모든 Commit 이 무슨 내용인지 절대로 알 수 없음. | 따라서 Conflict 가 발생하는 경우, 관련된 모든 개발자가 확인이 필요함. | . ",
     "url": "/docs/git/git-concepts.html#git",
     
     "relUrl": "/docs/git/git-concepts.html#git"
-  },"28": {
+  },"48": {
     "doc": "Git 개념",
     "title": "Git area",
     "content": ". reset . | 코드가 날아감 | 옵션 . | soft: index 보존(add한 상태, staged 상태), 워킹 디렉터리의 파일 보존. 즉 모두 보존. | mixed: index 취소(add하기 전 상태, unstaged 상태), 워킹 디렉터리의 파일 보존 (기본 옵션) | hard: index 취소(add하기 전 상태, unstaged 상태), 워킹 디렉터리의 파일 삭제. 즉 모두 취소. | . | . git reset --hard HEAD # (해당 커밋으로 돌리겠다. 모든 코드 + 커밋을) git reset --soft HEAD # (해당 커밋으로만 돌린다.) . Revert . | reset 없이 코드를 되돌릴 수 있는 명령어 | 그에 반해 revert는 앞서 말한 것 처럼 특정 사건을 골라서 없던일로 만듭니다. 또한 앞서 말한 것처럼 과거 특정 사건을 없에주지만 revert를 했다는 이력이 남게 됩니다. | . git revert &lt;commit id&gt; . ",
     "url": "/docs/git/git-concepts.html#git-area",
     
     "relUrl": "/docs/git/git-concepts.html#git-area"
-  },"29": {
+  },"49": {
     "doc": "Git 개념",
     "title": "Git checkout",
     "content": ". ",
     "url": "/docs/git/git-concepts.html#git-checkout",
     
     "relUrl": "/docs/git/git-concepts.html#git-checkout"
-  },"30": {
+  },"50": {
     "doc": "Git 개념",
     "title": "How to clear working directory",
     "content": "git checkout -- . # Clear changes (exclude untracted files) git clean -df # remove untracted files . ",
     "url": "/docs/git/git-concepts.html#how-to-clear-working-directory",
     
     "relUrl": "/docs/git/git-concepts.html#how-to-clear-working-directory"
-  },"31": {
+  },"51": {
     "doc": "Git 개념",
     "title": "Commit type",
     "content": ". | feat: 새로운 기능 추가 | fix: 버그 수정 | docs: 문서 수정 | style: 코드 포멧팅, 세미콜론 누락, 코드 변경이 없는 경우 | refactor: 코드 리펙토링 | test: 테스트코드, 리펙토링 테스트 코드 추가 | chore: 빌드 업무 수정, 패키지 매니저 수정, .ignore 수정 등 | . ",
     "url": "/docs/git/git-concepts.html#commit-type",
     
     "relUrl": "/docs/git/git-concepts.html#commit-type"
-  },"32": {
+  },"52": {
     "doc": "Git 개념",
     "title": "upstream",
     "content": ". | local branch 와 remote branch 를 연결 | . ",
     "url": "/docs/git/git-concepts.html#upstream",
     
     "relUrl": "/docs/git/git-concepts.html#upstream"
-  },"33": {
+  },"53": {
     "doc": "Git 개념",
     "title": "origin",
     "content": "git push -u origin main //git repository에 main으로 푸쉬 --set-upstream //관계 설정 . ",
     "url": "/docs/git/git-concepts.html#origin",
     
     "relUrl": "/docs/git/git-concepts.html#origin"
-  },"34": {
+  },"54": {
     "doc": "Git 개념",
     "title": "Git 개념",
     "content": " ",
     "url": "/docs/git/git-concepts.html",
     
     "relUrl": "/docs/git/git-concepts.html"
-  },"35": {
+  },"55": {
     "doc": "git-filter-repo",
     "title": "git-filter-repo",
     "content": ". | git-filter-repo is a tool that helps tou organize your Git repository or change history | . ",
     "url": "/docs/git/git-filter-repo.html",
     
     "relUrl": "/docs/git/git-filter-repo.html"
-  },"36": {
+  },"56": {
     "doc": "git-filter-repo",
     "title": "How to install in Mac",
     "content": "brew install git-filter-repo . ",
     "url": "/docs/git/git-filter-repo.html#how-to-install-in-mac",
     
     "relUrl": "/docs/git/git-filter-repo.html#how-to-install-in-mac"
-  },"37": {
+  },"57": {
     "doc": "git-filter-repo",
     "title": "How to use git-filter-repo",
     "content": "git filter-repo --subdirectory-filter path/to/keep # When you want to organize your history by leaving only a specific directory . ",
     "url": "/docs/git/git-filter-repo.html#how-to-use-git-filter-repo",
     
     "relUrl": "/docs/git/git-filter-repo.html#how-to-use-git-filter-repo"
-  },"38": {
+  },"58": {
     "doc": "How-to-write-helm-chart",
     "title": "Chart grammer",
     "content": "apiVersion: The chart API version (required) name: The name of the chart (required) version: A SemVer 2 version (required) # 1.2.3-alpha.1+ef365 description: A single-sentence description of this project (optional) dependencies: # A list of the chart requirements (optional) - name: The name of the chart (nginx) version: The version of the chart (\"1.2.3\") repository: (optional) The repository URL (\"https://example.com/charts\") or alias (\"@repo-name\") condition: (optional) A yaml path that resolves to a boolean, used for enabling/disabling charts (e.g. subchart1.enabled ) tags: # (optional) - Tags can be used to group charts for enabling/disabling together import-values: # (optional) - ImportValues holds the mapping of source values to parent key to be imported. Each item can be a string or pair of child/parent sublist items. alias: (optional) Alias to be used for the chart. Useful when you have to add the same chart multiple times appVersion: The version of the app that this contains (optional). Needn't be SemVer. Quotes recommended. # \"8.2.1\" . ",
     "url": "/docs/helm/grammer.html#chart-grammer",
     
     "relUrl": "/docs/helm/grammer.html#chart-grammer"
-  },"39": {
+  },"59": {
     "doc": "How-to-write-helm-chart",
     "title": "SemVersion",
     "content": " ",
     "url": "/docs/helm/grammer.html#semversion",
     
     "relUrl": "/docs/helm/grammer.html#semversion"
-  },"40": {
+  },"60": {
     "doc": "How-to-write-helm-chart",
     "title": "version",
     "content": ". | major version.minor version.patches . | major . | 호환되지 않는 API 변경 | . | minor . | 하위 호환되는 기능 추가 | . | patch . | 하위 호환되는 기능 추가 | . | . | . ",
     "url": "/docs/helm/grammer.html#version",
     
     "relUrl": "/docs/helm/grammer.html#version"
-  },"41": {
+  },"61": {
     "doc": "How-to-write-helm-chart",
     "title": "alpha",
     "content": ". | 하이픈(-) 사용 . | - 뒤에 오는 값은 정식 릴리즈 전의 버전을 나타낸다. | 정식 버전보다 낮은 버전 | 예시 . | 1.2.3-alpha | 1.2.3-beta.1 | 1.2.3-rc.2 | . | . | 플러스(+) 사용: 빌드 메타데이터 . | 빌드 메타데이터(Build Metadata) | 플러스 뒤에 오는 값은 빌드 정보를 나타냅니다. | 빌드 메타데이터는 버전 우선순위에 영향을 주지 않습니다 (동일 버전으로 간주). | 예시 . | 1.2.3+001 | 1.2.3-alpha+exp.sha.5114f85 | . | . | . ",
     "url": "/docs/helm/grammer.html#alpha",
     
     "relUrl": "/docs/helm/grammer.html#alpha"
-  },"42": {
+  },"62": {
     "doc": "How-to-write-helm-chart",
     "title": "How-to-write-helm-chart",
     "content": " ",
     "url": "/docs/helm/grammer.html",
     
     "relUrl": "/docs/helm/grammer.html"
-  },"43": {
+  },"63": {
     "doc": "Helm",
     "title": "Helm",
     "content": "Helm에 대한 설명입니다. How-to-use-Helm . Command of helm . Read more → What-is-Helm . Description of helm . Read more → How-to-write-helm-chart . Grammer of helm . Read more → ",
     "url": "/helm/",
     
     "relUrl": "/helm/"
-  },"44": {
+  },"64": {
     "doc": "Jekyll",
     "title": "Jekyll",
     "content": "Jekyll에 대한 소개 페이지입니다. git-command . git 개념 및 command에 대한 설명이다. Read more → Git 개념 . Git이란 무엇이고 어떻게 사용하는가에 대한 설명입니다. Read more → git-filter-repo . git-filter-repo에 대한 설명 . Read more → ",
     "url": "/jekyll/",
     
     "relUrl": "/jekyll/"
-  },"45": {
+  },"65": {
+    "doc": "Container",
+    "title": "Container",
+    "content": "Container 와 관련된 개념입니다. All-of-docker . Description of docker . Read more → ",
+    "url": "/all-container/",
+    
+    "relUrl": "/all-container/"
+  },"66": {
     "doc": "Git",
     "title": "Git",
     "content": "Git에 대한 소개 페이지입니다. git-command . git 개념 및 command에 대한 설명이다. Read more → Git 개념 . Git이란 무엇이고 어떻게 사용하는가에 대한 설명입니다. Read more → git-filter-repo . git-filter-repo에 대한 설명 . Read more → ",
     "url": "/git/",
     
     "relUrl": "/git/"
-  },"46": {
+  },"67": {
     "doc": "문서 목록",
     "title": "👋 Seungeon의 개발 블로그",
     "content": "안녕하세요! 백엔드 개발자 Seungeon입니다. 아래는 제가 진행한 주요 프로젝트 목록입니다. My Awesome API . 사용자 인증, 게시글 CRUD, JWT 기반 로그인 기능이 포함된 API 서버입니다. | 기술 스택: Spring Boot, JPA, PostgreSQL | 사용 언어: Java | 주요 기능: 로그인, 회원가입, 게시글 | . Blog Front . Jekyll 기반 정적 블로그, GitHub Actions로 자동 배포 구성 . | 기술 스택: Jekyll, GitHub Pages | 사용 언어: Markdown, HTML, Liquid | 주요 기능: 사이드바, 검색, 문서 분류 | . ",
     "url": "/#-seungeon%EC%9D%98-%EA%B0%9C%EB%B0%9C-%EB%B8%94%EB%A1%9C%EA%B7%B8",
     
     "relUrl": "/#-seungeon의-개발-블로그"
-  },"47": {
+  },"68": {
     "doc": "문서 목록",
     "title": "문서 목록",
     "content": " ",
     "url": "/",
     
     "relUrl": "/"
-  },"48": {
+  },"69": {
     "doc": "How to Install Jekyll",
     "title": "How to install jekyll in mac",
     "content": "brew install chruby ruby-install ruby-install ruby 3.4.1 echo \"source $(brew --prefix)/opt/chruby/share/chruby/chruby.sh\" &gt;&gt; ~/.zshrc echo \"source $(brew --prefix)/opt/chruby/share/chruby/auto.sh\" &gt;&gt; ~/.zshrc echo \"chruby ruby-3.4.1\" &gt;&gt; ~/.zshrc # run 'chruby' to see actual version gem install jekyll . ",
     "url": "/docs/jekyll/install-jekyll.html#how-to-install-jekyll-in-mac",
     
     "relUrl": "/docs/jekyll/install-jekyll.html#how-to-install-jekyll-in-mac"
-  },"49": {
+  },"70": {
     "doc": "How to Install Jekyll",
     "title": "Installing bundler",
     "content": "What is Bundler . | Bundler is tool managements dependencies. | . ",
     "url": "/docs/jekyll/install-jekyll.html#installing-bundler",
     
     "relUrl": "/docs/jekyll/install-jekyll.html#installing-bundler"
-  },"50": {
+  },"71": {
     "doc": "How to Install Jekyll",
     "title": "why use Bundler??",
     "content": ". | Ruby-based projects such jekyll and github pages require multiple gems (ruby packages), and Bundler allows you to install and manage all of those dependecies automatically | Benefit is creating a reproducible environment by unifying the gem version for each project | . ",
     "url": "/docs/jekyll/install-jekyll.html#why-use-bundler",
     
     "relUrl": "/docs/jekyll/install-jekyll.html#why-use-bundler"
-  },"51": {
+  },"72": {
     "doc": "How to Install Jekyll",
     "title": "How to install bundler",
     "content": "gem install bundler . ",
     "url": "/docs/jekyll/install-jekyll.html#how-to-install-bundler",
     
     "relUrl": "/docs/jekyll/install-jekyll.html#how-to-install-bundler"
-  },"52": {
+  },"73": {
     "doc": "How to Install Jekyll",
     "title": "How to set jekyll project",
     "content": " ",
     "url": "/docs/jekyll/install-jekyll.html#how-to-set-jekyll-project",
     
     "relUrl": "/docs/jekyll/install-jekyll.html#how-to-set-jekyll-project"
-  },"53": {
+  },"74": {
     "doc": "How to Install Jekyll",
     "title": "First step",
     "content": "mkdir docs cd docs git checkout --orphan gh-pages # this branch is called gh-pages does not create history or contents git rm -rf . # removes the contents from your default branch from the working directory jekyll new --skip-bundle . # creates a jekyll site in the current directory . ",
     "url": "/docs/jekyll/install-jekyll.html#first-step",
     
     "relUrl": "/docs/jekyll/install-jekyll.html#first-step"
-  },"54": {
+  },"75": {
     "doc": "How to Install Jekyll",
     "title": "Second step",
     "content": "Edit Gemfile . Add \"#\" to the beggining of the line that starts with \"gem \"jekyll\"\" to comment out this line Remove \"#\" to the beggining of the line that starts with `gem \"github-pages\"` to comment out this line . ",
     "url": "/docs/jekyll/install-jekyll.html#second-step",
     
     "relUrl": "/docs/jekyll/install-jekyll.html#second-step"
-  },"55": {
+  },"76": {
     "doc": "How to Install Jekyll",
     "title": "Thrid step",
     "content": "bundle install Add `Gemfile.lock` into .gitignore file . ",
     "url": "/docs/jekyll/install-jekyll.html#thrid-step",
     
     "relUrl": "/docs/jekyll/install-jekyll.html#thrid-step"
-  },"56": {
+  },"77": {
     "doc": "How to Install Jekyll",
     "title": "Fourth step",
     "content": ". | Optinally, make any necessary edits to the _config.yml file. This is required for relative paths when the repository is hosted in a subdirectory. # _config.yml baseurl # the subpath of you site url # the base hostname &amp; protocol for your site domain # if you want to force HTTPS, specify the domain without the http at the start . | . ",
     "url": "/docs/jekyll/install-jekyll.html#fourth-step",
     
     "relUrl": "/docs/jekyll/install-jekyll.html#fourth-step"
-  },"57": {
+  },"78": {
     "doc": "How to Install Jekyll",
     "title": "Notice",
     "content": ". | To make it appear in the text, Put it in the _posts folder | The front-meter is essential at the top --- layout: post title: \"How to Install Jekyll\" date: 2025-07-06 --- . | . ",
     "url": "/docs/jekyll/install-jekyll.html#notice",
     
     "relUrl": "/docs/jekyll/install-jekyll.html#notice"
-  },"58": {
+  },"79": {
     "doc": "How to Install Jekyll",
     "title": "How to start jekyll in local",
     "content": "bundle exec jekyll serve . ",
     "url": "/docs/jekyll/install-jekyll.html#how-to-start-jekyll-in-local",
     
     "relUrl": "/docs/jekyll/install-jekyll.html#how-to-start-jekyll-in-local"
-  },"59": {
+  },"80": {
     "doc": "How to Install Jekyll",
     "title": "Set the just-the-docs",
     "content": "# Gemfile gem \"just-the-docs\" . # _config.yml theme: just-the-docs . ",
     "url": "/docs/jekyll/install-jekyll.html#set-the-just-the-docs",
     
     "relUrl": "/docs/jekyll/install-jekyll.html#set-the-just-the-docs"
-  },"60": {
+  },"81": {
     "doc": "How to Install Jekyll",
     "title": "How to Install Jekyll",
     "content": " ",
     "url": "/docs/jekyll/install-jekyll.html",
     
     "relUrl": "/docs/jekyll/install-jekyll.html"
-  },"61": {
+  },"82": {
     "doc": "How to use just-the-docs docs",
     "title": "Just the docs guide",
     "content": "Go just the docs . ",
     "url": "/docs/jekyll/just-the-docs.html#just-the-docs-guide",
     
     "relUrl": "/docs/jekyll/just-the-docs.html#just-the-docs-guide"
-  },"62": {
+  },"83": {
     "doc": "How to use just-the-docs docs",
     "title": "How to use just-the-docs docs",
     "content": " ",
     "url": "/docs/jekyll/just-the-docs.html",
     
     "relUrl": "/docs/jekyll/just-the-docs.html"
+  },"84": {
+    "doc": "Docker Registry",
+    "title": "What is Docker registry",
+    "content": ". | Docker Registry는 컨테이너 이미지를 저장하고 배포하는 중앙 저장소입니다. 개발자는 이미지를 registry에 업로드(push)하고, 필요할 때 다운로드(pull)하여 컨테이너를 실행할 수 있습니다. | 이미지 버전 관리 및 공유 | CI/CD 파이프라인에서 이미지 배포 자동화에 필수 | 사설/공용 registry 모두 존재 | . | . ",
+    "url": "/docs/all-container/registry.html#what-is-docker-registry",
+    
+    "relUrl": "/docs/all-container/registry.html#what-is-docker-registry"
+  },"85": {
+    "doc": "Docker Registry",
+    "title": "Kind of docker registry",
+    "content": ". | 공식 Docker Hub: hub.docker.com, 가장 널리 사용되는 공개 registry | Harbor: 오픈소스 기반의 엔터프라이즈용 프라이빗 registry, 보안/정책/감사 기능 강화 | Google Container Registry(GCR), Amazon ECR, GitHub Container Registry 등 다양한 클라우드 기반 registry | . ",
+    "url": "/docs/all-container/registry.html#kind-of-docker-registry",
+    
+    "relUrl": "/docs/all-container/registry.html#kind-of-docker-registry"
+  },"86": {
+    "doc": "Docker Registry",
+    "title": "Docker registry",
+    "content": ". | Docker에서 기본적으로 사용하는 공개 registry(hub.docker.com) | 무료로 이미지 업로드/다운로드 가능(공개/비공개 저장소 지원) | 전 세계적으로 가장 많이 사용됨 | 인증, 자동 빌드, 웹 UI 제공 | . ",
+    "url": "/docs/all-container/registry.html#docker-registry",
+    
+    "relUrl": "/docs/all-container/registry.html#docker-registry"
+  },"87": {
+    "doc": "Docker Registry",
+    "title": "Harbor",
+    "content": ". | CNCF에서 관리하는 오픈소스 프라이빗 registry | 엔터프라이즈 환경에 적합(사용자/권한 관리, 이미지 서명, 취약점 스캔, 감사 로그 등 지원) | 자체 서버에 설치하여 운영 가능 | LDAP, AD 등 외부 인증 연동 지원 | . ",
+    "url": "/docs/all-container/registry.html#harbor",
+    
+    "relUrl": "/docs/all-container/registry.html#harbor"
+  },"88": {
+    "doc": "Docker Registry",
+    "title": "Registry 비교",
+    "content": "| 항목 | Docker Hub | Harbor | . | 공개/비공개 | 모두 지원 | 모두 지원 | . | 설치 방식 | 클라우드(공식) | 온프레미스(직접 설치) | . | 보안/정책 | 기본 제공 | 고급(정책, 감사, 서명) | . | 취약점 스캔 | 일부 제공 | 기본 제공 | . | 사용자/권한 관리 | 제한적 | 세분화/강력 | . | 외부 인증 | 제한적 | LDAP/AD 등 지원 | . | 커뮤니티/지원 | 매우 활발 | 활발 | . ",
+    "url": "/docs/all-container/registry.html#registry-%EB%B9%84%EA%B5%90",
+    
+    "relUrl": "/docs/all-container/registry.html#registry-비교"
+  },"89": {
+    "doc": "Docker Registry",
+    "title": "이미지 올리기(push)와 받기(pull)",
+    "content": "이미지 push (업로드) . | Docker Hub/Harbor에 로그인 docker login [registry 주소] . | 이미지 태그 지정(예: myrepo/myimage:tag) docker tag [이미지명] [registry 주소]/[저장소]/[이미지명]:[태그] . | 이미지 push docker push [registry 주소]/[저장소]/[이미지명]:[태그] . | . 이미지 pull (다운로드) . docker pull [registry 주소]/[저장소]/[이미지명]:[태그] . | 공식 Docker Hub는 registry 주소 생략 가능(예: docker pull nginx:latest) | Harbor 등 사설 registry는 주소 명시 필요(예: docker pull harbor.example.com/myrepo/myimage:tag) | . ",
+    "url": "/docs/all-container/registry.html#%EC%9D%B4%EB%AF%B8%EC%A7%80-%EC%98%AC%EB%A6%AC%EA%B8%B0push%EC%99%80-%EB%B0%9B%EA%B8%B0pull",
+    
+    "relUrl": "/docs/all-container/registry.html#이미지-올리기push와-받기pull"
+  },"90": {
+    "doc": "Docker Registry",
+    "title": "Docker Registry",
+    "content": " ",
+    "url": "/docs/all-container/registry.html",
+    
+    "relUrl": "/docs/all-container/registry.html"
   }
 }
