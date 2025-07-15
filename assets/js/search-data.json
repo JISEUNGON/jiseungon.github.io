@@ -456,7 +456,7 @@
   },"65": {
     "doc": "Container",
     "title": "Container",
-    "content": "Container 와 관련된 개념입니다. All-of-docker . Description of docker . Read more → ",
+    "content": "Container 와 관련된 개념입니다. What-is-Container-Runtime . Description of container runtime . Read more → What-is-Container . Description of container . Read more → All-of-docker . Description of docker . Read more → Docker Registry . Description of docker registry . Read more → ",
     "url": "/all-container/",
     
     "relUrl": "/all-container/"
