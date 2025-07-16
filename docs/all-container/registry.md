@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Docker Registry"
-parent: all-container
+parent: Container
 date: 2025-07-15
 nav_order: 1
 excerpt: Description of docker registry

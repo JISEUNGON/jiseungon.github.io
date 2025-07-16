@@ -1,17 +1,17 @@
 ---
-title: Container
+title: Markdown
 nav_order: 1
 has_children: true
-permalink: /all-container/
+permalink: /diagram/
 ---
 
-# Container
+# Markdown 에서 diagram 만드는 방법에 대한 페이지
 
-Container 와 관련된 개념입니다.
+Kubernetes 에 대한 소개 페이지입니다.
 
 <div style="display: grid; gap: 1rem; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));">
 
-{% assign children = site.pages | where: "parent", "Container" | sort: "nav_order" %}
+{% assign children = site.pages | where: "parent", "Markdown" | sort: "nav_order" %}
 {% for child in children %}
 
   <div style="border: 1px solid #e0e0e0; border-radius: 8px; padding: 1rem; background-color: #f9f9f9; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
