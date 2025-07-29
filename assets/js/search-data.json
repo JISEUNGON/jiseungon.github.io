@@ -1,975 +1,1199 @@
 {"0": {
-    "doc": "How to use kubectl",
-    "title": "목차",
-    "content": ". | What is kubectl? | How to use kubectl . | Useful setting . | 자동완성 설정 | 별칭(Alias) 설정 | kubectl 플러그인 설치 | 환경 변수 설정 | kubectl 설정 파일 | 유용한 kubectl 플러그인들 | 프로덕션 환경 설정 | . | Primary command . | Show resource list . | 기본 조회 명령어 | -o wide 옵션 | 리소스 타입별 조회 | . | Edit resource | Scale resource . | 스케일 가능한 리소스 종류 | 스케일링 명령어 예시 | . | . | Additional useful commands . | 리소스 상세 정보 조회 | 로그 조회 | 파드 내부 접속 | 포트 포워딩 | 리소스 삭제 | YAML 파일로 리소스 관리 | 네임스페이스 관리 | 컨텍스트 관리 | 디버깅 도구 | . | . | . ",
-    "url": "/docs/kubernetes/command.html#%EB%AA%A9%EC%B0%A8",
+    "doc": "Blue/Green Deployment",
+    "title": "Blue/Green 배포 전략",
+    "content": "Blue/Green 배포는 두 개의 동일한 환경(Blue와 Green)을 사용하여 완전한 버전 전환을 통해 무중단 배포를 구현하는 전략입니다. ",
+    "url": "/docs/deploy/blue-green.html#bluegreen-%EB%B0%B0%ED%8F%AC-%EC%A0%84%EB%9E%B5",
     
-    "relUrl": "/docs/kubernetes/command.html#목차"
+    "relUrl": "/docs/deploy/blue-green.html#bluegreen-배포-전략"
   },"1": {
-    "doc": "How to use kubectl",
-    "title": "What is kubectl?",
-    "content": ". | kubectl은 Kubernetes 클러스터와 상호작용하기 위한 명령줄 도구입니다. | 클러스터의 리소스를 관리하고, 애플리케이션을 배포하며, 문제를 진단하는 데 사용됩니다. | . ",
-    "url": "/docs/kubernetes/command.html#what-is-kubectl",
+    "doc": "Blue/Green Deployment",
+    "title": "개요",
+    "content": "Blue/Green 배포에서는 현재 운영 중인 환경(Blue)과 새로운 버전을 배포할 환경(Green)을 준비합니다. 새로운 버전이 Green 환경에서 완전히 테스트된 후, 트래픽을 한 번에 Blue에서 Green으로 전환합니다. ",
+    "url": "/docs/deploy/blue-green.html#%EA%B0%9C%EC%9A%94",
     
-    "relUrl": "/docs/kubernetes/command.html#what-is-kubectl"
+    "relUrl": "/docs/deploy/blue-green.html#개요"
   },"2": {
-    "doc": "How to use kubectl",
-    "title": "How to use kubectl",
-    "content": " ",
-    "url": "/docs/kubernetes/command.html",
+    "doc": "Blue/Green Deployment",
+    "title": "작동 원리",
+    "content": "graph TB subgraph \"Phase 1: 준비 단계\" A1[\"Blue v1.0&lt;br/&gt;🔵\"] --&gt; S1[\"Service&lt;br/&gt;🌐\"] A2[\"Blue v1.0&lt;br/&gt;🔵\"] --&gt; S1 A3[\"Blue v1.0&lt;br/&gt;🔵\"] --&gt; S1 G1[\"Green v2.0&lt;br/&gt;🟢\"] -.-&gt; S2[\"Service&lt;br/&gt;🌐\"] G2[\"Green v2.0&lt;br/&gt;🟢\"] -.-&gt; S2 G3[\"Green v2.0&lt;br/&gt;🟢\"] -.-&gt; S2 end subgraph \"Phase 2: 트래픽 전환\" B1[\"Blue v1.0&lt;br/&gt;🔵\"] -.-&gt; S3[\"Service&lt;br/&gt;🌐\"] B2[\"Blue v1.0&lt;br/&gt;🔵\"] -.-&gt; S3 B3[\"Blue v1.0&lt;br/&gt;🔵\"] -.-&gt; S3 H1[\"Green v2.0&lt;br/&gt;🟢\"] --&gt; S3 H2[\"Green v2.0&lt;br/&gt;🟢\"] --&gt; S3 H3[\"Green v2.0&lt;br/&gt;🟢\"] --&gt; S3 end subgraph \"Phase 3: 정리 단계\" C1[\"Blue v1.0&lt;br/&gt;🔵\"] -.-&gt; S4[\"Service&lt;br/&gt;🌐\"] C2[\"Blue v1.0&lt;br/&gt;🔵\"] -.-&gt; S4 C3[\"Blue v1.0&lt;br/&gt;🔵\"] -.-&gt; S4 I1[\"Green v2.0&lt;br/&gt;🟢\"] --&gt; S4 I2[\"Green v2.0&lt;br/&gt;🟢\"] --&gt; S4 I3[\"Green v2.0&lt;br/&gt;🟢\"] --&gt; S4 end Phase1 --&gt; Phase2 --&gt; Phase3 style A1 fill:#87CEEB style A2 fill:#87CEEB style A3 fill:#87CEEB style G1 fill:#90EE90 style G2 fill:#90EE90 style G3 fill:#90EE90 style B1 fill:#87CEEB style B2 fill:#87CEEB style B3 fill:#87CEEB style H1 fill:#90EE90 style H2 fill:#90EE90 style H3 fill:#90EE90 style C1 fill:#87CEEB style C2 fill:#87CEEB style C3 fill:#87CEEB style I1 fill:#90EE90 style I2 fill:#90EE90 style I3 fill:#90EE90 . ",
+    "url": "/docs/deploy/blue-green.html#%EC%9E%91%EB%8F%99-%EC%9B%90%EB%A6%AC",
     
-    "relUrl": "/docs/kubernetes/command.html"
+    "relUrl": "/docs/deploy/blue-green.html#작동-원리"
   },"3": {
-    "doc": "How to use kubectl",
-    "title": "Useful setting",
-    "content": "kubectl을 더 효율적으로 사용하기 위한 유용한 설정들입니다. 자동완성 설정 . Bash 자동완성 . # kubectl 자동완성 스크립트 추가 echo 'source &lt;(kubectl completion bash)' &gt;&gt;~/.bashrc # 현재 세션에 적용 source ~/.bashrc # 또는 직접 실행 source &lt;(kubectl completion bash) . kubectl 설정 파일 (~/.kube/config) . apiVersion: v1 kind: Config clusters: - name: my-cluster cluster: server: https://kubernetes.example.com certificate-authority-data: &lt;base64-encoded-ca-cert&gt; contexts: - name: my-context context: cluster: my-cluster user: my-user namespace: default current-context: my-context users: - name: my-user user: client-certificate-data: &lt;base64-encoded-client-cert&gt; client-key-data: &lt;base64-encoded-client-key&gt; . 프로덕션 환경 설정 . # 네임스페이스별 컨텍스트 설정 kubectl config set-context --current --namespace=production # 리소스 제한 확인 kubectl top nodes kubectl top pods # 클러스터 상태 확인 kubectl get componentstatuses kubectl get nodes -o wide . ",
-    "url": "/docs/kubernetes/command.html#useful-setting",
+    "doc": "Blue/Green Deployment",
+    "title": "배포 과정",
+    "content": "stateDiagram-v2 [*] --&gt; BlueActive BlueActive --&gt; GreenDeploy: 새 버전 배포 GreenDeploy --&gt; GreenTest: Green 환경 테스트 GreenTest --&gt; TrafficSwitch: 트래픽 전환 TrafficSwitch --&gt; GreenActive: Green 활성화 GreenActive --&gt; BlueCleanup: Blue 환경 정리 BlueCleanup --&gt; [*] note right of BlueActive: Blue 환경에서 서비스 제공 note right of GreenDeploy: Green 환경에 새 버전 배포 note right of GreenTest: Green 환경에서 완전한 테스트 note right of TrafficSwitch: 로드밸런서 설정 변경 note right of GreenActive: Green 환경이 새로운 Blue note right of BlueCleanup: 이전 Blue 환경 삭제 . ",
+    "url": "/docs/deploy/blue-green.html#%EB%B0%B0%ED%8F%AC-%EA%B3%BC%EC%A0%95",
     
-    "relUrl": "/docs/kubernetes/command.html#useful-setting"
+    "relUrl": "/docs/deploy/blue-green.html#배포-과정"
   },"4": {
-    "doc": "How to use kubectl",
-    "title": "Primary command",
-    "content": "Show resource list . | 리소스 목록을 조회하는 기본 명령어들입니다. | . 기본 조회 명령어 . # 모든 네임스페이스의 파드 조회 kubectl get pods --all-namespaces # 특정 네임스페이스의 파드 조회 kubectl get pods -n default # 모든 리소스 타입 조회 kubectl get all . -o wide 옵션 . -o wide 옵션을 사용하면 더 자세한 정보를 볼 수 있습니다. # 파드의 상세 정보 조회 (IP, 노드 정보 포함) kubectl get pods -o wide # 서비스의 상세 정보 조회 (클러스터 IP, 외부 IP 포함) kubectl get services -o wide # 디플로이먼트의 상세 정보 조회 kubectl get deployments -o wide . 리소스 타입별 조회 . # 디플로이먼트 조회 kubectl get deploy # 서비스 조회 # port 조회 kubectl get service # StatefulSet 조회 kubectl get sts # 파드 조회 kubectl get pod # ConfigMap 조회 kubectl get configmap # Secret 조회 kubectl get secret # Role 조회 kubectl get role # ServiceAccount 조회 kubectl get serviceaccount # RoleBinding 조회 kubectl get rolebinding # PersistentVolumeClaim 조회 kubectl get pvc # PersistentVolume 조회 kubectl get pv . Edit resource . 리소스를 직접 편집할 수 있습니다. # 디플로이먼트 편집 kubectl edit deployment my-app # 서비스 편집 kubectl edit service my-service # ConfigMap 편집 kubectl edit configmap my-config # Secret 편집 kubectl edit secret my-secret . 편집기가 열리면 YAML 형식으로 리소스를 수정할 수 있습니다. 저장하면 변경사항이 즉시 클러스터에 적용됩니다. Scale resource . 리소스의 복제본 수를 조정할 수 있습니다. 스케일 가능한 리소스 종류 . | Deployment: 가장 일반적인 스케일링 대상 | StatefulSet: 상태를 가진 애플리케이션 | ReplicaSet: 디플로이먼트의 하위 리소스 | HorizontalPodAutoscaler: 자동 스케일링 | . 스케일링 명령어 예시 . # 디플로이먼트 스케일링 (3개 복제본으로 확장) kubectl scale deployment my-app --replicas=3 # StatefulSet 스케일링 (5개 복제본으로 확장) kubectl scale statefulset my-stateful-app --replicas=5 # 현재 복제본 수 확인 kubectl get deployment my-app -o jsonpath='{.spec.replicas}' # 실시간으로 복제본 수 모니터링 kubectl get pods -l app=my-app -w . ",
-    "url": "/docs/kubernetes/command.html#primary-command",
+    "doc": "Blue/Green Deployment",
+    "title": "장점",
+    "content": ". | ✅ 빠른 롤백: 트래픽을 다시 Blue로 전환하여 즉시 롤백 가능 | ✅ 완전한 테스트: Green 환경에서 실제 환경과 동일한 조건으로 테스트 | ✅ 무중단 배포: 트래픽 전환이 순간적으로 이루어짐 | ✅ 버전 분리: Blue와 Green이 완전히 분리되어 버전 충돌 없음 | . ",
+    "url": "/docs/deploy/blue-green.html#%EC%9E%A5%EC%A0%90",
     
-    "relUrl": "/docs/kubernetes/command.html#primary-command"
+    "relUrl": "/docs/deploy/blue-green.html#장점"
   },"5": {
-    "doc": "How to use kubectl",
-    "title": "Additional useful commands",
-    "content": "리소스 상세 정보 조회 . # 파드의 상세 정보 조회 kubectl describe pod my-pod # 디플로이먼트의 상세 정보 조회 kubectl describe deployment my-app # 서비스의 상세 정보 조회 kubectl describe service my-service . 로그 조회 . # 파드 로그 조회 kubectl logs my-pod # 실시간 로그 조회 (follow) kubectl logs -f my-pod # 이전 컨테이너 로그 조회 kubectl logs my-pod --previous # 특정 컨테이너 로그 조회 (멀티 컨테이너 파드) kubectl logs my-pod -c container-name . 파드 내부 접속 . # 파드 내부로 쉘 접속 kubectl exec -it my-pod -- /bin/bash # 특정 컨테이너로 접속 kubectl exec -it my-pod -c container-name -- /bin/bash # 명령어 실행 kubectl exec my-pod -- ls /app . 포트 포워딩 . # 로컬 포트를 파드 포트로 포워딩 kubectl port-forward my-pod 8080:80 # 서비스 포트 포워딩 kubectl port-forward service/my-service 8080:80 . 리소스 삭제 . # 파드 삭제 kubectl delete pod my-pod # 디플로이먼트 삭제 kubectl delete deployment my-app # 네임스페이스 삭제 (모든 리소스 포함) kubectl delete namespace my-namespace # 라벨로 리소스 삭제 kubectl delete pods -l app=my-app . YAML 파일로 리소스 관리 . # YAML 파일로 리소스 생성 kubectl apply -f deployment.yaml # 여러 파일 적용 kubectl apply -f k8s/ # 리소스 삭제 kubectl delete -f deployment.yaml # YAML 형식으로 출력 kubectl get pod my-pod -o yaml . 네임스페이스 관리 . # 네임스페이스 생성 kubectl create namespace my-namespace # 네임스페이스 목록 조회 kubectl get namespaces # 특정 네임스페이스의 모든 리소스 조회 kubectl get all -n my-namespace . 컨텍스트 관리 . # 현재 컨텍스트 확인 kubectl config current-context # 컨텍스트 목록 조회 kubectl config get-contexts # 컨텍스트 변경 kubectl config use-context my-cluster # 클러스터 목록 조회 kubectl config get-clusters . 디버깅 도구 . # 파드 이벤트 조회 kubectl get events --sort-by='.lastTimestamp' # 노드 정보 조회 kubectl describe node my-node # 클러스터 정보 조회 kubectl cluster-info # API 리소스 목록 조회 kubectl api-resources . 이러한 명령어들을 조합하여 Kubernetes 클러스터를 효과적으로 관리할 수 있습니다. ",
-    "url": "/docs/kubernetes/command.html#additional-useful-commands",
+    "doc": "Blue/Green Deployment",
+    "title": "단점",
+    "content": ". | ❌ 리소스 비용: 두 배의 인프라가 필요 | ❌ 데이터베이스 복잡성: 데이터베이스 스키마 변경 시 주의 필요 | ❌ 상태 관리: 세션 상태나 캐시 데이터 처리 필요 | ❌ 복잡한 설정: 로드밸런서와 네트워크 설정이 복잡 | . ",
+    "url": "/docs/deploy/blue-green.html#%EB%8B%A8%EC%A0%90",
     
-    "relUrl": "/docs/kubernetes/command.html#additional-useful-commands"
+    "relUrl": "/docs/deploy/blue-green.html#단점"
   },"6": {
+    "doc": "Blue/Green Deployment",
+    "title": "Kubernetes에서의 구현",
+    "content": "Blue 환경 (현재 운영) . apiVersion: apps/v1 kind: Deployment metadata: name: my-app-blue labels: app: my-app version: blue spec: replicas: 3 selector: matchLabels: app: my-app version: blue template: metadata: labels: app: my-app version: blue spec: containers: - name: my-app image: my-app:v1.0 --- apiVersion: v1 kind: Service metadata: name: my-app-service spec: selector: app: my-app version: blue # 현재 Blue 환경으로 트래픽 전달 ports: - port: 80 targetPort: 8080 . Green 환경 (새 버전) . apiVersion: apps/v1 kind: Deployment metadata: name: my-app-green labels: app: my-app version: green spec: replicas: 3 selector: matchLabels: app: my-app version: green template: metadata: labels: app: my-app version: green spec: containers: - name: my-app image: my-app:v2.0 . 배포 스크립트 . #!/bin/bash # 1. Green 환경 배포 kubectl apply -f green-deployment.yaml # 2. Green 환경 상태 확인 kubectl rollout status deployment/my-app-green # 3. Green 환경 테스트 kubectl port-forward service/my-app-green 8080:80 &amp; sleep 10 curl -f http://localhost:8080/health || exit 1 # 4. 트래픽 전환 (Service selector 변경) kubectl patch service my-app-service -p '{\"spec\":{\"selector\":{\"version\":\"green\"}}}' # 5. Green 환경 활성화 확인 kubectl get endpoints my-app-service # 6. Blue 환경 정리 (선택사항) kubectl delete deployment my-app-blue . ",
+    "url": "/docs/deploy/blue-green.html#kubernetes%EC%97%90%EC%84%9C%EC%9D%98-%EA%B5%AC%ED%98%84",
+    
+    "relUrl": "/docs/deploy/blue-green.html#kubernetes에서의-구현"
+  },"7": {
+    "doc": "Blue/Green Deployment",
+    "title": "트래픽 전환 방법",
+    "content": "1. Service Selector 변경 . # Blue에서 Green으로 전환 kubectl patch service my-app-service -p '{\"spec\":{\"selector\":{\"version\":\"green\"}}}' # Green에서 Blue로 롤백 kubectl patch service my-app-service -p '{\"spec\":{\"selector\":{\"version\":\"blue\"}}}' . 2. Ingress 설정 변경 . apiVersion: networking.k8s.io/v1 kind: Ingress metadata: name: my-app-ingress spec: rules: - host: my-app.example.com http: paths: - path: / pathType: Prefix backend: service: name: my-app-service port: number: 80 . ",
+    "url": "/docs/deploy/blue-green.html#%ED%8A%B8%EB%9E%98%ED%94%BD-%EC%A0%84%ED%99%98-%EB%B0%A9%EB%B2%95",
+    
+    "relUrl": "/docs/deploy/blue-green.html#트래픽-전환-방법"
+  },"8": {
+    "doc": "Blue/Green Deployment",
+    "title": "모니터링 및 검증",
+    "content": "# 배포 상태 확인 kubectl get deployments -l app=my-app # 서비스 엔드포인트 확인 kubectl get endpoints my-app-service # 파드 상태 확인 kubectl get pods -l app=my-app # 로그 확인 kubectl logs -l app=my-app,version=green # 헬스체크 kubectl exec -it $(kubectl get pods -l app=my-app,version=green -o jsonpath='{.items[0].metadata.name}') -- curl localhost:8080/health . ",
+    "url": "/docs/deploy/blue-green.html#%EB%AA%A8%EB%8B%88%ED%84%B0%EB%A7%81-%EB%B0%8F-%EA%B2%80%EC%A6%9D",
+    
+    "relUrl": "/docs/deploy/blue-green.html#모니터링-및-검증"
+  },"9": {
+    "doc": "Blue/Green Deployment",
+    "title": "데이터베이스 고려사항",
+    "content": "스키마 변경이 없는 경우 . | Green 환경에서 동일한 데이터베이스 사용 | 트래픽 전환만으로 배포 완료 | . 스키마 변경이 있는 경우 . | 데이터베이스 마이그레이션 스크립트 준비 | Green 환경 배포 전 마이그레이션 실행 | 롤백 시 데이터베이스 롤백 계획 필요 | . ",
+    "url": "/docs/deploy/blue-green.html#%EB%8D%B0%EC%9D%B4%ED%84%B0%EB%B2%A0%EC%9D%B4%EC%8A%A4-%EA%B3%A0%EB%A0%A4%EC%82%AC%ED%95%AD",
+    
+    "relUrl": "/docs/deploy/blue-green.html#데이터베이스-고려사항"
+  },"10": {
+    "doc": "Blue/Green Deployment",
+    "title": "베스트 프랙티스",
+    "content": ". | 완전한 테스트: Green 환경에서 실제 환경과 동일한 테스트 | 모니터링: 트래픽 전환 후 즉시 모니터링 시작 | 롤백 계획: 문제 발생 시 빠른 롤백 절차 준비 | 리소스 관리: 사용하지 않는 Blue 환경 정리 | 문서화: 배포 절차와 롤백 절차 문서화 | . ",
+    "url": "/docs/deploy/blue-green.html#%EB%B2%A0%EC%8A%A4%ED%8A%B8-%ED%94%84%EB%9E%99%ED%8B%B0%EC%8A%A4",
+    
+    "relUrl": "/docs/deploy/blue-green.html#베스트-프랙티스"
+  },"11": {
+    "doc": "Blue/Green Deployment",
+    "title": "사용 시나리오",
+    "content": ". | ✅ 중요한 프로덕션 환경: 완전한 무중단 배포가 필요한 경우 | ✅ 복잡한 애플리케이션: 여러 컴포넌트가 상호 의존하는 경우 | ✅ 데이터베이스 변경: 스키마 변경이 포함된 배포 | ✅ 긴급 배포: 빠른 롤백이 필요한 경우 | . Blue/Green 배포는 완전한 환경 분리를 통해 안전하고 신뢰할 수 있는 배포를 제공하지만, 추가 리소스와 복잡한 설정이 필요한 고급 배포 전략입니다. ",
+    "url": "/docs/deploy/blue-green.html#%EC%82%AC%EC%9A%A9-%EC%8B%9C%EB%82%98%EB%A6%AC%EC%98%A4",
+    
+    "relUrl": "/docs/deploy/blue-green.html#사용-시나리오"
+  },"12": {
+    "doc": "Blue/Green Deployment",
+    "title": "Blue/Green Deployment",
+    "content": " ",
+    "url": "/docs/deploy/blue-green.html",
+    
+    "relUrl": "/docs/deploy/blue-green.html"
+  },"13": {
+    "doc": "Canary Deployment",
+    "title": "Canary 배포 전략",
+    "content": "Canary 배포는 새로운 버전을 소규모 사용자 그룹에게 먼저 배포하여 안전성을 검증한 후, 점진적으로 전체 사용자에게 확산하는 배포 전략입니다. ",
+    "url": "/docs/deploy/canary.html#canary-%EB%B0%B0%ED%8F%AC-%EC%A0%84%EB%9E%B5",
+    
+    "relUrl": "/docs/deploy/canary.html#canary-배포-전략"
+  },"14": {
+    "doc": "Canary Deployment",
+    "title": "개요",
+    "content": "Canary 배포는 광부들이 카나리아(새)를 광산에 데려가서 유해 가스 유무를 확인했던 것에서 유래한 이름입니다. 소수의 사용자에게 새 버전을 먼저 제공하여 문제가 없는지 확인한 후, 점진적으로 트래픽을 늘려가는 방식입니다. ",
+    "url": "/docs/deploy/canary.html#%EA%B0%9C%EC%9A%94",
+    
+    "relUrl": "/docs/deploy/canary.html#개요"
+  },"15": {
+    "doc": "Canary Deployment",
+    "title": "작동 원리",
+    "content": "graph TB subgraph \"Phase 1: Canary 초기 배포\" A1[\"Stable v1.0&lt;br/&gt;🟢\"] --&gt; S1[\"Service&lt;br/&gt;🌐\"] A2[\"Stable v1.0&lt;br/&gt;🟢\"] --&gt; S1 A3[\"Stable v1.0&lt;br/&gt;🟢\"] --&gt; S1 A4[\"Canary v2.0&lt;br/&gt;🟡\"] --&gt; S1 end subgraph \"Phase 2: 트래픽 점진적 증가\" B1[\"Stable v1.0&lt;br/&gt;🟢\"] --&gt; S2[\"Service&lt;br/&gt;🌐\"] B2[\"Stable v1.0&lt;br/&gt;🟢\"] --&gt; S2 B3[\"Canary v2.0&lt;br/&gt;🟡\"] --&gt; S2 B4[\"Canary v2.0&lt;br/&gt;🟡\"] --&gt; S2 end subgraph \"Phase 3: 완전 전환\" C1[\"Canary v2.0&lt;br/&gt;🟡\"] --&gt; S3[\"Service&lt;br/&gt;🌐\"] C2[\"Canary v2.0&lt;br/&gt;🟡\"] --&gt; S3 C3[\"Canary v2.0&lt;br/&gt;🟡\"] --&gt; S3 C4[\"Canary v2.0&lt;br/&gt;🟡\"] --&gt; S3 end Phase1 --&gt; Phase2 --&gt; Phase3 style A1 fill:#90EE90 style A2 fill:#90EE90 style A3 fill:#90EE90 style A4 fill:#FFD700 style B1 fill:#90EE90 style B2 fill:#90EE90 style B3 fill:#FFD700 style B4 fill:#FFD700 style C1 fill:#FFD700 style C2 fill:#FFD700 style C3 fill:#FFD700 style C4 fill:#FFD700 . ",
+    "url": "/docs/deploy/canary.html#%EC%9E%91%EB%8F%99-%EC%9B%90%EB%A6%AC",
+    
+    "relUrl": "/docs/deploy/canary.html#작동-원리"
+  },"16": {
+    "doc": "Canary Deployment",
+    "title": "배포 과정",
+    "content": "stateDiagram-v2 [*] --&gt; StableOnly StableOnly --&gt; CanaryDeploy: Canary 배포 CanaryDeploy --&gt; SmallTraffic: 5% 트래픽 SmallTraffic --&gt; Monitor: 모니터링 Monitor --&gt; IncreaseTraffic: 트래픽 증가 IncreaseTraffic --&gt; Monitor Monitor --&gt; FullDeploy: 전체 배포 FullDeffic --&gt; Rollback: 문제 발생 Monitor --&gt; Rollback: 문제 발생 Rollback --&gt; StableOnly FullDeploy --&gt; [*] note right of StableOnly: 안정 버전만 실행 note right of CanaryDeploy: Canary 버전 소수 배포 note right of SmallTraffic: 5-10% 트래픽으로 테스트 note right of Monitor: 메트릭, 로그, 오류율 모니터링 note right of IncreaseTraffic: 25%, 50%, 75% 순차 증가 note right of FullDeploy: 100% 트래픽으로 완전 전환 note right of Rollback: 문제 발생 시 즉시 롤백 . ",
+    "url": "/docs/deploy/canary.html#%EB%B0%B0%ED%8F%AC-%EA%B3%BC%EC%A0%95",
+    
+    "relUrl": "/docs/deploy/canary.html#배포-과정"
+  },"17": {
+    "doc": "Canary Deployment",
+    "title": "장점",
+    "content": ". | ✅ 위험 최소화: 소수 사용자에게만 영향 | ✅ 실시간 피드백: 실제 사용자 데이터로 검증 | ✅ 점진적 배포: 트래픽 비율 조정으로 안전한 확산 | ✅ 빠른 롤백: 문제 발생 시 즉시 이전 버전으로 복구 | ✅ A/B 테스트: 사용자 반응 비교 가능 | . ",
+    "url": "/docs/deploy/canary.html#%EC%9E%A5%EC%A0%90",
+    
+    "relUrl": "/docs/deploy/canary.html#장점"
+  },"18": {
+    "doc": "Canary Deployment",
+    "title": "단점",
+    "content": ". | ❌ 복잡한 설정: 트래픽 분산 로직 구현 필요 | ❌ 모니터링 부담: 실시간 모니터링과 알림 설정 필요 | ❌ 세션 관리: 사용자 세션 일관성 유지 어려움 | ❌ 데이터 일관성: 두 버전 간 데이터 동기화 문제 | . ",
+    "url": "/docs/deploy/canary.html#%EB%8B%A8%EC%A0%90",
+    
+    "relUrl": "/docs/deploy/canary.html#단점"
+  },"19": {
+    "doc": "Canary Deployment",
+    "title": "Kubernetes에서의 구현",
+    "content": "기본 Canary 배포 . # Stable 버전 (기존) apiVersion: apps/v1 kind: Deployment metadata: name: my-app-stable labels: app: my-app version: stable spec: replicas: 9 # 90% 트래픽 selector: matchLabels: app: my-app version: stable template: metadata: labels: app: my-app version: stable spec: containers: - name: my-app image: my-app:v1.0 --- # Canary 버전 (새로운) apiVersion: apps/v1 kind: Deployment metadata: name: my-app-canary labels: app: my-app version: canary spec: replicas: 1 # 10% 트래픽 selector: matchLabels: app: my-app version: canary template: metadata: labels: app: my-app version: canary spec: containers: - name: my-app image: my-app:v2.0 --- # Service (라벨 셀렉터로 트래픽 분산) apiVersion: v1 kind: Service metadata: name: my-app-service spec: selector: app: my-app # stable과 canary 모두 선택 ports: - port: 80 targetPort: 8080 . 트래픽 비율 조정 . # Canary 10% (1개 파드) kubectl scale deployment my-app-canary --replicas=1 kubectl scale deployment my-app-stable --replicas=9 # Canary 25% (2개 파드) kubectl scale deployment my-app-canary --replicas=2 kubectl scale deployment my-app-stable --replicas=6 # Canary 50% (3개 파드) kubectl scale deployment my-app-canary --replicas=3 kubectl scale deployment my-app-stable --replicas=3 # Canary 100% (완전 전환) kubectl scale deployment my-app-canary --replicas=10 kubectl scale deployment my-app-stable --replicas=0 . ",
+    "url": "/docs/deploy/canary.html#kubernetes%EC%97%90%EC%84%9C%EC%9D%98-%EA%B5%AC%ED%98%84",
+    
+    "relUrl": "/docs/deploy/canary.html#kubernetes에서의-구현"
+  },"20": {
+    "doc": "Canary Deployment",
+    "title": "고급 Canary 배포 (Istio 사용)",
+    "content": "Istio VirtualService 설정 . apiVersion: networking.istio.io/v1alpha3 kind: VirtualService metadata: name: my-app-vs spec: hosts: - my-app.example.com http: - route: - destination: host: my-app-stable subset: v1 weight: 90 # 90% 트래픽 - destination: host: my-app-canary subset: v2 weight: 10 # 10% 트래픽 --- apiVersion: networking.istio.io/v1alpha3 kind: DestinationRule metadata: name: my-app-dr spec: host: my-app-service subsets: - name: v1 labels: version: stable - name: v2 labels: version: canary . 트래픽 비율 동적 조정 . # Canary 10%로 시작 kubectl patch virtualservice my-app-vs -p '{\"spec\":{\"http\":[{\"route\":[{\"destination\":{\"host\":\"my-app-stable\",\"subset\":\"v1\"},\"weight\":90},{\"destination\":{\"host\":\"my-app-canary\",\"subset\":\"v2\"},\"weight\":10}]}]}}' # Canary 50%로 증가 kubectl patch virtualservice my-app-vs -p '{\"spec\":{\"http\":[{\"route\":[{\"destination\":{\"host\":\"my-app-stable\",\"subset\":\"v1\"},\"weight\":50},{\"destination\":{\"host\":\"my-app-canary\",\"subset\":\"v2\"},\"weight\":50}]}]}}' # Canary 100%로 완전 전환 kubectl patch virtualservice my-app-vs -p '{\"spec\":{\"http\":[{\"route\":[{\"destination\":{\"host\":\"my-app-canary\",\"subset\":\"v2\"},\"weight\":100}]}]}}' . ",
+    "url": "/docs/deploy/canary.html#%EA%B3%A0%EA%B8%89-canary-%EB%B0%B0%ED%8F%AC-istio-%EC%82%AC%EC%9A%A9",
+    
+    "relUrl": "/docs/deploy/canary.html#고급-canary-배포-istio-사용"
+  },"21": {
+    "doc": "Canary Deployment",
+    "title": "모니터링 및 알림",
+    "content": "메트릭 수집 . apiVersion: v1 kind: ConfigMap metadata: name: prometheus-config data: prometheus.yml: | global: scrape_interval: 15s scrape_configs: - job_name: 'kubernetes-pods' kubernetes_sd_configs: - role: pod relabel_configs: - source_labels: [__meta_kubernetes_pod_annotation_prometheus_io_scrape] action: keep regex: true . 알림 규칙 . apiVersion: monitoring.coreos.com/v1 kind: PrometheusRule metadata: name: canary-alerts spec: groups: - name: canary.rules rules: - alert: CanaryHighErrorRate expr: rate(http_requests_total{status=~\"5..\"}[5m]) &gt; 0.1 for: 2m labels: severity: critical annotations: summary: \"Canary deployment has high error rate\" . ",
+    "url": "/docs/deploy/canary.html#%EB%AA%A8%EB%8B%88%ED%84%B0%EB%A7%81-%EB%B0%8F-%EC%95%8C%EB%A6%BC",
+    
+    "relUrl": "/docs/deploy/canary.html#모니터링-및-알림"
+  },"22": {
+    "doc": "Canary Deployment",
+    "title": "자동화된 Canary 배포",
+    "content": "배포 스크립트 . #!/bin/bash # Canary 배포 자동화 스크립트 CANARY_REPLICAS=1 STABLE_REPLICAS=9 MONITORING_DURATION=300 # 5분 echo \"Starting Canary deployment...\" # 1. Canary 배포 kubectl apply -f canary-deployment.yaml kubectl rollout status deployment/my-app-canary # 2. 초기 트래픽 설정 (10%) kubectl scale deployment my-app-canary --replicas=$CANARY_REPLICAS kubectl scale deployment my-app-stable --replicas=$STABLE_REPLICAS # 3. 모니터링 echo \"Monitoring canary deployment for $MONITORING_DURATION seconds...\" sleep $MONITORING_DURATION # 4. 메트릭 확인 ERROR_RATE=$(kubectl exec -it $(kubectl get pods -l app=my-app,version=canary -o jsonpath='{.items[0].metadata.name}') -- curl -s localhost:8080/metrics | grep error_rate | awk '{print $2}') if [ \"$ERROR_RATE\" -lt \"0.05\" ]; then echo \"Canary deployment successful. Increasing traffic...\" # 5. 트래픽 증가 (25%) kubectl scale deployment my-app-canary --replicas=2 kubectl scale deployment my-app-stable --replicas=6 sleep $MONITORING_DURATION # 6. 완전 전환 kubectl scale deployment my-app-canary --replicas=10 kubectl scale deployment my-app-stable --replicas=0 echo \"Canary deployment completed successfully!\" else echo \"High error rate detected. Rolling back...\" kubectl scale deployment my-app-canary --replicas=0 kubectl scale deployment my-app-stable --replicas=10 echo \"Rollback completed.\" fi . ",
+    "url": "/docs/deploy/canary.html#%EC%9E%90%EB%8F%99%ED%99%94%EB%90%9C-canary-%EB%B0%B0%ED%8F%AC",
+    
+    "relUrl": "/docs/deploy/canary.html#자동화된-canary-배포"
+  },"23": {
+    "doc": "Canary Deployment",
+    "title": "베스트 프랙티스",
+    "content": ". | 점진적 트래픽 증가: 5% → 25% → 50% → 75% → 100% | 충분한 모니터링: 각 단계별로 충분한 시간 모니터링 | 자동 롤백: 오류율 임계값 설정으로 자동 롤백 | 메트릭 정의: 성공률, 응답시간, 오류율 등 핵심 메트릭 정의 | 사용자 세션: 사용자별 일관된 버전 제공 | . ",
+    "url": "/docs/deploy/canary.html#%EB%B2%A0%EC%8A%A4%ED%8A%B8-%ED%94%84%EB%9E%99%ED%8B%B0%EC%8A%A4",
+    
+    "relUrl": "/docs/deploy/canary.html#베스트-프랙티스"
+  },"24": {
+    "doc": "Canary Deployment",
+    "title": "사용 시나리오",
+    "content": ". | ✅ 중요한 프로덕션 서비스: 위험을 최소화하고 싶은 경우 | ✅ 새로운 기능 배포: 사용자 반응을 확인하고 싶은 경우 | ✅ 성능 테스트: 실제 트래픽으로 성능 검증 | ✅ A/B 테스트: 사용자 경험 비교 분석 | . Canary 배포는 위험을 최소화하면서 새로운 버전을 안전하게 배포할 수 있는 현대적인 배포 전략입니다. ",
+    "url": "/docs/deploy/canary.html#%EC%82%AC%EC%9A%A9-%EC%8B%9C%EB%82%98%EB%A6%AC%EC%98%A4",
+    
+    "relUrl": "/docs/deploy/canary.html#사용-시나리오"
+  },"25": {
+    "doc": "Canary Deployment",
+    "title": "Canary Deployment",
+    "content": " ",
+    "url": "/docs/deploy/canary.html",
+    
+    "relUrl": "/docs/deploy/canary.html"
+  },"26": {
     "doc": "How-to-use-Helm",
     "title": "Helm grammer",
     "content": "apiVersion: apps/v1 kind: Deployment metadata: name: nginx namespace: { { .Release.namepsace } } spec: selector: matchLabels: app: nginx replicas: 2 # tells deployment to run 2 pods matching the template template: metadata: labels: app: nginx spec: containers: - name: nginx image: nginx:1.14.2 ports: - containerPort: 80 . ",
     "url": "/docs/helm/command.html#helm-grammer",
     
     "relUrl": "/docs/helm/command.html#helm-grammer"
-  },"7": {
+  },"27": {
     "doc": "How-to-use-Helm",
     "title": "Helm 주요 command",
     "content": "helm install --upgrade -n {namespace} {chart name} {directory} -f {file name} # If there is a helm chart, upgrade it, and if not, install it. helm ls -n {namespace} # Check the status with the helm list helm uninstall -n {namespace} {chart name} # Remove helm chart in namespace helm template -n {namespace} {chart name} {directory} -f {value file} # Chech the chart grammer helm install --dry-run -n {namespace} {chart name} {directory} -f {file name} # Run a mock helm install . ",
     "url": "/docs/helm/command.html#helm-%EC%A3%BC%EC%9A%94-command",
     
     "relUrl": "/docs/helm/command.html#helm-주요-command"
-  },"8": {
+  },"28": {
     "doc": "How-to-use-Helm",
     "title": "How-to-use-Helm",
     "content": " ",
     "url": "/docs/helm/command.html",
     
     "relUrl": "/docs/helm/command.html"
-  },"9": {
+  },"29": {
     "doc": "How to use kubectl",
     "title": "목차",
-    "content": ". | What is kubectl? | How to use kubectl . | Useful setting . | 자동완성 설정 | 별칭(Alias) 설정 | kubectl 플러그인 설치 | 환경 변수 설정 | kubectl 설정 파일 | 유용한 kubectl 플러그인들 | 프로덕션 환경 설정 | . | Primary command . | Show resource list . | 기본 조회 명령어 | -o wide 옵션 | 리소스 타입별 조회 | . | Edit resource | Scale resource . | 스케일 가능한 리소스 종류 | 스케일링 명령어 예시 | . | . | Additional useful commands . | 리소스 상세 정보 조회 | 로그 조회 | 파드 내부 접속 | 포트 포워딩 | 리소스 삭제 | YAML 파일로 리소스 관리 | 네임스페이스 관리 | 컨텍스트 관리 | 디버깅 도구 | . | . | . ",
+    "content": ". | What is kubectl? | How to use kubectl . | Useful setting . | 자동완성 설정 | 별칭(Alias) 설정 | kubectl 플러그인 설치 | 환경 변수 설정 | kubectl 설정 파일 | 유용한 kubectl 플러그인들 | 프로덕션 환경 설정 | . | Primary command . | Show resource list . | 기본 조회 명령어 | -o wide 옵션 | 리소스 타입별 조회 | . | Edit resource | Scale resource . | 스케일 가능한 리소스 종류 | 스케일링 명령어 예시 | . | . | Additional useful commands . | 리소스 상세 정보 조회 | 로그 조회 | 파드 내부 접속 | 포트 포워딩 | 파일 복사 | 배포 관리 | 리소스 삭제 | YAML 파일로 리소스 관리 | 네임스페이스 관리 | 컨텍스트 관리 | 디버깅 도구 | . | . | . ",
     "url": "/docs/k8s/command.html#%EB%AA%A9%EC%B0%A8",
     
     "relUrl": "/docs/k8s/command.html#목차"
-  },"10": {
+  },"30": {
     "doc": "How to use kubectl",
     "title": "What is kubectl?",
     "content": ". | kubectl은 Kubernetes 클러스터와 상호작용하기 위한 명령줄 도구입니다. | 클러스터의 리소스를 관리하고, 애플리케이션을 배포하며, 문제를 진단하는 데 사용됩니다. | . ",
     "url": "/docs/k8s/command.html#what-is-kubectl",
     
     "relUrl": "/docs/k8s/command.html#what-is-kubectl"
-  },"11": {
+  },"31": {
     "doc": "How to use kubectl",
     "title": "How to use kubectl",
     "content": " ",
     "url": "/docs/k8s/command.html",
     
     "relUrl": "/docs/k8s/command.html"
-  },"12": {
+  },"32": {
     "doc": "How to use kubectl",
     "title": "Useful setting",
     "content": "kubectl을 더 효율적으로 사용하기 위한 유용한 설정들입니다. 자동완성 설정 . Bash 자동완성 . # kubectl 자동완성 스크립트 추가 echo 'source &lt;(kubectl completion bash)' &gt;&gt;~/.bashrc # 현재 세션에 적용 source ~/.bashrc # 또는 직접 실행 source &lt;(kubectl completion bash) . kubectl 설정 파일 (~/.kube/config) . apiVersion: v1 kind: Config clusters: - name: my-cluster cluster: server: https://kubernetes.example.com certificate-authority-data: &lt;base64-encoded-ca-cert&gt; contexts: - name: my-context context: cluster: my-cluster user: my-user namespace: default current-context: my-context users: - name: my-user user: client-certificate-data: &lt;base64-encoded-client-cert&gt; client-key-data: &lt;base64-encoded-client-key&gt; . 프로덕션 환경 설정 . # 네임스페이스별 컨텍스트 설정 kubectl config set-context --current --namespace=production # 리소스 제한 확인 kubectl top nodes kubectl top pods # 클러스터 상태 확인 kubectl get componentstatuses kubectl get nodes -o wide . ",
     "url": "/docs/k8s/command.html#useful-setting",
     
     "relUrl": "/docs/k8s/command.html#useful-setting"
-  },"13": {
+  },"33": {
     "doc": "How to use kubectl",
     "title": "Primary command",
     "content": "Show resource list . | 리소스 목록을 조회하는 기본 명령어들입니다. | . 기본 조회 명령어 . # 모든 네임스페이스의 파드 조회 kubectl get pods --all-namespaces # 특정 네임스페이스의 파드 조회 kubectl get pods -n default # 모든 리소스 타입 조회 kubectl get all . -o wide 옵션 . -o wide 옵션을 사용하면 더 자세한 정보를 볼 수 있습니다. # 파드의 상세 정보 조회 (IP, 노드 정보 포함) kubectl get pods -o wide # 서비스의 상세 정보 조회 (클러스터 IP, 외부 IP 포함) kubectl get services -o wide # 디플로이먼트의 상세 정보 조회 kubectl get deployments -o wide . 리소스 타입별 조회 . # 디플로이먼트 조회 kubectl get deploy # 서비스 조회 # port 조회 kubectl get service # StatefulSet 조회 kubectl get sts # 파드 조회 kubectl get pod # ConfigMap 조회 kubectl get configmap # Secret 조회 kubectl get secret # Role 조회 kubectl get role # ServiceAccount 조회 kubectl get serviceaccount # RoleBinding 조회 kubectl get rolebinding # PersistentVolumeClaim 조회 kubectl get pvc # PersistentVolume 조회 kubectl get pv . Edit resource . 리소스를 직접 편집할 수 있습니다. # 디플로이먼트 편집 kubectl edit deployment my-app # 서비스 편집 kubectl edit service my-service # ConfigMap 편집 kubectl edit configmap my-config # Secret 편집 kubectl edit secret my-secret . 편집기가 열리면 YAML 형식으로 리소스를 수정할 수 있습니다. 저장하면 변경사항이 즉시 클러스터에 적용됩니다. Scale resource . 리소스의 복제본 수를 조정할 수 있습니다. 스케일 가능한 리소스 종류 . | Deployment: 가장 일반적인 스케일링 대상 | StatefulSet: 상태를 가진 애플리케이션 | ReplicaSet: 디플로이먼트의 하위 리소스 | HorizontalPodAutoscaler: 자동 스케일링 | . 스케일링 명령어 예시 . # 디플로이먼트 스케일링 (3개 복제본으로 확장) kubectl scale deployment my-app --replicas=3 # StatefulSet 스케일링 (5개 복제본으로 확장) kubectl scale statefulset my-stateful-app --replicas=5 # 현재 복제본 수 확인 kubectl get deployment my-app -o jsonpath='{.spec.replicas}' # 실시간으로 복제본 수 모니터링 kubectl get pods -l app=my-app -w . ",
     "url": "/docs/k8s/command.html#primary-command",
     
     "relUrl": "/docs/k8s/command.html#primary-command"
-  },"14": {
+  },"34": {
     "doc": "How to use kubectl",
     "title": "Additional useful commands",
-    "content": "리소스 상세 정보 조회 . # 파드의 상세 정보 조회 kubectl describe pod my-pod # 디플로이먼트의 상세 정보 조회 kubectl describe deployment my-app # 서비스의 상세 정보 조회 kubectl describe service my-service . 로그 조회 . # 파드 로그 조회 kubectl logs my-pod # 실시간 로그 조회 (follow) kubectl logs -f my-pod # 이전 컨테이너 로그 조회 kubectl logs my-pod --previous # 특정 컨테이너 로그 조회 (멀티 컨테이너 파드) kubectl logs my-pod -c container-name . 파드 내부 접속 . # 파드 내부로 쉘 접속 kubectl exec -it my-pod -- /bin/bash # 특정 컨테이너로 접속 kubectl exec -it my-pod -c container-name -- /bin/bash # 명령어 실행 kubectl exec my-pod -- ls /app . 포트 포워딩 . # 로컬 포트를 파드 포트로 포워딩 kubectl port-forward my-pod 8080:80 # 서비스 포트 포워딩 kubectl port-forward service/my-service 8080:80 . 리소스 삭제 . # 파드 삭제 kubectl delete pod my-pod # 디플로이먼트 삭제 kubectl delete deployment my-app # 네임스페이스 삭제 (모든 리소스 포함) kubectl delete namespace my-namespace # 라벨로 리소스 삭제 kubectl delete pods -l app=my-app . YAML 파일로 리소스 관리 . # YAML 파일로 리소스 생성 kubectl apply -f deployment.yaml # 여러 파일 적용 kubectl apply -f k8s/ # 리소스 삭제 kubectl delete -f deployment.yaml # YAML 형식으로 출력 kubectl get pod my-pod -o yaml . 네임스페이스 관리 . # 네임스페이스 생성 kubectl create namespace my-namespace # 네임스페이스 목록 조회 kubectl get namespaces # 특정 네임스페이스의 모든 리소스 조회 kubectl get all -n my-namespace . 컨텍스트 관리 . # 현재 컨텍스트 확인 kubectl config current-context # 컨텍스트 목록 조회 kubectl config get-contexts # 컨텍스트 변경 kubectl config use-context my-cluster # 클러스터 목록 조회 kubectl config get-clusters . 디버깅 도구 . # 파드 이벤트 조회 kubectl get events --sort-by='.lastTimestamp' # 노드 정보 조회 kubectl describe node my-node # 클러스터 정보 조회 kubectl cluster-info # API 리소스 목록 조회 kubectl api-resources . 이러한 명령어들을 조합하여 Kubernetes 클러스터를 효과적으로 관리할 수 있습니다. ",
+    "content": "리소스 상세 정보 조회 . # 파드의 상세 정보 조회 kubectl describe pod my-pod # 디플로이먼트의 상세 정보 조회 kubectl describe deployment my-app # 서비스의 상세 정보 조회 kubectl describe service my-service . 로그 조회 . # 파드 로그 조회 kubectl logs my-pod # 실시간 로그 조회 (follow) kubectl logs -f my-pod # 이전 컨테이너 로그 조회 kubectl logs my-pod --previous # 특정 컨테이너 로그 조회 (멀티 컨테이너 파드) kubectl logs my-pod -c container-name . 파드 내부 접속 . # 파드 내부로 쉘 접속 kubectl exec -it my-pod -- /bin/bash # 특정 컨테이너로 접속 kubectl exec -it my-pod -c container-name -- /bin/bash # 명령어 실행 kubectl exec my-pod -- ls /app . 포트 포워딩 . # 로컬 포트를 파드 포트로 포워딩 kubectl port-forward my-pod 8080:80 # 서비스 포트 포워딩 kubectl port-forward service/my-service 8080:80 . 파일 복사 . 로컬 시스템과 파드 간에 파일을 복사할 수 있습니다. 기본 파일 복사 . # 로컬 파일을 파드로 복사 kubectl cp /local/path/file.txt my-pod:/remote/path/ # 파드 파일을 로컬로 복사 kubectl cp my-pod:/remote/path/file.txt /local/path/ # 특정 컨테이너에 파일 복사 (멀티 컨테이너 파드) kubectl cp /local/path/file.txt my-pod:/remote/path/ -c container-name . 디렉토리 복사 . # 로컬 디렉토리를 파드로 복사 kubectl cp /local/directory/ my-pod:/remote/directory/ # 파드 디렉토리를 로컬로 복사 kubectl cp my-pod:/remote/directory/ /local/directory/ . 네임스페이스 지정 . # 특정 네임스페이스의 파드에 파일 복사 kubectl cp /local/file.txt my-pod:/remote/ -n my-namespace # 다른 네임스페이스의 파드에서 파일 복사 kubectl cp my-namespace/my-pod:/remote/file.txt /local/ . 실용적인 예시 . # 설정 파일을 파드로 복사 kubectl cp -n namespace config.yaml pod-name:/app/config/ # 로그 파일을 로컬로 복사 kubectl cp -n namespace pod-name:/var/log/app.log ./logs/ # 데이터베이스 백업 파일 복사 kubectl cp -n namespace pod-name:/backup/db.sql ./backup/ # 웹 애플리케이션 정적 파일 복사 kubectl cp -n namespace ./static/ pod-name:/app/public/ . 주의사항 . | 권한: 파드에 파일을 복사할 때 적절한 권한이 필요합니다 | 용량: 대용량 파일 복사 시 시간이 오래 걸릴 수 있습니다 | 네트워크: 클러스터 네트워크 상태에 따라 속도가 달라집니다 | 보안: 민감한 파일 복사 시 주의가 필요합니다 | . 배포 관리 . kubectl rollout 명령어는 Deployment, StatefulSet, DaemonSet의 배포 상태를 관리하는 데 사용됩니다. 왜 rollout을 사용하는가? . | 무중단 배포: 새로운 버전으로 업데이트하면서 서비스 중단 최소화 | 롤백 기능: 문제 발생 시 이전 버전으로 빠른 복구 | 배포 상태 모니터링: 실시간으로 배포 진행 상황 확인 | 배포 전략: Rolling, Blue/Green, Canary 등 다양한 배포 방식 지원 | . 배포 상태 확인 . # 배포 상태 조회 kubectl rollout status deployment/my-app # 배포 히스토리 조회 kubectl rollout history deployment/my-app # 특정 리비전의 상세 정보 kubectl rollout history deployment/my-app --revision=2 . 배포 일시정지/재개 . # 배포 일시정지 (새로운 ReplicaSet 생성을 중단) kubectl rollout pause deployment/my-app # 배포 재개 kubectl rollout resume deployment/my-app . 롤백 (이전 버전으로 되돌리기) . # 이전 버전으로 롤백 kubectl rollout undo deployment/my-app # 특정 리비전으로 롤백 kubectl rollout undo deployment/my-app --to-revision=2 # 롤백 상태 확인 kubectl rollout status deployment/my-app . 실시간 모니터링 . # 배포 진행 상황 실시간 모니터링 kubectl rollout status deployment/my-app -w # 파드 상태 실시간 모니터링 kubectl get pods -l app=my-app -w . 배포 전략별 예시 . Rolling Update (기본) . # Rolling Update로 배포 kubectl set image deployment/my-app nginx=nginx:1.21 # 배포 설정 확인 kubectl get deployment my-app -o yaml | grep -A 10 strategy . Blue/Green 배포 . # 새 버전 배포 kubectl apply -f new-version.yaml # 트래픽 전환 kubectl patch service my-service -p '{\"spec\":{\"selector\":{\"version\":\"v2\"}}}' # 이전 버전 정리 kubectl delete deployment my-app-v1 . Canary 배포 . # Canary 버전 배포 (10% 트래픽) kubectl apply -f canary-deployment.yaml # 트래픽 비율 조정 kubectl patch service my-service -p '{\"spec\":{\"selector\":{\"version\":\"canary\"}}}' . 고급 배포 관리 . # 배포 설정 편집 kubectl edit deployment/my-app # 이미지 업데이트 kubectl set image deployment/my-app container-name=new-image:tag # 환경 변수 업데이트 kubectl set env deployment/my-app ENV_VAR=new-value # 리소스 제한 업데이트 kubectl set resources deployment/my-app --requests=cpu=100m,memory=128Mi --limits=cpu=200m,memory=256Mi . 문제 해결 . # 배포 실패 시 디버깅 kubectl describe deployment/my-app # 이벤트 확인 kubectl get events --sort-by='.lastTimestamp' # 파드 로그 확인 kubectl logs -l app=my-app --tail=100 # 강제 롤백 (비상시) kubectl rollout undo deployment/my-app --force . 배포 모니터링 도구 . # 배포 상태 요약 kubectl get deployments -o wide # ReplicaSet 상태 확인 kubectl get rs -l app=my-app # 파드 상태 확인 kubectl get pods -l app=my-app # 서비스 엔드포인트 확인 kubectl get endpoints my-service . 베스트 프랙티스 . | 배포 전 테스트: 스테이징 환경에서 충분한 테스트 | 점진적 배포: 한 번에 모든 인스턴스를 업데이트하지 않기 | 모니터링: 배포 후 메트릭과 로그를 주의 깊게 관찰 | 롤백 계획: 문제 발생 시 빠른 롤백 전략 수립 | 문서화: 배포 히스토리와 변경 사항 기록 | . 리소스 삭제 . # 파드 삭제 kubectl delete pod my-pod # 디플로이먼트 삭제 kubectl delete deployment my-app # 네임스페이스 삭제 (모든 리소스 포함) kubectl delete namespace my-namespace # 라벨로 리소스 삭제 kubectl delete pods -l app=my-app . YAML 파일로 리소스 관리 . # YAML 파일로 리소스 생성 kubectl apply -f deployment.yaml # 여러 파일 적용 kubectl apply -f k8s/ # 리소스 삭제 kubectl delete -f deployment.yaml # YAML 형식으로 출력 kubectl get pod my-pod -o yaml . 네임스페이스 관리 . # 네임스페이스 생성 kubectl create namespace my-namespace # 네임스페이스 목록 조회 kubectl get namespaces # 특정 네임스페이스의 모든 리소스 조회 kubectl get all -n my-namespace . 컨텍스트 관리 . # 현재 컨텍스트 확인 kubectl config current-context # 컨텍스트 목록 조회 kubectl config get-contexts # 컨텍스트 변경 kubectl config use-context my-cluster # 클러스터 목록 조회 kubectl config get-clusters . 디버깅 도구 . # 파드 이벤트 조회 kubectl get events --sort-by='.lastTimestamp' # 노드 정보 조회 kubectl describe node my-node # 클러스터 정보 조회 kubectl cluster-info # API 리소스 목록 조회 kubectl api-resources . 이러한 명령어들을 조합하여 Kubernetes 클러스터를 효과적으로 관리할 수 있습니다. ",
     "url": "/docs/k8s/command.html#additional-useful-commands",
     
     "relUrl": "/docs/k8s/command.html#additional-useful-commands"
-  },"15": {
+  },"35": {
     "doc": "git-command",
     "title": "Git 구성",
     "content": ". | 작업 디렉토리(working directory) . | 실제 파일들로 이루어져 있음 | . | 인덱스(Index) . | 준비 영역(staging area)의 역할 | . | HEAD . | 최종 확정본(commit) | . | . ",
     "url": "/docs/git/command.html#git-%EA%B5%AC%EC%84%B1",
     
     "relUrl": "/docs/git/command.html#git-구성"
-  },"16": {
+  },"36": {
     "doc": "git-command",
     "title": "Branch",
     "content": " ",
     "url": "/docs/git/command.html#branch",
     
     "relUrl": "/docs/git/command.html#branch"
-  },"17": {
+  },"37": {
     "doc": "git-command",
     "title": "branch는 안전하게 격리된 상태에서 작업을 할 때 사용",
     "content": ". | 저장소를 만들면 기본이 master 브랜치이다. | 다른 branch를 이용해서 개발을 진행하고, master 브랜로 돌아와 merge 한다. | . ",
     "url": "/docs/git/command.html#branch%EB%8A%94-%EC%95%88%EC%A0%84%ED%95%98%EA%B2%8C-%EA%B2%A9%EB%A6%AC%EB%90%9C-%EC%83%81%ED%83%9C%EC%97%90%EC%84%9C-%EC%9E%91%EC%97%85%EC%9D%84-%ED%95%A0-%EB%95%8C-%EC%82%AC%EC%9A%A9",
     
     "relUrl": "/docs/git/command.html#branch는-안전하게-격리된-상태에서-작업을-할-때-사용"
-  },"18": {
+  },"38": {
     "doc": "git-command",
     "title": "Git 명령어",
     "content": ". | 원격 저장소 추가 | 기존에 있던 원격 저장를 추가할 때 | . git remote add origin &lt;원격 서버 주소&gt; . ",
     "url": "/docs/git/command.html#git-%EB%AA%85%EB%A0%B9%EC%96%B4",
     
     "relUrl": "/docs/git/command.html#git-명령어"
-  },"19": {
+  },"39": {
     "doc": "git-command",
     "title": "새로운 저장소 만들기",
     "content": ". | git init : 현재 폴더를 git 저장소로 만들기 | 로컬 저장소를 복제(clone) 하기 | . git clone /로컬/저장소/경로 . ",
     "url": "/docs/git/command.html#%EC%83%88%EB%A1%9C%EC%9A%B4-%EC%A0%80%EC%9E%A5%EC%86%8C-%EB%A7%8C%EB%93%A4%EA%B8%B0",
     
     "relUrl": "/docs/git/command.html#새로운-저장소-만들기"
-  },"20": {
+  },"40": {
     "doc": "git-command",
     "title": "원격 서버의 저장소 복제",
     "content": "git clone 사용자명@호스트:/원격/저장소/경로 git clone https://githugib.com/[USERNAME]/[REPOSITORY_NAME].git . ",
     "url": "/docs/git/command.html#%EC%9B%90%EA%B2%A9-%EC%84%9C%EB%B2%84%EC%9D%98-%EC%A0%80%EC%9E%A5%EC%86%8C-%EB%B3%B5%EC%A0%9C",
     
     "relUrl": "/docs/git/command.html#원격-서버의-저장소-복제"
-  },"21": {
+  },"41": {
     "doc": "git-command",
     "title": "git checkout",
     "content": "git checkout branchName git checkout -b &lt;branch name&gt; //브랜치 생성 및 이 git checkout -d &lt;branch name&gt; //delete branch git push origin &lt;branch namem&gt; //원격 저장소로 전송 전에는 다른 사용자들이 사용 불가 . ",
     "url": "/docs/git/command.html#git-checkout",
     
     "relUrl": "/docs/git/command.html#git-checkout"
-  },"22": {
+  },"42": {
     "doc": "git-command",
     "title": "git add",
     "content": ". | 변경된 파일을 인덱스(staging area)에 추가 | . git add . =&gt; 해당 폴더의 모든 파일을 더하겠다 git add file_name =&gt; 해당 파일만 더하겠다 git add -i //파일을 추가할 때 대화식으로 추가하 . ",
     "url": "/docs/git/command.html#git-add",
     
     "relUrl": "/docs/git/command.html#git-add"
-  },"23": {
+  },"43": {
     "doc": "git-command",
     "title": "git commit",
     "content": ". | 실제 변경 내용을 확정 | HEAD에 반영 | 원격 저장소에는 반영이 안된다. | git push를 해야 remote에 반영된다. | . ",
     "url": "/docs/git/command.html#git-commit",
     
     "relUrl": "/docs/git/command.html#git-commit"
-  },"24": {
+  },"44": {
     "doc": "git-command",
     "title": "git commit 뜻",
     "content": ". | 인덱스에 추가된 변경 내용 및 새로 생성한 파일은 남는다. git checkout -- &lt;파일 이름&gt; . | . git commit -m \"commit 내용\" git commit # 이 명령어만 치면 변겨 사항을 확인하는 상태로 작성할 수 있다. ",
     "url": "/docs/git/command.html#git-commit-%EB%9C%BB",
     
     "relUrl": "/docs/git/command.html#git-commit-뜻"
-  },"25": {
+  },"45": {
     "doc": "git-command",
     "title": "git pull",
     "content": ". | 로컬 저장소를 원격 저장소와 동기화 | git pull = git fetch &amp;&amp; git merge . | 변경사항을 가져오고 현재 브랜치를 remote 브랜치로 업데이트한다. | . | . git pull . ",
     "url": "/docs/git/command.html#git-pull",
     
     "relUrl": "/docs/git/command.html#git-pull"
-  },"26": {
+  },"46": {
     "doc": "git-command",
     "title": "git push",
     "content": ". | HEAD의 변경 내역을 서버로 올린다. git push origin master # upstream을생성하지 않았을 때 사용 . | . ",
     "url": "/docs/git/command.html#git-push",
     
     "relUrl": "/docs/git/command.html#git-push"
-  },"27": {
+  },"47": {
     "doc": "git-command",
     "title": "git pull request",
     "content": ". | merge를 해도 되는지를 요청 git pull request =&gt; 해당 변경사항에 대한 merge를 요청 . | . ",
     "url": "/docs/git/command.html#git-pull-request",
     
     "relUrl": "/docs/git/command.html#git-pull-request"
-  },"28": {
+  },"48": {
     "doc": "git-command",
     "title": "git merge",
     "content": ". | 소스 파일을 병합 git merge =&gt; 변경 사항들을 병합 git merge &lt;branch name&gt; //브랜치에 있는 변경 내용을 현재 브랜치에 병합(현재 branch is a branch name is master) # ex) Current branch is dev git merge master # master 내용을 dev에 합친다. | . ",
     "url": "/docs/git/command.html#git-merge",
     
     "relUrl": "/docs/git/command.html#git-merge"
-  },"29": {
+  },"49": {
     "doc": "git-command",
     "title": "reset 그림",
     "content": ". ",
     "url": "/docs/git/command.html#reset-%EA%B7%B8%EB%A6%BC",
     
     "relUrl": "/docs/git/command.html#reset-그림"
-  },"30": {
+  },"50": {
     "doc": "git-command",
     "title": "git status",
     "content": ". | 현재 폴더 상태를 나타낸다. git reset --hard HEAD : HEAD로 되돌리기 | . git reset --merge : branch|merging 풀기 . ",
     "url": "/docs/git/command.html#git-status",
     
     "relUrl": "/docs/git/command.html#git-status"
-  },"31": {
+  },"51": {
     "doc": "git-command",
     "title": "Git Conflict",
     "content": ". | 충돌 발생 시 충돌 부분을 수정해서 merge git diff &lt;원래 브랜치&gt; &lt;비교 대상 브랜치&gt; //변경사항 비 git fetch --all git reset --hard origin/master git pull origin/master . | . ",
     "url": "/docs/git/command.html#git-conflict",
     
     "relUrl": "/docs/git/command.html#git-conflict"
-  },"32": {
+  },"52": {
     "doc": "git-command",
     "title": "git log",
     "content": ". | 로컬 변경 내용 되돌리기 | . ",
     "url": "/docs/git/command.html#git-log",
     
     "relUrl": "/docs/git/command.html#git-log"
-  },"33": {
+  },"53": {
     "doc": "git-command",
     "title": "Rebase",
     "content": "브랜치 업데이트 . git rebase staging . ",
     "url": "/docs/git/command.html#rebase",
     
     "relUrl": "/docs/git/command.html#rebase"
-  },"34": {
+  },"54": {
     "doc": "git-command",
     "title": "git-command",
     "content": " ",
     "url": "/docs/git/command.html",
     
     "relUrl": "/docs/git/command.html"
-  },"35": {
+  },"55": {
     "doc": "What-is-Helm",
     "title": "Helm이란?",
     "content": ". | Kubernetes 환경에서 여러 서비스를 효율적으로 배포·관리할 수 있도록 도와주는 패키지 매니저입니다. | Helm Chart를 통해 서비스별 설정과 리소스를 템플릿화하여 관리합니다. | . ",
     "url": "/docs/helm/concept.html#helm%EC%9D%B4%EB%9E%80",
     
     "relUrl": "/docs/helm/concept.html#helm이란"
-  },"36": {
+  },"56": {
     "doc": "What-is-Helm",
     "title": "Helm 사용 시 장점",
     "content": ". | 여러 서비스를 효율적으로 배포, 관리할 수 있다. | Git을 통해 버전 관리가 용이하다. | . ",
     "url": "/docs/helm/concept.html#helm-%EC%82%AC%EC%9A%A9-%EC%8B%9C-%EC%9E%A5%EC%A0%90",
     
     "relUrl": "/docs/helm/concept.html#helm-사용-시-장점"
-  },"37": {
+  },"57": {
     "doc": "What-is-Helm",
     "title": "Helm Chart 구조",
     "content": ". ├── Chart.yaml # chart 버전 및 정보 ├── templates/ # 실제 yaml file 들이 들어가 있다. └── values.yaml # 변수들 . ",
     "url": "/docs/helm/concept.html#helm-chart-%EA%B5%AC%EC%A1%B0",
     
     "relUrl": "/docs/helm/concept.html#helm-chart-구조"
-  },"38": {
+  },"58": {
     "doc": "What-is-Helm",
     "title": "What-is-Helm",
     "content": " ",
     "url": "/docs/helm/concept.html",
     
     "relUrl": "/docs/helm/concept.html"
-  },"39": {
+  },"59": {
     "doc": "What-is-Kubernetes",
     "title": "Kubernetes란?",
     "content": "Kubernetes(쿠버네티스)는 컨테이너화된 애플리케이션의 배포, 확장, 관리를 자동화하는 오픈소스 오케스트레이션 플랫폼입니다. Google에서 개발했으며, 현재는 Cloud Native Computing Foundation(CNCF)에서 관리하고 있습니다. ",
     "url": "/docs/k8s/concept.html#kubernetes%EB%9E%80",
     
     "relUrl": "/docs/k8s/concept.html#kubernetes란"
-  },"40": {
+  },"60": {
     "doc": "What-is-Kubernetes",
     "title": "핵심 특징",
     "content": ". | 자동화된 배포: 애플리케이션을 원하는 상태로 자동 배포 | 자동 스케일링: 트래픽에 따라 자동으로 확장/축소 | 자동 복구: 장애 발생 시 자동으로 복구 | 로드 밸런싱: 트래픽을 여러 인스턴스에 분산 | 서비스 디스커버리: 마이크로서비스 간 통신 자동화 | . ",
     "url": "/docs/k8s/concept.html#%ED%95%B5%EC%8B%AC-%ED%8A%B9%EC%A7%95",
     
     "relUrl": "/docs/k8s/concept.html#핵심-특징"
-  },"41": {
+  },"61": {
     "doc": "What-is-Kubernetes",
     "title": "kubernetes 쓰는 이유",
     "content": " ",
     "url": "/docs/k8s/concept.html#kubernetes-%EC%93%B0%EB%8A%94-%EC%9D%B4%EC%9C%A0",
     
     "relUrl": "/docs/k8s/concept.html#kubernetes-쓰는-이유"
-  },"42": {
+  },"62": {
     "doc": "What-is-Kubernetes",
     "title": "1. 컨테이너 오케스트레이션",
     "content": ". | 수백, 수천 개의 컨테이너를 효율적으로 관리 | 복잡한 마이크로서비스 아키텍처 지원 | . ",
     "url": "/docs/k8s/concept.html#1-%EC%BB%A8%ED%85%8C%EC%9D%B4%EB%84%88-%EC%98%A4%EC%BC%80%EC%8A%A4%ED%8A%B8%EB%A0%88%EC%9D%B4%EC%85%98",
     
     "relUrl": "/docs/k8s/concept.html#1-컨테이너-오케스트레이션"
-  },"43": {
+  },"63": {
     "doc": "What-is-Kubernetes",
     "title": "2. 높은 가용성",
     "content": ". | 노드 장애 시 자동으로 다른 노드로 이동 | 무중단 배포(Zero-downtime deployment) 지원 | . ",
     "url": "/docs/k8s/concept.html#2-%EB%86%92%EC%9D%80-%EA%B0%80%EC%9A%A9%EC%84%B1",
     
     "relUrl": "/docs/k8s/concept.html#2-높은-가용성"
-  },"44": {
+  },"64": {
     "doc": "What-is-Kubernetes",
     "title": "3. 자동 스케일링",
     "content": ". | CPU, 메모리 사용량에 따른 자동 확장 | 수평적 확장(Horizontal scaling) 지원 | . ",
     "url": "/docs/k8s/concept.html#3-%EC%9E%90%EB%8F%99-%EC%8A%A4%EC%BC%80%EC%9D%BC%EB%A7%81",
     
     "relUrl": "/docs/k8s/concept.html#3-자동-스케일링"
-  },"45": {
+  },"65": {
     "doc": "What-is-Kubernetes",
     "title": "4. 클라우드 네이티브",
     "content": ". | 클라우드 환경에 최적화 | 멀티 클라우드 지원 | . ",
     "url": "/docs/k8s/concept.html#4-%ED%81%B4%EB%9D%BC%EC%9A%B0%EB%93%9C-%EB%84%A4%EC%9D%B4%ED%8B%B0%EB%B8%8C",
     
     "relUrl": "/docs/k8s/concept.html#4-클라우드-네이티브"
-  },"46": {
+  },"66": {
     "doc": "What-is-Kubernetes",
     "title": "5. 생태계",
     "content": ". | 풍부한 도구와 플러그인 | 대규모 커뮤니티 지원 | . ",
     "url": "/docs/k8s/concept.html#5-%EC%83%9D%ED%83%9C%EA%B3%84",
     
     "relUrl": "/docs/k8s/concept.html#5-생태계"
-  },"47": {
+  },"67": {
     "doc": "What-is-Kubernetes",
     "title": "kubernetes를 쓰면 좋은 상황",
     "content": " ",
     "url": "/docs/k8s/concept.html#kubernetes%EB%A5%BC-%EC%93%B0%EB%A9%B4-%EC%A2%8B%EC%9D%80-%EC%83%81%ED%99%A9",
     
     "relUrl": "/docs/k8s/concept.html#kubernetes를-쓰면-좋은-상황"
-  },"48": {
+  },"68": {
     "doc": "What-is-Kubernetes",
     "title": "✅ Kubernetes가 적합한 상황",
     "content": "1. 대규모 마이크로서비스 . | 수십 개 이상의 서비스 | 복잡한 서비스 간 의존성 | 높은 트래픽 처리 필요 | . 2. 클라우드 네이티브 애플리케이션 . | 컨테이너 기반 아키텍처 | 자동 스케일링 필요 | 멀티 클라우드 환경 | . 3. 엔터프라이즈 환경 . | 높은 가용성 요구 | 복잡한 배포 전략 | 보안 및 규정 준수 | . 4. DevOps 문화 . | CI/CD 파이프라인 | 자동화된 운영 | 모니터링 및 로깅 | . ",
     "url": "/docs/k8s/concept.html#-kubernetes%EA%B0%80-%EC%A0%81%ED%95%A9%ED%95%9C-%EC%83%81%ED%99%A9",
     
     "relUrl": "/docs/k8s/concept.html#-kubernetes가-적합한-상황"
-  },"49": {
+  },"69": {
     "doc": "What-is-Kubernetes",
-    "title": "❌ Kubernetes가 과도한 상황",
+    "title": "Kubernetes가 과도한 상황",
     "content": "1. 단순한 애플리케이션 . | 단일 서비스 | 낮은 트래픽 | 간단한 배포 요구사항 | . 2. 소규모 팀 . | 학습 곡선이 높음 | 복잡한 운영 오버헤드 | 리소스 제약 | . 3. 레거시 시스템 . | 모놀리식 아키텍처 | 컨테이너화되지 않은 애플리케이션 | 급진적인 변화가 어려운 환경 | . ",
-    "url": "/docs/k8s/concept.html#-kubernetes%EA%B0%80-%EA%B3%BC%EB%8F%84%ED%95%9C-%EC%83%81%ED%99%A9",
+    "url": "/docs/k8s/concept.html#kubernetes%EA%B0%80-%EA%B3%BC%EB%8F%84%ED%95%9C-%EC%83%81%ED%99%A9",
     
-    "relUrl": "/docs/k8s/concept.html#-kubernetes가-과도한-상황"
-  },"50": {
+    "relUrl": "/docs/k8s/concept.html#kubernetes가-과도한-상황"
+  },"70": {
     "doc": "What-is-Kubernetes",
     "title": "kubernetes architecture diagram",
     "content": " ",
     "url": "/docs/k8s/concept.html#kubernetes-architecture-diagram",
     
     "relUrl": "/docs/k8s/concept.html#kubernetes-architecture-diagram"
-  },"51": {
+  },"71": {
     "doc": "What-is-Kubernetes",
     "title": "전체 아키텍처",
-    "content": "graph TB subgraph \"Control Plane (Master Node)\" API[API Server] ETCD[(etcd)] Scheduler[Scheduler] Controller[Controller Manager] Cloud[Cloud Controller Manager] end subgraph \"Worker Nodes\" Kubelet1[Kubelet] Proxy1[kube-proxy] Container1[Container Runtime] Kubelet2[Kubelet] Proxy2[kube-proxy] Container2[Container Runtime] Kubelet3[Kubelet] Proxy3[kube-proxy] Container3[Container Runtime] end subgraph \"Applications\" Pod1[Pod 1] Pod2[Pod 2] Pod3[Pod 3] Pod4[Pod 4] end API --&gt; ETCD API --&gt; Scheduler API --&gt; Controller API --&gt; Cloud Scheduler --&gt; Kubelet1 Scheduler --&gt; Kubelet2 Scheduler --&gt; Kubelet3 Kubelet1 --&gt; Container1 Kubelet2 --&gt; Container2 Kubelet3 --&gt; Container3 Container1 --&gt; Pod1 Container1 --&gt; Pod2 Container2 --&gt; Pod3 Container3 --&gt; Pod4 Proxy1 --&gt; Pod1 Proxy1 --&gt; Pod2 Proxy2 --&gt; Pod3 Proxy3 --&gt; Pod4 ",
+    "content": "graph TB subgraph \"Control Plane (Master Node)\" API[\"API Server\"] ETCD[(etcd)] Scheduler[Scheduler] Controller[\"Controller Manager\"] Cloud[\"Cloud Controller Manager\"] end subgraph \"Worker Nodes\" Kubelet1[Kubelet] Proxy1[kube-proxy] Container1[\"Container Runtime\"] Kubelet2[Kubelet] Proxy2[kube-proxy] Container2[\"Container Runtime\"] Kubelet3[Kubelet] Proxy3[kube-proxy] Container3[\"Container Runtime\"] end subgraph \"Applications\" Pod1[\"Pod 1\"] Pod2[\"Pod 2\"] Pod3[\"Pod 3\"] Pod4[\"Pod 4\"] end API --&gt; ETCD API --&gt; Scheduler API --&gt; Controller API --&gt; Cloud Scheduler --&gt; Kubelet1 Scheduler --&gt; Kubelet2 Scheduler --&gt; Kubelet3 Kubelet1 --&gt; Container1 Kubelet2 --&gt; Container2 Kubelet3 --&gt; Container3 Container1 --&gt; Pod1 Container1 --&gt; Pod2 Container2 --&gt; Pod3 Container3 --&gt; Pod4 Proxy1 --&gt; Pod1 Proxy1 --&gt; Pod2 Proxy2 --&gt; Pod3 Proxy3 --&gt; Pod4 . ",
     "url": "/docs/k8s/concept.html#%EC%A0%84%EC%B2%B4-%EC%95%84%ED%82%A4%ED%85%8D%EC%B2%98",
     
     "relUrl": "/docs/k8s/concept.html#전체-아키텍처"
-  },"52": {
+  },"72": {
     "doc": "What-is-Kubernetes",
     "title": "컴포넌트 설명",
     "content": "Control Plane (마스터 노드) . | API Server: 클러스터의 통합 엔트리 포인트 | etcd: 클러스터 데이터 저장소 | Scheduler: Pod를 적절한 노드에 배치 | Controller Manager: 클러스터 상태 관리 | Cloud Controller Manager: 클라우드 제공자와 연동 | . Worker Nodes (워커 노드) . | Kubelet: 노드의 Pod 관리 | kube-proxy: 네트워크 통신 관리 | Container Runtime: 컨테이너 실행 (Docker, containerd 등) | . ",
     "url": "/docs/k8s/concept.html#%EC%BB%B4%ED%8F%AC%EB%84%8C%ED%8A%B8-%EC%84%A4%EB%AA%85",
     
     "relUrl": "/docs/k8s/concept.html#컴포넌트-설명"
-  },"53": {
+  },"73": {
     "doc": "What-is-Kubernetes",
     "title": "Pod 생명주기",
-    "content": "stateDiagram-v2 [*] --&gt; Pending Pending --&gt; Running : Pod 스케줄링 완료 Running --&gt; Succeeded : 작업 완료 Running --&gt; Failed : 오류 발생 Running --&gt; Unknown : 노드 통신 불가 Succeeded --&gt; [*] Failed --&gt; [*] Unknown --&gt; [*] ",
+    "content": "stateDiagram-v2 [*] --&gt; Pending Pending --&gt; Running : Pod scheduled Running --&gt; Succeeded : Job completed Running --&gt; Failed : Error occurred Running --&gt; Unknown : Node unreachable Succeeded --&gt; [*] Failed --&gt; [*] Unknown --&gt; [*] . ",
     "url": "/docs/k8s/concept.html#pod-%EC%83%9D%EB%AA%85%EC%A3%BC%EA%B8%B0",
     
     "relUrl": "/docs/k8s/concept.html#pod-생명주기"
-  },"54": {
+  },"74": {
     "doc": "What-is-Kubernetes",
     "title": "kubernetes vs docker compose",
     "content": " ",
     "url": "/docs/k8s/concept.html#kubernetes-vs-docker-compose",
     
     "relUrl": "/docs/k8s/concept.html#kubernetes-vs-docker-compose"
-  },"55": {
+  },"75": {
     "doc": "What-is-Kubernetes",
     "title": "비교표",
     "content": "| 구분 | Kubernetes | Docker Compose | . | 용도 | 프로덕션 오케스트레이션 | 개발/테스트 환경 | . | 규모 | 수백~수천 컨테이너 | 수십 개 컨테이너 | . | 복잡도 | 높음 (학습 곡선 가파름) | 낮음 (간단한 YAML) | . | 자동화 | 고도 자동화 (스케일링, 복구) | 수동 관리 | . | 스케일링 | 자동 수평 스케일링 | 수동 스케일링 | . | 로드 밸런싱 | 내장 로드 밸런서 | 외부 도구 필요 | . | 서비스 디스커버리 | 내장 | 수동 설정 | . | 배포 전략 | Rolling, Blue/Green, Canary | 단순 배포 | . | 모니터링 | 풍부한 메트릭 | 기본 로그만 | . | 보안 | RBAC, 네트워크 정책 | 기본 보안 | . | 리소스 관리 | CPU/메모리 제한 | 기본 제한 | . | 학습 비용 | 높음 (몇 주~몇 달) | 낮음 (몇 시간) | . | 운영 오버헤드 | 높음 | 낮음 | . | 클라우드 지원 | 모든 클라우드 지원 | 제한적 | . ",
     "url": "/docs/k8s/concept.html#%EB%B9%84%EA%B5%90%ED%91%9C",
     
     "relUrl": "/docs/k8s/concept.html#비교표"
-  },"56": {
+  },"76": {
     "doc": "What-is-Kubernetes",
     "title": "언제 어떤 것을 사용할까?",
     "content": "Docker Compose 사용 시기 . | ✅ 개발 환경에서 빠른 프로토타이핑 | ✅ 단순한 애플리케이션 (웹앱 + DB) | ✅ 소규모 팀 (DevOps 전문가 없음) | ✅ 테스트 환경 구축 | ✅ 학습 목적 (컨테이너 개념 이해) | . Kubernetes 사용 시기 . | ✅ 프로덕션 환경에서 대규모 서비스 | ✅ 마이크로서비스 아키텍처 | ✅ 높은 가용성 요구 | ✅ 자동 스케일링 필요 | ✅ 복잡한 배포 전략 (Canary, Blue/Green) | ✅ 멀티 클라우드 환경 | . ",
     "url": "/docs/k8s/concept.html#%EC%96%B8%EC%A0%9C-%EC%96%B4%EB%96%A4-%EA%B2%83%EC%9D%84-%EC%82%AC%EC%9A%A9%ED%95%A0%EA%B9%8C",
     
     "relUrl": "/docs/k8s/concept.html#언제-어떤-것을-사용할까"
-  },"57": {
+  },"77": {
     "doc": "What-is-Kubernetes",
     "title": "마이그레이션 전략",
-    "content": "graph LR A[단순 애플리케이션] --&gt; B[Docker Compose] B --&gt; C[복잡한 요구사항] C --&gt; D[Kubernetes] E[개발팀 성장] --&gt; F[DevOps 도입] F --&gt; D G[트래픽 증가] --&gt; H[스케일링 필요] H --&gt; D ",
+    "content": "graph LR A[\"Simple Application\"] --&gt; B[\"Docker Compose\"] B --&gt; C[\"Complex Requirements\"] C --&gt; D[\"Kubernetes\"] E[\"Team Growth\"] --&gt; F[\"DevOps Adoption\"] F --&gt; D G[\"Traffic Increase\"] --&gt; H[\"Scaling Needed\"] H --&gt; D . ",
     "url": "/docs/k8s/concept.html#%EB%A7%88%EC%9D%B4%EA%B7%B8%EB%A0%88%EC%9D%B4%EC%85%98-%EC%A0%84%EB%9E%B5",
     
     "relUrl": "/docs/k8s/concept.html#마이그레이션-전략"
-  },"58": {
-    "doc": "What-is-Kubernetes",
-    "title": "결론",
-    "content": "Docker Compose는 개발 초기 단계나 간단한 애플리케이션에 적합하며, Kubernetes는 프로덕션 환경의 복잡한 요구사항을 충족하는 엔터프라이즈급 솔루션입니다. 팀의 규모, 애플리케이션의 복잡도, 운영 요구사항을 고려하여 선택하는 것이 중요합니다. ",
-    "url": "/docs/k8s/concept.html#%EA%B2%B0%EB%A1%A0",
-    
-    "relUrl": "/docs/k8s/concept.html#결론"
-  },"59": {
+  },"78": {
     "doc": "What-is-Kubernetes",
     "title": "What-is-Kubernetes",
     "content": " ",
     "url": "/docs/k8s/concept.html",
     
     "relUrl": "/docs/k8s/concept.html"
-  },"60": {
+  },"79": {
     "doc": "What-is-Container-Runtime",
     "title": "What is container runtime",
     "content": ". | 컨테이너 런타임은 컨테이너 이미지를 실제로 실행하고 관리하는 소프트웨어입니다. | 컨테이너의 생성, 시작, 중지, 삭제 등 라이프사이클을 담당합니다. | 주요 특징 . | 컨테이너 프로세스의 격리와 자원 할당 관리 . | 자원: 네트워크, 볼륨, CPU, 메모리 등 | . | 표준 인터페이스(OCI, CRI 등) 지원 | 컨테이너의 보안, 네트워크, 스토리지 등 다양한 기능 제공 | . | . ",
     "url": "/docs/all-container/container-runtime.html#what-is-container-runtime",
     
     "relUrl": "/docs/all-container/container-runtime.html#what-is-container-runtime"
-  },"61": {
+  },"80": {
     "doc": "What-is-Container-Runtime",
     "title": "대표적인 런타임",
     "content": "Docker . | 설명: 초기에는 컨테이너 엔진과 런타임을 모두 포함한 올인원 솔루션이었으나, 현재는 런타임 역할을 containerd에 위임함. | 장점: . | 사용이 쉽고, 생태계(도구, 문서, 커뮤니티)가 매우 풍부함 | 로컬 개발 및 테스트에 적합 | 다양한 플랫폼 지원 | . | 단점: . | 오버헤드가 상대적으로 있음(엔진+런타임 구조) | Kubernetes와 직접 연동이 비효율적(추가 계층 필요) | . | . containerd . | 설명: . | Docker에서 분리된 경량화된 컨테이너 런타임. Kubernetes의 기본 런타임으로 채택됨. | . | 장점: . | 경량화되어 있고, 성능이 우수함 | Kubernetes와의 연동이 뛰어남(CRI 지원) | 안정적이고 대규모 환경에 적합 | . | 단점: . | Docker에 비해 직접 사용 시 기능이 제한적(빌드, 네트워크 등) | image build 명령어가 없음 | CLI 등 사용자 친화적 도구가 적음 | . | . CRI-O . | 설명: Kubernetes를 위해 설계된 매우 경량화된 컨테이너 런타임. 오직 Kubernetes와의 연동만을 목표로 함. | 장점: . | 매우 가볍고, 보안에 초점을 맞춤 | Kubernetes와의 호환성이 뛰어남 | 불필요한 기능이 없어 관리가 용이 | podman 명령어를 설치해서 쓰면 도커 명령어를 podman으로 사용 가능 | . podman images podman rmi podman ps . | 단점: . | 범용성이 떨어짐(Kubernetes 외 환경에서 사용 어려움) | 커뮤니티와 생태계가 상대적으로 작음 | . | . ",
     "url": "/docs/all-container/container-runtime.html#%EB%8C%80%ED%91%9C%EC%A0%81%EC%9D%B8-%EB%9F%B0%ED%83%80%EC%9E%84",
     
     "relUrl": "/docs/all-container/container-runtime.html#대표적인-런타임"
-  },"62": {
+  },"81": {
     "doc": "What-is-Container-Runtime",
     "title": "개발자가 추가로 알아야 할 점",
     "content": ". | Kubernetes 등 오케스트레이션 도구는 컨테이너 런타임과 연동하여 컨테이너를 관리함 | 런타임 선택에 따라 성능, 보안, 운영 방식이 달라질 수 있음 | OCI(Open Container Initiative) 표준을 지원하는 런타임을 사용하는 것이 호환성과 유지보수에 유리함 | 런타임은 컨테이너의 보안, 네트워크, 스토리지 등 다양한 기능에 영향을 미침 | . ",
     "url": "/docs/all-container/container-runtime.html#%EA%B0%9C%EB%B0%9C%EC%9E%90%EA%B0%80-%EC%B6%94%EA%B0%80%EB%A1%9C-%EC%95%8C%EC%95%84%EC%95%BC-%ED%95%A0-%EC%A0%90",
     
     "relUrl": "/docs/all-container/container-runtime.html#개발자가-추가로-알아야-할-점"
-  },"63": {
+  },"82": {
     "doc": "What-is-Container-Runtime",
     "title": "What-is-Container-Runtime",
     "content": " ",
     "url": "/docs/all-container/container-runtime.html",
     
     "relUrl": "/docs/all-container/container-runtime.html"
-  },"64": {
+  },"83": {
     "doc": "What-is-Container",
     "title": "What is container",
     "content": ". | 컨테이너는 애플리케이션과 그 실행에 필요한 모든 라이브러리, 설정 파일, 종속성을 하나의 패키지로 묶어, 어디서든 일관되게 실행할 수 있도록 해주는 기술입니다. | 컨테이너는 운영체제 수준에서 격리되어 실행되며, 가상머신보다 가볍고 빠릅니다. | 주요 특징 . | 애플리케이션 실행 환경을 표준화 . | web app . | node app | . | server app . | spring boot application | . | . | 빠른 배포 및 확장 가능 | 리소스 효율적(가상머신보다 오버헤드 적음) | 격리된 환경 제공(보안성↑) | . | 개발자가 알아야 할 점 . | 컨테이너는 호스트 OS의 커널을 공유함 | 컨테이너 내부와 외부의 네트워크, 파일시스템, 프로세스가 분리됨 | 대표적인 컨테이너 엔진: Docker, containerd, crio | . | . ",
     "url": "/docs/all-container/container.html#what-is-container",
     
     "relUrl": "/docs/all-container/container.html#what-is-container"
-  },"65": {
+  },"84": {
     "doc": "What-is-Container",
     "title": "What is container image",
     "content": ". | 컨테이너 이미지는 컨테이너를 실행하기 위한 모든 파일, 라이브러리, 설정, 코드 등을 포함한 불변(immutable)한 패키지입니다. | 이미지는 여러 계층(layer)으로 구성되어 있고, 읽기 전용입니다. | 주요 특징 . | 컨테이너 실행의 ‘설계도’ 역할 | Dockerfile 등으로 이미지를 정의하고 빌드 | 이미지 레지스트리(예: Docker Hub, Google Container Registry, harbor, docker registry)에 저장 및 배포 | . | 개발자가 알아야 할 점 . | 이미지는 계층 구조로 되어 있어, 중복된 계층은 캐싱되어 효율적 | 이미지를 작게 만들기 위해 불필요한 파일/패키지 제외 필요 | 보안 취약점이 없는 베이스 이미지를 사용하는 것이 중요 | . | . ",
     "url": "/docs/all-container/container.html#what-is-container-image",
     
     "relUrl": "/docs/all-container/container.html#what-is-container-image"
-  },"66": {
+  },"85": {
     "doc": "What-is-Container",
     "title": "How to write a Dockerfile",
     "content": "Dockerfile은 컨테이너 이미지를 만들기 위한 설정 파일로, 이미지 빌드 과정을 단계별로 명시합니다. ",
     "url": "/docs/all-container/container.html#how-to-write-a-dockerfile",
     
     "relUrl": "/docs/all-container/container.html#how-to-write-a-dockerfile"
-  },"67": {
+  },"86": {
     "doc": "What-is-Container",
     "title": "기본 문법",
     "content": ". | FROM: 베이스 이미지 지정 (필수) | RUN: 명령어 실행 (이미지 빌드 시) | COPY/ADD: 파일/디렉토리 복사 | WORKDIR: 작업 디렉토리 설정 | ENV: 환경 변수 설정 | EXPOSE: 컨테이너가 열 포트 지정(문서화 목적) | CMD/ENTRYPOINT: 컨테이너 시작 시 실행할 명령 | . ",
     "url": "/docs/all-container/container.html#%EA%B8%B0%EB%B3%B8-%EB%AC%B8%EB%B2%95",
     
     "relUrl": "/docs/all-container/container.html#기본-문법"
-  },"68": {
+  },"87": {
     "doc": "What-is-Container",
     "title": "예시: Node.js 애플리케이션",
     "content": "# 1. 베이스 이미지 지정 FROM node:18-alpine # 2. 작업 디렉토리 생성 및 이동 WORKDIR /app # 3. 의존성 파일 복사 및 설치 COPY package*.json ./ RUN npm install # 4. 소스 코드 복사 # COPY {local directory or file} {container directory or file} COPY . # 5. 컨테이너가 열 포트 지정(문서화 목적) EXPOSE 3000 # 6. 컨테이너 시작 시 실행할 명령 CMD [ \"npm\", \"start\" ] . ",
     "url": "/docs/all-container/container.html#%EC%98%88%EC%8B%9C-nodejs-%EC%95%A0%ED%94%8C%EB%A6%AC%EC%BC%80%EC%9D%B4%EC%85%98",
     
     "relUrl": "/docs/all-container/container.html#예시-nodejs-애플리케이션"
-  },"69": {
+  },"88": {
     "doc": "What-is-Container",
     "title": "개발자가 알아야 할 점",
     "content": ". | 불필요한 파일은 .dockerignore로 제외하여 이미지 용량 최소화 | 보안상 신뢰할 수 있는 베이스 이미지를 사용 | 멀티스테이지 빌드로 빌드/런타임 환경 분리 가능 | 계층 구조를 이해하고, 캐시 효율을 높이기 위해 자주 변경되는 파일은 아래쪽에 COPY | . ",
     "url": "/docs/all-container/container.html#%EA%B0%9C%EB%B0%9C%EC%9E%90%EA%B0%80-%EC%95%8C%EC%95%84%EC%95%BC-%ED%95%A0-%EC%A0%90",
     
     "relUrl": "/docs/all-container/container.html#개발자가-알아야-할-점"
-  },"70": {
+  },"89": {
     "doc": "What-is-Container",
     "title": "What-is-Container",
     "content": " ",
     "url": "/docs/all-container/container.html",
     
     "relUrl": "/docs/all-container/container.html"
-  },"71": {
+  },"90": {
     "doc": "How to make diagram in markdown",
     "title": "How to make diagram in markdown",
     "content": " ",
     "url": "/docs/markdown/diagram.html",
     
     "relUrl": "/docs/markdown/diagram.html"
-  },"72": {
+  },"91": {
     "doc": "All-of-docker",
     "title": "What is docker",
     "content": ". | Docker는 애플리케이션을 컨테이너라는 격리된 환경에서 실행할 수 있게 해주는 플랫폼입니다. 컨테이너는 애플리케이션과 그 실행에 필요한 모든 것을 하나로 묶어, 어디서든 일관되게 실행할 수 있도록 합니다. | . ",
     "url": "/docs/all-container/docker.html#what-is-docker",
     
     "relUrl": "/docs/all-container/docker.html#what-is-docker"
-  },"73": {
+  },"92": {
     "doc": "All-of-docker",
     "title": "장점",
     "content": ". | 컨테이너 기반 가상화 기술로, 가볍고 빠른 배포가 가능 | 이미지 기반으로 환경을 표준화하여, 개발-테스트-운영 환경 차이를 최소화 | 격리된 환경에서 여러 애플리케이션을 동시에 실행 가능 | . ",
     "url": "/docs/all-container/docker.html#%EC%9E%A5%EC%A0%90",
     
     "relUrl": "/docs/all-container/docker.html#장점"
-  },"74": {
+  },"93": {
     "doc": "All-of-docker",
     "title": "Docker 구조",
     "content": ". | Docker CLI: 사용자가 명령을 입력하는 도구 (docker 명령어) | Docker Daemon: 컨테이너와 이미지를 관리하는 백그라운드 서비스 | Images: 컨테이너 실행에 필요한 모든 파일과 설정을 포함한 패키지 | Containers: 실제로 실행 중인 애플리케이션 인스턴스 | Volumes: 데이터 영속성을 위한 저장소 | Networks: 컨테이너 간 통신을 위한 가상 네트워크 | . flowchart TD subgraph \"Host OS\" D1[\"Docker Daemon (dockerd)\"] C1[\"Container 1\"] C2[\"Container 2\"] IMG[\"Images\"] VOL[\"Volumes\"] NET[\"Networks\"] end CLI[\"Docker CLI (docker)\"] --&gt; D1 D1 --&gt; IMG D1 --&gt; VOL D1 --&gt; NET D1 --&gt; C1 D1 --&gt; C2 C1 -- \"Uses\" --&gt; IMG C2 -- \"Uses\" --&gt; IMG C1 -- \"Mounts\" --&gt; VOL C2 -- \"Mounts\" --&gt; VOL C1 -- \"Connects\" --&gt; NET C2 -- \"Connects\" --&gt; NET . ",
     "url": "/docs/all-container/docker.html#docker-%EA%B5%AC%EC%A1%B0",
     
     "relUrl": "/docs/all-container/docker.html#docker-구조"
-  },"75": {
+  },"94": {
     "doc": "All-of-docker",
     "title": "How to use docker",
     "content": ". | Docker 설치 후, 이미지를 받아 컨테이너를 실행 | . | image는 기본적으로 hub.docker.com에서 가져온다. | . | Dockerfile로 이미지를 직접 빌드하여 배포 가능 | 주요 사용 흐름: . | 이미지를 다운로드(pull) | 컨테이너 실행(run) | 상태 확인(ps) . | 컨테이너 접속(exec) | . | 중지/삭제(stop/rm) | . | . 예시: . docker pull nginx # -d option is background # --name option is create container name # -p option is port forwarding {local port}:{container port} # nginx is image docker run -d --name webserver -p 8080:80 nginx docker ps # -it: interactive # bash is command running shell docker exec -it webserver bash docker stop webserver docker rm webserver . ",
     "url": "/docs/all-container/docker.html#how-to-use-docker",
     
     "relUrl": "/docs/all-container/docker.html#how-to-use-docker"
-  },"76": {
+  },"95": {
     "doc": "All-of-docker",
     "title": "Local Volume과 Mount 구조",
     "content": "flowchart LR subgraph Host DIR1[\"/host/data\"] end subgraph Container DIR2[\"/container/data\"] APP[\"App\"] end DIR1 -- \"Volume Mount (-v /host/data:/container/data)\" --&gt; DIR2 APP -- \"Read/Write\" --&gt; DIR2 . 왜 volume mount를 사용하는가? . | 컨테이너는 기본적으로 휘발성(컨테이너 삭제 시 데이터도 삭제) | 호스트와 데이터를 공유하거나, 데이터 영속성을 보장하기 위해 사용 | 개발 환경에서 소스코드 실시간 반영, DB 데이터 보존 등에 활용 | . ",
     "url": "/docs/all-container/docker.html#local-volume%EA%B3%BC-mount-%EA%B5%AC%EC%A1%B0",
     
     "relUrl": "/docs/all-container/docker.html#local-volume과-mount-구조"
-  },"77": {
+  },"96": {
     "doc": "All-of-docker",
     "title": "Port Forwarding 구조",
     "content": "flowchart LR subgraph Host PORT1[\"Host: 8080\"] end subgraph Container PORT2[\"Container: 80\"] APP[\"Web App\"] end PORT1 -- \"-p 8080:80\" --&gt; PORT2 APP -- \"Listen\" --&gt; PORT2 . 왜 port forwarding을 사용하는가? . | 컨테이너 내부 서비스(예: 80번 포트 웹서버)를 외부(호스트)에서 접근 가능하게 함 | 여러 컨테이너가 각각 다른 포트로 외부에 서비스 제공 가능 | 개발/운영 환경에서 서비스 접근 및 테스트 용이 | . ",
     "url": "/docs/all-container/docker.html#port-forwarding-%EA%B5%AC%EC%A1%B0",
     
     "relUrl": "/docs/all-container/docker.html#port-forwarding-구조"
-  },"78": {
+  },"97": {
     "doc": "All-of-docker",
     "title": "Docker Network란?",
     "content": "Docker Network는 컨테이너 간 통신, 외부와의 연결을 관리하는 가상 네트워크입니다. | 컨테이너끼리 독립적이면서도 필요에 따라 서로 통신 가능 | 브리지, 호스트, 오버레이 등 다양한 네트워크 드라이버 제공 | 네트워크 격리 및 보안성 강화 | . 왜 docker network를 사용하는가? . | 여러 컨테이너가 하나의 서비스처럼 상호작용(예: 웹+DB) | 네트워크 격리로 보안성 향상 | 복잡한 서비스 아키텍처(마이크로서비스 등) 구현에 필수 | . Docker Network 구조 다이어그램 . flowchart LR NET[\"Docker Network (bridge)\"] C1[\"Container 1 (web)\"] C2[\"Container 2 (db)\"] C1 -- \"172.18.0.2\" --&gt; NET C2 -- \"172.18.0.3\" --&gt; NET NET -- \"가상 네트워크\" --- C1 NET -- \"가상 네트워크\" --- C2 . ",
     "url": "/docs/all-container/docker.html#docker-network%EB%9E%80",
     
     "relUrl": "/docs/all-container/docker.html#docker-network란"
-  },"79": {
+  },"98": {
     "doc": "All-of-docker",
     "title": "Command of docker",
     "content": ". | inspect image . | 이미지 상세 정보 확인 | docker inspect &lt;이미지명&gt; | . | volume mounts . | 호스트와 컨테이너 간 디렉토리/파일 공유 | docker run -v /host/path:/container/path ... | . | network . | 컨테이너 간 통신, 외부와의 연결 설정 | docker network ls, docker network create, docker run --network &lt;네트워크명&gt; | . | How to connect to host ip . | 컨테이너에서 호스트로 접근: Linux는 host.docker.internal 또는 호스트의 실제 IP 사용 | . | How to use exec . | 실행 중인 컨테이너에 명령어 실행/접속 | docker exec -it &lt;컨테이너명&gt; /bin/sh 또는 /bin/bash | . | save . | 이미지를 tar 파일로 저장(백업, 이동, 오프라인 배포 등) | docker save -o &lt;저장할파일명.tar&gt; &lt;이미지명&gt;:&lt;태그&gt; | 예시: docker save -o nginx.tar nginx:latest | . | load . | 저장된 이미지(tar 파일)를 Docker에 불러오기 | docker load -i &lt;이미지파일명.tar&gt; | 예시: docker load -i nginx.tar | . | commit . | 실행 중인 컨테이너의 상태를 새로운 이미지로 저장 | docker commit &lt;컨테이너명 또는 ID&gt; &lt;새이미지명&gt;:&lt;태그&gt; | 예시: docker commit webserver mynginx:custom | . | . ",
     "url": "/docs/all-container/docker.html#command-of-docker",
     
     "relUrl": "/docs/all-container/docker.html#command-of-docker"
-  },"80": {
+  },"99": {
     "doc": "All-of-docker",
     "title": "All-of-docker",
     "content": " ",
     "url": "/docs/all-container/docker.html",
     
     "relUrl": "/docs/all-container/docker.html"
-  },"81": {
+  },"100": {
     "doc": "Git 개념",
     "title": "Git",
     "content": "개인과 팀의 가장 큰 차이점 . | 내가 알고 있는 내용(코드, 커밋)이 전부가 아니다. | 모든 내용은 위의 가정 하에 시작됩니다. | . 개인 프로젝트에서의 Git . | 모든 Commit 이 무슨 내용인지 알 수 있음. | Conflict 해결에 --force 와 reset --hard 이라는 치트키를 사용할 수 있음. | push / pull 에 큰 신경 쓰지 않았음. | . 팀 프로젝트에서의 Git . | 모든 Commit 이 무슨 내용인지 절대로 알 수 없음. | 따라서 Conflict 가 발생하는 경우, 관련된 모든 개발자가 확인이 필요함. | . ",
     "url": "/docs/git/git-concepts.html#git",
     
     "relUrl": "/docs/git/git-concepts.html#git"
-  },"82": {
+  },"101": {
     "doc": "Git 개념",
     "title": "Git area",
     "content": ". reset . | 코드가 날아감 | 옵션 . | soft: index 보존(add한 상태, staged 상태), 워킹 디렉터리의 파일 보존. 즉 모두 보존. | mixed: index 취소(add하기 전 상태, unstaged 상태), 워킹 디렉터리의 파일 보존 (기본 옵션) | hard: index 취소(add하기 전 상태, unstaged 상태), 워킹 디렉터리의 파일 삭제. 즉 모두 취소. | . | . git reset --hard HEAD # (해당 커밋으로 돌리겠다. 모든 코드 + 커밋을) git reset --soft HEAD # (해당 커밋으로만 돌린다.) . Revert . | reset 없이 코드를 되돌릴 수 있는 명령어 | 그에 반해 revert는 앞서 말한 것 처럼 특정 사건을 골라서 없던일로 만듭니다. 또한 앞서 말한 것처럼 과거 특정 사건을 없에주지만 revert를 했다는 이력이 남게 됩니다. | . git revert &lt;commit id&gt; . ",
     "url": "/docs/git/git-concepts.html#git-area",
     
     "relUrl": "/docs/git/git-concepts.html#git-area"
-  },"83": {
+  },"102": {
     "doc": "Git 개념",
     "title": "Git checkout",
     "content": ". ",
     "url": "/docs/git/git-concepts.html#git-checkout",
     
     "relUrl": "/docs/git/git-concepts.html#git-checkout"
-  },"84": {
+  },"103": {
     "doc": "Git 개념",
     "title": "How to clear working directory",
     "content": "git checkout -- . # Clear changes (exclude untracted files) git clean -df # remove untracted files . ",
     "url": "/docs/git/git-concepts.html#how-to-clear-working-directory",
     
     "relUrl": "/docs/git/git-concepts.html#how-to-clear-working-directory"
-  },"85": {
+  },"104": {
     "doc": "Git 개념",
     "title": "Commit type",
     "content": ". | feat: 새로운 기능 추가 | fix: 버그 수정 | docs: 문서 수정 | style: 코드 포멧팅, 세미콜론 누락, 코드 변경이 없는 경우 | refactor: 코드 리펙토링 | test: 테스트코드, 리펙토링 테스트 코드 추가 | chore: 빌드 업무 수정, 패키지 매니저 수정, .ignore 수정 등 | . ",
     "url": "/docs/git/git-concepts.html#commit-type",
     
     "relUrl": "/docs/git/git-concepts.html#commit-type"
-  },"86": {
+  },"105": {
     "doc": "Git 개념",
     "title": "upstream",
     "content": ". | local branch 와 remote branch 를 연결 | . ",
     "url": "/docs/git/git-concepts.html#upstream",
     
     "relUrl": "/docs/git/git-concepts.html#upstream"
-  },"87": {
+  },"106": {
     "doc": "Git 개념",
     "title": "origin",
     "content": "git push -u origin main //git repository에 main으로 푸쉬 --set-upstream //관계 설정 . ",
     "url": "/docs/git/git-concepts.html#origin",
     
     "relUrl": "/docs/git/git-concepts.html#origin"
-  },"88": {
+  },"107": {
     "doc": "Git 개념",
     "title": "Git 개념",
     "content": " ",
     "url": "/docs/git/git-concepts.html",
     
     "relUrl": "/docs/git/git-concepts.html"
-  },"89": {
+  },"108": {
     "doc": "git-filter-repo",
     "title": "git-filter-repo",
     "content": ". | git-filter-repo is a tool that helps tou organize your Git repository or change history | . ",
     "url": "/docs/git/git-filter-repo.html",
     
     "relUrl": "/docs/git/git-filter-repo.html"
-  },"90": {
+  },"109": {
     "doc": "git-filter-repo",
     "title": "How to install in Mac",
     "content": "brew install git-filter-repo . ",
     "url": "/docs/git/git-filter-repo.html#how-to-install-in-mac",
     
     "relUrl": "/docs/git/git-filter-repo.html#how-to-install-in-mac"
-  },"91": {
+  },"110": {
     "doc": "git-filter-repo",
     "title": "How to use git-filter-repo",
     "content": "git filter-repo --subdirectory-filter path/to/keep # When you want to organize your history by leaving only a specific directory . ",
     "url": "/docs/git/git-filter-repo.html#how-to-use-git-filter-repo",
     
     "relUrl": "/docs/git/git-filter-repo.html#how-to-use-git-filter-repo"
-  },"92": {
+  },"111": {
     "doc": "How-to-write-helm-chart",
     "title": "Chart grammer",
     "content": "apiVersion: The chart API version (required) name: The name of the chart (required) version: A SemVer 2 version (required) # 1.2.3-alpha.1+ef365 description: A single-sentence description of this project (optional) dependencies: # A list of the chart requirements (optional) - name: The name of the chart (nginx) version: The version of the chart (\"1.2.3\") repository: (optional) The repository URL (\"https://example.com/charts\") or alias (\"@repo-name\") condition: (optional) A yaml path that resolves to a boolean, used for enabling/disabling charts (e.g. subchart1.enabled ) tags: # (optional) - Tags can be used to group charts for enabling/disabling together import-values: # (optional) - ImportValues holds the mapping of source values to parent key to be imported. Each item can be a string or pair of child/parent sublist items. alias: (optional) Alias to be used for the chart. Useful when you have to add the same chart multiple times appVersion: The version of the app that this contains (optional). Needn't be SemVer. Quotes recommended. # \"8.2.1\" . ",
     "url": "/docs/helm/grammer.html#chart-grammer",
     
     "relUrl": "/docs/helm/grammer.html#chart-grammer"
-  },"93": {
+  },"112": {
     "doc": "How-to-write-helm-chart",
     "title": "SemVersion",
     "content": " ",
     "url": "/docs/helm/grammer.html#semversion",
     
     "relUrl": "/docs/helm/grammer.html#semversion"
-  },"94": {
+  },"113": {
     "doc": "How-to-write-helm-chart",
     "title": "version",
     "content": ". | major version.minor version.patches . | major . | 호환되지 않는 API 변경 | . | minor . | 하위 호환되는 기능 추가 | . | patch . | 하위 호환되는 기능 추가 | . | . | . ",
     "url": "/docs/helm/grammer.html#version",
     
     "relUrl": "/docs/helm/grammer.html#version"
-  },"95": {
+  },"114": {
     "doc": "How-to-write-helm-chart",
     "title": "alpha",
     "content": ". | 하이픈(-) 사용 . | - 뒤에 오는 값은 정식 릴리즈 전의 버전을 나타낸다. | 정식 버전보다 낮은 버전 | 예시 . | 1.2.3-alpha | 1.2.3-beta.1 | 1.2.3-rc.2 | . | . | 플러스(+) 사용: 빌드 메타데이터 . | 빌드 메타데이터(Build Metadata) | 플러스 뒤에 오는 값은 빌드 정보를 나타냅니다. | 빌드 메타데이터는 버전 우선순위에 영향을 주지 않습니다 (동일 버전으로 간주). | 예시 . | 1.2.3+001 | 1.2.3-alpha+exp.sha.5114f85 | . | . | . ",
     "url": "/docs/helm/grammer.html#alpha",
     
     "relUrl": "/docs/helm/grammer.html#alpha"
-  },"96": {
+  },"115": {
     "doc": "How-to-write-helm-chart",
     "title": "How-to-write-helm-chart",
     "content": " ",
     "url": "/docs/helm/grammer.html",
     
     "relUrl": "/docs/helm/grammer.html"
-  },"97": {
+  },"116": {
     "doc": "How-to-write-helm-chart",
     "title": "Chart grammer",
     "content": "apiVersion: The chart API version (required) name: The name of the chart (required) version: A SemVer 2 version (required) # 1.2.3-alpha.1+ef365 description: A single-sentence description of this project (optional) dependencies: # A list of the chart requirements (optional) - name: The name of the chart (nginx) version: The version of the chart (\"1.2.3\") repository: (optional) The repository URL (\"https://example.com/charts\") or alias (\"@repo-name\") condition: (optional) A yaml path that resolves to a boolean, used for enabling/disabling charts (e.g. subchart1.enabled ) tags: # (optional) - Tags can be used to group charts for enabling/disabling together import-values: # (optional) - ImportValues holds the mapping of source values to parent key to be imported. Each item can be a string or pair of child/parent sublist items. alias: (optional) Alias to be used for the chart. Useful when you have to add the same chart multiple times appVersion: The version of the app that this contains (optional). Needn't be SemVer. Quotes recommended. # \"8.2.1\" . ",
     "url": "/docs/k8s/grammer.html#chart-grammer",
     
     "relUrl": "/docs/k8s/grammer.html#chart-grammer"
-  },"98": {
+  },"117": {
     "doc": "How-to-write-helm-chart",
     "title": "Helm Chart 구조 다이어그램",
     "content": "graph TB subgraph \"Helm Chart\" ChartYaml[Chart.yaml] ValuesYaml[values.yaml] Templates[Templates/] Charts[Charts/] README[README.md] Helpers[helpers.tpl] end subgraph \"Templates Directory\" Deployment[deployment.yaml] Service[service.yaml] ConfigMap[configmap.yaml] Secret[secret.yaml] Ingress[ingress.yaml] Notes[NOTES.txt] end subgraph \"Dependencies\" SubChart1[Sub Chart 1] SubChart2[Sub Chart 2] SubChart3[Sub Chart 3] end ChartYaml --&gt; ValuesYaml ChartYaml --&gt; Templates ChartYaml --&gt; Charts Templates --&gt; Deployment Templates --&gt; Service Templates --&gt; ConfigMap Templates --&gt; Secret Templates --&gt; Ingress Templates --&gt; Notes Charts --&gt; SubChart1 Charts --&gt; SubChart2 Charts --&gt; SubChart3 . ",
     "url": "/docs/k8s/grammer.html#helm-chart-%EA%B5%AC%EC%A1%B0-%EB%8B%A4%EC%9D%B4%EC%96%B4%EA%B7%B8%EB%9E%A8",
     
     "relUrl": "/docs/k8s/grammer.html#helm-chart-구조-다이어그램"
-  },"99": {
+  },"118": {
     "doc": "How-to-write-helm-chart",
     "title": "SemVersion",
     "content": " ",
     "url": "/docs/k8s/grammer.html#semversion",
     
     "relUrl": "/docs/k8s/grammer.html#semversion"
-  },"100": {
+  },"119": {
     "doc": "How-to-write-helm-chart",
     "title": "version",
     "content": ". | major version.minor version.patches . | major . | 호환되지 않는 API 변경 | . | minor . | 하위 호환되는 기능 추가 | . | patch . | 하위 호환되는 기능 추가 | . | . | . ",
     "url": "/docs/k8s/grammer.html#version",
     
     "relUrl": "/docs/k8s/grammer.html#version"
-  },"101": {
+  },"120": {
     "doc": "How-to-write-helm-chart",
     "title": "alpha",
     "content": ". | 하이픈(-) 사용 . | - 뒤에 오는 값은 정식 릴리즈 전의 버전을 나타낸다. | 정식 버전보다 낮은 버전 | 예시 . | 1.2.3-alpha | 1.2.3-beta.1 | 1.2.3-rc.2 | . | . | 플러스(+) 사용: 빌드 메타데이터 . | 빌드 메타데이터(Build Metadata) | 플러스 뒤에 오는 값은 빌드 정보를 나타냅니다. | 빌드 메타데이터는 버전 우선순위에 영향을 주지 않습니다 (동일 버전으로 간주). | 예시 . | 1.2.3+001 | 1.2.3-alpha+exp.sha.5114f85 | . | . | . ",
     "url": "/docs/k8s/grammer.html#alpha",
     
     "relUrl": "/docs/k8s/grammer.html#alpha"
-  },"102": {
+  },"121": {
     "doc": "How-to-write-helm-chart",
     "title": "Semantic Versioning 다이어그램",
     "content": "graph LR subgraph \"Version Format\" Major[Major Version] Minor[Minor Version] Patch[Patch Version] PreRelease[Pre-release] Build[Build Metadata] end Major --&gt; Minor Minor --&gt; Patch Patch --&gt; PreRelease PreRelease --&gt; Build subgraph \"Examples\" Ex1[\"1.2.3\"] Ex2[\"1.2.3-alpha\"] Ex3[\"1.2.3-beta.1\"] Ex4[\"1.2.3-rc.2\"] Ex5[\"1.2.3+001\"] Ex6[\"1.2.3-alpha+exp.sha.5114f85\"] end . ",
     "url": "/docs/k8s/grammer.html#semantic-versioning-%EB%8B%A4%EC%9D%B4%EC%96%B4%EA%B7%B8%EB%9E%A8",
     
     "relUrl": "/docs/k8s/grammer.html#semantic-versioning-다이어그램"
-  },"103": {
+  },"122": {
     "doc": "How-to-write-helm-chart",
     "title": "버전 우선순위 다이어그램",
     "content": "graph TD A[1.0.0] --&gt; B[1.0.1] B --&gt; C[1.1.0] C --&gt; D[1.1.1] D --&gt; E[1.2.0] E --&gt; F[2.0.0] G[1.0.0-alpha] --&gt; H[1.0.0-beta] H --&gt; I[1.0.0-rc.1] I --&gt; J[1.0.0-rc.2] J --&gt; A K[1.0.0+001] --&gt; L[1.0.0+002] L --&gt; A style A fill:#e1f5fe style F fill:#ffebee style G fill:#fff3e0 style J fill:#fff3e0 . ",
     "url": "/docs/k8s/grammer.html#%EB%B2%84%EC%A0%84-%EC%9A%B0%EC%84%A0%EC%88%9C%EC%9C%84-%EB%8B%A4%EC%9D%B4%EC%96%B4%EA%B7%B8%EB%9E%A8",
     
     "relUrl": "/docs/k8s/grammer.html#버전-우선순위-다이어그램"
-  },"104": {
+  },"123": {
     "doc": "How-to-write-helm-chart",
     "title": "Helm Chart 생명주기",
     "content": "stateDiagram-v2 [*] --&gt; Development Development --&gt; Testing Testing --&gt; Alpha Alpha --&gt; Beta Beta --&gt; ReleaseCandidate ReleaseCandidate --&gt; Production Production --&gt; [*] Testing --&gt; Development : 버그 발견 Alpha --&gt; Development : 개선 필요 Beta --&gt; Development : 수정 필요 ReleaseCandidate --&gt; Development : 최종 수정 Production --&gt; Development : 새로운 기능 . ",
     "url": "/docs/k8s/grammer.html#helm-chart-%EC%83%9D%EB%AA%85%EC%A3%BC%EA%B8%B0",
     
     "relUrl": "/docs/k8s/grammer.html#helm-chart-생명주기"
-  },"105": {
+  },"124": {
     "doc": "How-to-write-helm-chart",
     "title": "Chart.yaml 예시",
     "content": "graph TD A[Chart.yaml] --&gt; B[apiVersion: v2] A --&gt; C[name: my-app] A --&gt; D[version: 1.2.3] A --&gt; E[description: My application] A --&gt; F[appVersion: \"1.0.0\"] A --&gt; G[dependencies] G --&gt; H[name: nginx] G --&gt; I[version: \"1.2.3\"] G --&gt; J[repository: https://charts.bitnami.com/bitnami] style A fill:#e8f5e8 style B fill:#f0f8ff style C fill:#f0f8ff style D fill:#f0f8ff style E fill:#f0f8ff style F fill:#f0f8ff style G fill:#fff8dc . ",
     "url": "/docs/k8s/grammer.html#chartyaml-%EC%98%88%EC%8B%9C",
     
     "relUrl": "/docs/k8s/grammer.html#chartyaml-예시"
-  },"106": {
+  },"125": {
     "doc": "How-to-write-helm-chart",
     "title": "How-to-write-helm-chart",
     "content": " ",
     "url": "/docs/k8s/grammer.html",
     
     "relUrl": "/docs/k8s/grammer.html"
-  },"107": {
-    "doc": "Kubernetes",
-    "title": "Kubernetes",
-    "content": "Kubernetes 에 대한 소개 페이지입니다. How to use kubectl . Read more → How to use kubectl . Read more → What-is-Kubernetes . Description of Kubernetes . Read more → How-to-write-helm-chart . Grammer of helm . Read more → ",
-    "url": "/kubernetes/",
+  },"126": {
+    "doc": "Deploy",
+    "title": "배포 전략",
+    "content": "배포 전략에 대한 설명이다. Rolling Update . 점진적으로 애플리케이션을 업데이트하는 배포 전략 . Read more → Blue/Green Deployment . 완전한 버전 전환을 통한 무중단 배포 전략 . Read more → Canary Deployment . 소규모 사용자 그룹을 대상으로 한 점진적 배포 전략 . Read more → ",
+    "url": "/deploy/#%EB%B0%B0%ED%8F%AC-%EC%A0%84%EB%9E%B5",
     
-    "relUrl": "/kubernetes/"
-  },"108": {
+    "relUrl": "/deploy/#배포-전략"
+  },"127": {
+    "doc": "Deploy",
+    "title": "Deploy",
+    "content": " ",
+    "url": "/deploy/",
+    
+    "relUrl": "/deploy/"
+  },"128": {
     "doc": "Helm",
     "title": "Helm",
     "content": "Helm에 대한 설명입니다. How-to-use-Helm . Command of helm . Read more → What-is-Helm . Description of helm . Read more → How-to-write-helm-chart . Grammer of helm . Read more → ",
     "url": "/helm/",
     
     "relUrl": "/helm/"
-  },"109": {
+  },"129": {
     "doc": "Jekyll",
     "title": "Jekyll",
     "content": "Jekyll에 대한 소개 페이지입니다. git-command . git 개념 및 command에 대한 설명이다. Read more → Git 개념 . Git이란 무엇이고 어떻게 사용하는가에 대한 설명입니다. Read more → git-filter-repo . git-filter-repo에 대한 설명 . Read more → ",
     "url": "/jekyll/",
     
     "relUrl": "/jekyll/"
-  },"110": {
+  },"130": {
     "doc": "Kubernetes",
     "title": "Kubernetes",
-    "content": "K8s에 대한 설명입니다. How to use kubectl . Read more → How to use kubectl . Read more → What-is-Kubernetes . Description of Kubernetes . Read more → How-to-write-helm-chart . Grammer of helm . Read more → ",
+    "content": "K8s에 대한 설명입니다. How to use kubectl . Read more → What-is-Kubernetes . Description of Kubernetes . Read more → How-to-write-helm-chart . Grammer of helm . Read more → ",
     "url": "/k8s/",
     
     "relUrl": "/k8s/"
-  },"111": {
+  },"131": {
     "doc": "Markdown",
     "title": "Markdown 에서 diagram 만드는 방법에 대한 페이지",
     "content": "Kubernetes 에 대한 소개 페이지입니다. How to make diagram in markdown . Read more → ",
     "url": "/diagram/#markdown-%EC%97%90%EC%84%9C-diagram-%EB%A7%8C%EB%93%9C%EB%8A%94-%EB%B0%A9%EB%B2%95%EC%97%90-%EB%8C%80%ED%95%9C-%ED%8E%98%EC%9D%B4%EC%A7%80",
     
     "relUrl": "/diagram/#markdown-에서-diagram-만드는-방법에-대한-페이지"
-  },"112": {
+  },"132": {
     "doc": "Markdown",
     "title": "Markdown",
     "content": " ",
     "url": "/diagram/",
     
     "relUrl": "/diagram/"
-  },"113": {
+  },"133": {
     "doc": "Container",
     "title": "Container",
     "content": "Container 와 관련된 개념입니다. What-is-Container-Runtime . Description of container runtime . Read more → What-is-Container . Description of container . Read more → All-of-docker . Description of docker . Read more → Docker Registry . Description of docker registry . Read more → ",
     "url": "/all-container/",
     
     "relUrl": "/all-container/"
-  },"114": {
+  },"134": {
     "doc": "Git",
     "title": "Git",
     "content": "Git에 대한 소개 페이지입니다. git-command . git 개념 및 command에 대한 설명이다. Read more → Git 개념 . Git이란 무엇이고 어떻게 사용하는가에 대한 설명입니다. Read more → git-filter-repo . git-filter-repo에 대한 설명 . Read more → ",
     "url": "/git/",
     
     "relUrl": "/git/"
-  },"115": {
+  },"135": {
     "doc": "문서 목록",
     "title": "👋 Seungeon의 개발 블로그",
     "content": "안녕하세요! 백엔드 개발자 Seungeon입니다. 아래는 제가 진행한 주요 프로젝트 목록입니다. My Awesome API . 사용자 인증, 게시글 CRUD, JWT 기반 로그인 기능이 포함된 API 서버입니다. | 기술 스택: Spring Boot, JPA, PostgreSQL | 사용 언어: Java | 주요 기능: 로그인, 회원가입, 게시글 | . Blog Front . Jekyll 기반 정적 블로그, GitHub Actions로 자동 배포 구성 . | 기술 스택: Jekyll, GitHub Pages | 사용 언어: Markdown, HTML, Liquid | 주요 기능: 사이드바, 검색, 문서 분류 | . ",
     "url": "/#-seungeon%EC%9D%98-%EA%B0%9C%EB%B0%9C-%EB%B8%94%EB%A1%9C%EA%B7%B8",
     
     "relUrl": "/#-seungeon의-개발-블로그"
-  },"116": {
+  },"136": {
     "doc": "문서 목록",
     "title": "문서 목록",
     "content": " ",
     "url": "/",
     
     "relUrl": "/"
-  },"117": {
+  },"137": {
     "doc": "How to Install Jekyll",
     "title": "How to install jekyll in mac",
     "content": "brew install chruby ruby-install ruby-install ruby 3.4.1 echo \"source $(brew --prefix)/opt/chruby/share/chruby/chruby.sh\" &gt;&gt; ~/.zshrc echo \"source $(brew --prefix)/opt/chruby/share/chruby/auto.sh\" &gt;&gt; ~/.zshrc echo \"chruby ruby-3.4.1\" &gt;&gt; ~/.zshrc # run 'chruby' to see actual version gem install jekyll . ",
     "url": "/docs/jekyll/install-jekyll.html#how-to-install-jekyll-in-mac",
     
     "relUrl": "/docs/jekyll/install-jekyll.html#how-to-install-jekyll-in-mac"
-  },"118": {
+  },"138": {
     "doc": "How to Install Jekyll",
     "title": "Installing bundler",
     "content": "What is Bundler . | Bundler is tool managements dependencies. | . ",
     "url": "/docs/jekyll/install-jekyll.html#installing-bundler",
     
     "relUrl": "/docs/jekyll/install-jekyll.html#installing-bundler"
-  },"119": {
+  },"139": {
     "doc": "How to Install Jekyll",
     "title": "why use Bundler??",
     "content": ". | Ruby-based projects such jekyll and github pages require multiple gems (ruby packages), and Bundler allows you to install and manage all of those dependecies automatically | Benefit is creating a reproducible environment by unifying the gem version for each project | . ",
     "url": "/docs/jekyll/install-jekyll.html#why-use-bundler",
     
     "relUrl": "/docs/jekyll/install-jekyll.html#why-use-bundler"
-  },"120": {
+  },"140": {
     "doc": "How to Install Jekyll",
     "title": "How to install bundler",
     "content": "gem install bundler . ",
     "url": "/docs/jekyll/install-jekyll.html#how-to-install-bundler",
     
     "relUrl": "/docs/jekyll/install-jekyll.html#how-to-install-bundler"
-  },"121": {
+  },"141": {
     "doc": "How to Install Jekyll",
     "title": "How to set jekyll project",
     "content": " ",
     "url": "/docs/jekyll/install-jekyll.html#how-to-set-jekyll-project",
     
     "relUrl": "/docs/jekyll/install-jekyll.html#how-to-set-jekyll-project"
-  },"122": {
+  },"142": {
     "doc": "How to Install Jekyll",
     "title": "First step",
     "content": "mkdir docs cd docs git checkout --orphan gh-pages # this branch is called gh-pages does not create history or contents git rm -rf . # removes the contents from your default branch from the working directory jekyll new --skip-bundle . # creates a jekyll site in the current directory . ",
     "url": "/docs/jekyll/install-jekyll.html#first-step",
     
     "relUrl": "/docs/jekyll/install-jekyll.html#first-step"
-  },"123": {
+  },"143": {
     "doc": "How to Install Jekyll",
     "title": "Second step",
     "content": "Edit Gemfile . Add \"#\" to the beggining of the line that starts with \"gem \"jekyll\"\" to comment out this line Remove \"#\" to the beggining of the line that starts with `gem \"github-pages\"` to comment out this line . ",
     "url": "/docs/jekyll/install-jekyll.html#second-step",
     
     "relUrl": "/docs/jekyll/install-jekyll.html#second-step"
-  },"124": {
+  },"144": {
     "doc": "How to Install Jekyll",
     "title": "Thrid step",
     "content": "bundle install Add `Gemfile.lock` into .gitignore file . ",
     "url": "/docs/jekyll/install-jekyll.html#thrid-step",
     
     "relUrl": "/docs/jekyll/install-jekyll.html#thrid-step"
-  },"125": {
+  },"145": {
     "doc": "How to Install Jekyll",
     "title": "Fourth step",
     "content": ". | Optinally, make any necessary edits to the _config.yml file. This is required for relative paths when the repository is hosted in a subdirectory. # _config.yml baseurl # the subpath of you site url # the base hostname &amp; protocol for your site domain # if you want to force HTTPS, specify the domain without the http at the start . | . ",
     "url": "/docs/jekyll/install-jekyll.html#fourth-step",
     
     "relUrl": "/docs/jekyll/install-jekyll.html#fourth-step"
-  },"126": {
+  },"146": {
     "doc": "How to Install Jekyll",
     "title": "Notice",
     "content": ". | To make it appear in the text, Put it in the _posts folder | The front-meter is essential at the top --- layout: post title: \"How to Install Jekyll\" date: 2025-07-06 --- . | . ",
     "url": "/docs/jekyll/install-jekyll.html#notice",
     
     "relUrl": "/docs/jekyll/install-jekyll.html#notice"
-  },"127": {
+  },"147": {
     "doc": "How to Install Jekyll",
     "title": "How to start jekyll in local",
     "content": "bundle exec jekyll serve . ",
     "url": "/docs/jekyll/install-jekyll.html#how-to-start-jekyll-in-local",
     
     "relUrl": "/docs/jekyll/install-jekyll.html#how-to-start-jekyll-in-local"
-  },"128": {
+  },"148": {
     "doc": "How to Install Jekyll",
     "title": "Set the just-the-docs",
     "content": "# Gemfile gem \"just-the-docs\" . # _config.yml theme: just-the-docs . ",
     "url": "/docs/jekyll/install-jekyll.html#set-the-just-the-docs",
     
     "relUrl": "/docs/jekyll/install-jekyll.html#set-the-just-the-docs"
-  },"129": {
+  },"149": {
     "doc": "How to Install Jekyll",
     "title": "How to Install Jekyll",
     "content": " ",
     "url": "/docs/jekyll/install-jekyll.html",
     
     "relUrl": "/docs/jekyll/install-jekyll.html"
-  },"130": {
+  },"150": {
     "doc": "How to use just-the-docs docs",
     "title": "Just the docs guide",
     "content": "Go just the docs . ",
     "url": "/docs/jekyll/just-the-docs.html#just-the-docs-guide",
     
     "relUrl": "/docs/jekyll/just-the-docs.html#just-the-docs-guide"
-  },"131": {
+  },"151": {
     "doc": "How to use just-the-docs docs",
     "title": "How to use just-the-docs docs",
     "content": " ",
     "url": "/docs/jekyll/just-the-docs.html",
     
     "relUrl": "/docs/jekyll/just-the-docs.html"
-  },"132": {
+  },"152": {
     "doc": "Docker Registry",
     "title": "What is Docker registry",
     "content": ". | Docker Registry는 컨테이너 이미지를 저장하고 배포하는 중앙 저장소입니다. 개발자는 이미지를 registry에 업로드(push)하고, 필요할 때 다운로드(pull)하여 컨테이너를 실행할 수 있습니다. | 이미지 버전 관리 및 공유 | CI/CD 파이프라인에서 이미지 배포 자동화에 필수 | 사설/공용 registry 모두 존재 | . | . ",
     "url": "/docs/all-container/registry.html#what-is-docker-registry",
     
     "relUrl": "/docs/all-container/registry.html#what-is-docker-registry"
-  },"133": {
+  },"153": {
     "doc": "Docker Registry",
     "title": "Kind of docker registry",
     "content": ". | 공식 Docker Hub: hub.docker.com, 가장 널리 사용되는 공개 registry | Harbor: 오픈소스 기반의 엔터프라이즈용 프라이빗 registry, 보안/정책/감사 기능 강화 | Google Container Registry(GCR), Amazon ECR, GitHub Container Registry 등 다양한 클라우드 기반 registry | . ",
     "url": "/docs/all-container/registry.html#kind-of-docker-registry",
     
     "relUrl": "/docs/all-container/registry.html#kind-of-docker-registry"
-  },"134": {
+  },"154": {
     "doc": "Docker Registry",
     "title": "Docker registry",
     "content": ". | Docker에서 기본적으로 사용하는 공개 registry(hub.docker.com) | 무료로 이미지 업로드/다운로드 가능(공개/비공개 저장소 지원) | 전 세계적으로 가장 많이 사용됨 | 인증, 자동 빌드, 웹 UI 제공 | . ",
     "url": "/docs/all-container/registry.html#docker-registry",
     
     "relUrl": "/docs/all-container/registry.html#docker-registry"
-  },"135": {
+  },"155": {
     "doc": "Docker Registry",
     "title": "Harbor",
     "content": ". | CNCF에서 관리하는 오픈소스 프라이빗 registry | 엔터프라이즈 환경에 적합(사용자/권한 관리, 이미지 서명, 취약점 스캔, 감사 로그 등 지원) | 자체 서버에 설치하여 운영 가능 | LDAP, AD 등 외부 인증 연동 지원 | . ",
     "url": "/docs/all-container/registry.html#harbor",
     
     "relUrl": "/docs/all-container/registry.html#harbor"
-  },"136": {
+  },"156": {
     "doc": "Docker Registry",
     "title": "Registry 비교",
     "content": "| 항목 | Docker Hub | Harbor | . | 공개/비공개 | 모두 지원 | 모두 지원 | . | 설치 방식 | 클라우드(공식) | 온프레미스(직접 설치) | . | 보안/정책 | 기본 제공 | 고급(정책, 감사, 서명) | . | 취약점 스캔 | 일부 제공 | 기본 제공 | . | 사용자/권한 관리 | 제한적 | 세분화/강력 | . | 외부 인증 | 제한적 | LDAP/AD 등 지원 | . | 커뮤니티/지원 | 매우 활발 | 활발 | . ",
     "url": "/docs/all-container/registry.html#registry-%EB%B9%84%EA%B5%90",
     
     "relUrl": "/docs/all-container/registry.html#registry-비교"
-  },"137": {
+  },"157": {
     "doc": "Docker Registry",
     "title": "이미지 올리기(push)와 받기(pull)",
     "content": "이미지 push (업로드) . | Docker Hub/Harbor에 로그인 docker login [registry 주소] . | 이미지 태그 지정(예: myrepo/myimage:tag) docker tag [이미지명] [registry 주소]/[저장소]/[이미지명]:[태그] . | 이미지 push docker push [registry 주소]/[저장소]/[이미지명]:[태그] . | . 이미지 pull (다운로드) . docker pull [registry 주소]/[저장소]/[이미지명]:[태그] . | 공식 Docker Hub는 registry 주소 생략 가능(예: docker pull nginx:latest) | Harbor 등 사설 registry는 주소 명시 필요(예: docker pull harbor.example.com/myrepo/myimage:tag) | . ",
     "url": "/docs/all-container/registry.html#%EC%9D%B4%EB%AF%B8%EC%A7%80-%EC%98%AC%EB%A6%AC%EA%B8%B0push%EC%99%80-%EB%B0%9B%EA%B8%B0pull",
     
     "relUrl": "/docs/all-container/registry.html#이미지-올리기push와-받기pull"
-  },"138": {
+  },"158": {
     "doc": "Docker Registry",
     "title": "Docker Registry",
     "content": " ",
     "url": "/docs/all-container/registry.html",
     
     "relUrl": "/docs/all-container/registry.html"
+  },"159": {
+    "doc": "Rolling Update",
+    "title": "Rolling Update 배포 전략",
+    "content": "Rolling Update는 새로운 버전을 점진적으로 배포하여 서비스 중단을 최소화하는 배포 전략입니다. ",
+    "url": "/docs/deploy/rolling-update.html#rolling-update-%EB%B0%B0%ED%8F%AC-%EC%A0%84%EB%9E%B5",
+    
+    "relUrl": "/docs/deploy/rolling-update.html#rolling-update-배포-전략"
+  },"160": {
+    "doc": "Rolling Update",
+    "title": "개요",
+    "content": "Rolling Update는 기존 파드들을 하나씩 새로운 버전으로 교체하는 방식입니다. 이 과정에서 항상 일정 수의 파드가 서비스를 제공하므로 무중단 배포가 가능합니다. ",
+    "url": "/docs/deploy/rolling-update.html#%EA%B0%9C%EC%9A%94",
+    
+    "relUrl": "/docs/deploy/rolling-update.html#개요"
+  },"161": {
+    "doc": "Rolling Update",
+    "title": "작동 원리",
+    "content": "graph TB subgraph \"Step 1: 초기 상태\" A1[\"Pod v1.0&lt;br/&gt;🟢\"] --&gt; S1[\"Service&lt;br/&gt;🌐\"] A2[\"Pod v1.0&lt;br/&gt;🟢\"] --&gt; S1 A3[\"Pod v1.0&lt;br/&gt;🟢\"] --&gt; S1 end subgraph \"Step 2: 첫 번째 교체\" B1[\"Pod v1.0&lt;br/&gt;🟢\"] --&gt; S2[\"Service&lt;br/&gt;🌐\"] B2[\"Pod v1.0&lt;br/&gt;🟢\"] --&gt; S2 B3[\"Pod v2.0&lt;br/&gt;🔵\"] --&gt; S2 end subgraph \"Step 3: 두 번째 교체\" C1[\"Pod v1.0&lt;br/&gt;🟢\"] --&gt; S3[\"Service&lt;br/&gt;🌐\"] C2[\"Pod v2.0&lt;br/&gt;🔵\"] --&gt; S3 C3[\"Pod v2.0&lt;br/&gt;🔵\"] --&gt; S3 end subgraph \"Step 4: 완료\" D1[\"Pod v2.0&lt;br/&gt;🔵\"] --&gt; S4[\"Service&lt;br/&gt;🌐\"] D2[\"Pod v2.0&lt;br/&gt;🔵\"] --&gt; S4 D3[\"Pod v2.0&lt;br/&gt;🔵\"] --&gt; S4 end Step1 --&gt; Step2 --&gt; Step3 --&gt; Step4 style A1 fill:#90EE90 style A2 fill:#90EE90 style A3 fill:#90EE90 style B1 fill:#90EE90 style B2 fill:#90EE90 style B3 fill:#87CEEB style C1 fill:#90EE90 style C2 fill:#87CEEB style C3 fill:#87CEEB style D1 fill:#87CEEB style D2 fill:#87CEEB style D3 fill:#87CEEB . ",
+    "url": "/docs/deploy/rolling-update.html#%EC%9E%91%EB%8F%99-%EC%9B%90%EB%A6%AC",
+    
+    "relUrl": "/docs/deploy/rolling-update.html#작동-원리"
+  },"162": {
+    "doc": "Rolling Update",
+    "title": "장점",
+    "content": ". | 무중단 배포: 서비스 중단 없이 업데이트 가능 | 점진적 배포: 한 번에 모든 인스턴스를 교체하지 않음 | 자동 롤백: 문제 발생 시 이전 버전으로 자동 복구 | 리소스 효율성: 추가 인프라 없이 배포 가능 | . ",
+    "url": "/docs/deploy/rolling-update.html#%EC%9E%A5%EC%A0%90",
+    
+    "relUrl": "/docs/deploy/rolling-update.html#장점"
+  },"163": {
+    "doc": "Rolling Update",
+    "title": "단점",
+    "content": ". | 배포 시간: 점진적 배포로 인한 긴 배포 시간 | 버전 혼재: 배포 중에는 여러 버전이 동시에 실행 | 데이터베이스 호환성: 스키마 변경 시 주의 필요 | . ",
+    "url": "/docs/deploy/rolling-update.html#%EB%8B%A8%EC%A0%90",
+    
+    "relUrl": "/docs/deploy/rolling-update.html#단점"
+  },"164": {
+    "doc": "Rolling Update",
+    "title": "Kubernetes에서의 구현",
+    "content": "Deployment 설정 . apiVersion: apps/v1 kind: Deployment metadata: name: my-app spec: replicas: 3 strategy: type: RollingUpdate rollingUpdate: maxSurge: 1 # 최대 추가 파드 수 maxUnavailable: 1 # 최대 사용 불가 파드 수 selector: matchLabels: app: my-app template: metadata: labels: app: my-app spec: containers: - name: my-app image: my-app:v1.0 . 배포 명령어 . # 이미지 업데이트로 Rolling Update 시작 kubectl set image deployment/my-app my-app=my-app:v2.0 # 배포 상태 확인 kubectl rollout status deployment/my-app # 배포 진행 상황 모니터링 kubectl get pods -l app=my-app -w # 배포 일시정지 kubectl rollout pause deployment/my-app # 배포 재개 kubectl rollout resume deployment/my-app # 롤백 kubectl rollout undo deployment/my-app . ",
+    "url": "/docs/deploy/rolling-update.html#kubernetes%EC%97%90%EC%84%9C%EC%9D%98-%EA%B5%AC%ED%98%84",
+    
+    "relUrl": "/docs/deploy/rolling-update.html#kubernetes에서의-구현"
+  },"165": {
+    "doc": "Rolling Update",
+    "title": "배포 과정 상세",
+    "content": "stateDiagram-v2 [*] --&gt; Initial Initial --&gt; Step1: kubectl set image Step1 --&gt; Step2: Pod v2.0 생성 Step2 --&gt; Step3: Pod v1.0 삭제 Step3 --&gt; Step4: Pod v2.0 생성 Step4 --&gt; Step5: Pod v1.0 삭제 Step5 --&gt; Step6: Pod v2.0 생성 Step6 --&gt; Complete: Pod v1.0 삭제 Complete --&gt; [*] note right of Step1: 3개 Pod v1.0 실행 중 note right of Step2: 3개 v1.0 + 1개 v2.0 note right of Step3: 2개 v1.0 + 1개 v2.0 note right of Step4: 2개 v1.0 + 2개 v2.0 note right of Step5: 1개 v1.0 + 2개 v2.0 note right of Step6: 1개 v1.0 + 3개 v2.0 note right of Complete: 3개 Pod v2.0 실행 중 . ",
+    "url": "/docs/deploy/rolling-update.html#%EB%B0%B0%ED%8F%AC-%EA%B3%BC%EC%A0%95-%EC%83%81%EC%84%B8",
+    
+    "relUrl": "/docs/deploy/rolling-update.html#배포-과정-상세"
+  },"166": {
+    "doc": "Rolling Update",
+    "title": "설정 옵션",
+    "content": "maxSurge . | 배포 중 생성할 수 있는 최대 추가 파드 수 | 기본값: 25% (최소 1개) | . maxUnavailable . | 배포 중 사용 불가능한 최대 파드 수 | 기본값: 25% (최소 1개) | . strategy: type: RollingUpdate rollingUpdate: maxSurge: 2 # 최대 2개 추가 파드 허용 maxUnavailable: 0 # 사용 불가 파드 없음 (100% 가용성) . ",
+    "url": "/docs/deploy/rolling-update.html#%EC%84%A4%EC%A0%95-%EC%98%B5%EC%85%98",
+    
+    "relUrl": "/docs/deploy/rolling-update.html#설정-옵션"
+  },"167": {
+    "doc": "Rolling Update",
+    "title": "모니터링 및 디버깅",
+    "content": "# 배포 상태 확인 kubectl rollout status deployment/my-app # 배포 히스토리 kubectl rollout history deployment/my-app # ReplicaSet 확인 kubectl get rs -l app=my-app # 파드 상태 확인 kubectl get pods -l app=my-app # 이벤트 확인 kubectl get events --sort-by='.lastTimestamp' . ",
+    "url": "/docs/deploy/rolling-update.html#%EB%AA%A8%EB%8B%88%ED%84%B0%EB%A7%81-%EB%B0%8F-%EB%94%94%EB%B2%84%EA%B9%85",
+    
+    "relUrl": "/docs/deploy/rolling-update.html#모니터링-및-디버깅"
+  },"168": {
+    "doc": "Rolling Update",
+    "title": "베스트 프랙티스",
+    "content": ". | 적절한 replica 수: 최소 2개 이상의 replica 유지 | Health Check: Readiness/Liveness Probe 설정 | 점진적 배포: maxSurge와 maxUnavailable 조정 | 모니터링: 배포 후 메트릭과 로그 확인 | 롤백 준비: 문제 발생 시 빠른 롤백 계획 | . ",
+    "url": "/docs/deploy/rolling-update.html#%EB%B2%A0%EC%8A%A4%ED%8A%B8-%ED%94%84%EB%9E%99%ED%8B%B0%EC%8A%A4",
+    
+    "relUrl": "/docs/deploy/rolling-update.html#베스트-프랙티스"
+  },"169": {
+    "doc": "Rolling Update",
+    "title": "사용 시나리오",
+    "content": ". | ✅ 웹 애플리케이션: 무중단 서비스가 중요한 경우 | ✅ API 서비스: 지속적인 가용성이 필요한 경우 | ✅ 마이크로서비스: 각 서비스의 독립적 배포 | ✅ 개발/스테이징 환경: 안전한 배포 테스트 | . Rolling Update는 Kubernetes의 기본 배포 전략으로, 대부분의 애플리케이션에 적합한 안전하고 효율적인 배포 방식을 제공합니다. ",
+    "url": "/docs/deploy/rolling-update.html#%EC%82%AC%EC%9A%A9-%EC%8B%9C%EB%82%98%EB%A6%AC%EC%98%A4",
+    
+    "relUrl": "/docs/deploy/rolling-update.html#사용-시나리오"
+  },"170": {
+    "doc": "Rolling Update",
+    "title": "Rolling Update",
+    "content": " ",
+    "url": "/docs/deploy/rolling-update.html",
+    
+    "relUrl": "/docs/deploy/rolling-update.html"
   }
 }
