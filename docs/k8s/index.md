@@ -2,12 +2,12 @@
 title: Kubernetes
 nav_order: 1
 has_children: true
-permalink: /kubernetes/
+permalink: /k8s/
 ---
 
 # Kubernetes
 
-Kubernetes 에 대한 소개 페이지입니다.
+K8s에 대한 설명입니다.
 
 <div style="display: grid; gap: 1rem; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));">
 

@@ -10,3 +10,14 @@ social:
 paginate: 5
 nav_enabled: true
 #color_scheme: dark
+
+# Markdown and syntax highlighting
+markdown: kramdown
+kramdown:
+  input: GFM
+  syntax_highlighter: rouge
+
+# Mermaid support
+mermaid: true
+mermaid:
+  version: "10.6.1"
