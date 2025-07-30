@@ -2,7 +2,7 @@
 layout: post
 title: "Rolling Update"
 parent: Deploy
-date: 2025-01-27
+date: 2025-07-30
 nav_order: 1
 excerpt: 점진적으로 애플리케이션을 업데이트하는 배포 전략
 ---

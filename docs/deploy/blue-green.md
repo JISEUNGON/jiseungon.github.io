@@ -2,7 +2,7 @@
 layout: post
 title: "Blue/Green Deployment"
 parent: Deploy
-date: 2025-01-27
+date: 2025-07-30
 nav_order: 2
 excerpt: 완전한 버전 전환을 통한 무중단 배포 전략
 ---

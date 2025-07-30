@@ -2,7 +2,7 @@
 layout: post
 title: "Canary Deployment"
 parent: Deploy
-date: 2025-01-27
+date: 2025-07-30
 nav_order: 3
 excerpt: 소규모 사용자 그룹을 대상으로 한 점진적 배포 전략
 ---
