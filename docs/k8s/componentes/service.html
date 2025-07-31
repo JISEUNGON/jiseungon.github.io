@@ -1,0 +1,322 @@
+<!DOCTYPE html> <html lang="en"> <head> <meta charset="UTF-8"> <meta http-equiv="X-UA-Compatible" content="IE=Edge"> <link rel="stylesheet" href="/assets/css/just-the-docs-default.css"> <link rel="stylesheet" href="/assets/css/just-the-docs-head-nav.css" id="jtd-head-nav-stylesheet"> <style id="jtd-nav-activation"> .site-nav > ul.nav-list:first-child > li > a, .site-nav > ul.nav-list:first-child > li > ul > li > a, .site-nav > ul.nav-list:first-child > li > ul > li > ul > li:not(:nth-child(4)) > a, .site-nav > ul.nav-list:first-child > li > ul > li > ul > li > ul > li a { background-image: none; } .site-nav > ul.nav-list:not(:first-child) a, .site-nav li.external a { background-image: none; } .site-nav > ul.nav-list:first-child > li:nth-child(4) > ul > li:nth-child(4) > ul > li:nth-child(4) > a { font-weight: 600; text-decoration: none; }.site-nav > ul.nav-list:first-child > li:nth-child(4) > button svg, .site-nav > ul.nav-list:first-child > li:nth-child(4) > ul > li:nth-child(4) > button svg, .site-nav > ul.nav-list:first-child > li:nth-child(4) > ul > li:nth-child(4) > ul > li:nth-child(4) > button svg { transform: rotate(-90deg); }.site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(4) > ul.nav-list, .site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(4) > ul.nav-list > li.nav-list-item:nth-child(4) > ul.nav-list, .site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(4) > ul.nav-list > li.nav-list-item:nth-child(4) > ul.nav-list > li.nav-list-item:nth-child(4) > ul.nav-list { display: block; } </style> <script src="/assets/js/vendor/lunr.min.js"></script> <script src="/assets/js/just-the-docs.js"></script> <meta name="viewport" content="width=device-width, initial-scale=1"> <!-- Begin Jekyll SEO tag v2.8.0 --> <title>Service | Seungeon’s blog</title> <meta name="generator" content="Jekyll v3.10.0" /> <meta property="og:title" content="Service" /> <meta property="og:locale" content="en" /> <meta name="description" content="Service component in Kubernetes" /> <meta property="og:description" content="Service component in Kubernetes" /> <meta property="og:site_name" content="Seungeon’s blog" /> <meta property="og:type" content="article" /> <meta property="article:published_time" content="2025-07-31T00:00:00+09:00" /> <meta name="twitter:card" content="summary" /> <meta property="twitter:title" content="Service" /> <script type="application/ld+json"> {"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2025-07-31T00:00:00+09:00","datePublished":"2025-07-31T00:00:00+09:00","description":"Service component in Kubernetes","headline":"Service","mainEntityOfPage":{"@type":"WebPage","@id":"/docs/k8s/componentes/service.html"},"url":"/docs/k8s/componentes/service.html"}</script> <!-- End Jekyll SEO tag --> </head> <body> <a class="skip-to-main" href="#main-content">Skip to main content</a> <svg xmlns="http://www.w3.org/2000/svg" class="d-none"> <symbol id="svg-link" viewBox="0 0 24 24"> <title>Link</title> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-link"> <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path> </svg> </symbol> <symbol id="svg-menu" viewBox="0 0 24 24"> <title>Menu</title> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"> <line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line> </svg> </symbol> <symbol id="svg-arrow-right" viewBox="0 0 24 24"> <title>Expand</title> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"> <polyline points="9 18 15 12 9 6"></polyline> </svg> </symbol> <!-- Feather. MIT License: https://github.com/feathericons/feather/blob/master/LICENSE --> <symbol id="svg-external-link" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link"> <title id="svg-external-link-title">(external link)</title> <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line> </symbol> <symbol id="svg-doc" viewBox="0 0 24 24"> <title>Document</title> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file"> <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline> </svg> </symbol> <symbol id="svg-search" viewBox="0 0 24 24"> <title>Search</title> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"> <circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line> </svg> </symbol> <!-- Bootstrap Icons. MIT License: https://github.com/twbs/icons/blob/main/LICENSE.md --> <symbol id="svg-copy" viewBox="0 0 16 16"> <title>Copy</title> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard" viewBox="0 0 16 16"> <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/> <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/> </svg> </symbol> <symbol id="svg-copied" viewBox="0 0 16 16"> <title>Copied</title> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard-check-fill" viewBox="0 0 16 16"> <path d="M6.5 0A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3Zm3 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3Z"/> <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1A2.5 2.5 0 0 1 9.5 5h-3A2.5 2.5 0 0 1 4 2.5v-1Zm6.854 7.354-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L7.5 10.793l2.646-2.647a.5.5 0 0 1 .708.708Z"/> </svg> </symbol> </svg> <div class="side-bar"> <div class="site-header" role="banner"> <a href="/" class="site-title lh-tight"> Seungeon's blog </a> <button id="menu-button" class="site-button btn-reset" aria-label="Toggle menu" aria-pressed="false"> <svg viewBox="0 0 24 24" class="icon" aria-hidden="true"><use xlink:href="#svg-menu"></use></svg> </button> </div> <nav aria-label="Main" id="site-nav" class="site-nav"> <ul class="nav-list"><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="toggle items in Deploy category" aria-pressed="false"> <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg> </button><a href="/deploy/" class="nav-list-link">Deploy</a><ul class="nav-list"><li class="nav-list-item"><a href="/docs/deploy/rolling-update.html" class="nav-list-link">Rolling Update</a></li><li class="nav-list-item"><a href="/docs/deploy/blue-green.html" class="nav-list-link">Blue/Green Deployment</a></li><li class="nav-list-item"><a href="/docs/deploy/canary.html" class="nav-list-link">Canary Deployment</a></li></ul></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="toggle items in Helm category" aria-pressed="false"> <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg> </button><a href="/helm/" class="nav-list-link">Helm</a><ul class="nav-list"><li class="nav-list-item"><a href="/docs/helm/command.html" class="nav-list-link">How-to-use-Helm</a></li><li class="nav-list-item"><a href="/docs/helm/concept.html" class="nav-list-link">What-is-Helm</a></li><li class="nav-list-item"><a href="/docs/helm/grammer.html" class="nav-list-link">How-to-write-helm-chart</a></li></ul></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="toggle items in Jekyll category" aria-pressed="false"> <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg> </button><a href="/jekyll/" class="nav-list-link">Jekyll</a><ul class="nav-list"><li class="nav-list-item"><a href="/docs/jekyll/install-jekyll.html" class="nav-list-link">How to Install Jekyll</a></li><li class="nav-list-item"><a href="/docs/jekyll/just-the-docs.html" class="nav-list-link">How to use just-the-docs docs</a></li></ul></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="toggle items in Kubernetes category" aria-pressed="false"> <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg> </button><a href="/k8s/" class="nav-list-link">Kubernetes</a><ul class="nav-list"><li class="nav-list-item"><a href="/docs/k8s/command.html" class="nav-list-link">How to use kubectl</a></li><li class="nav-list-item"><a href="/docs/k8s/concept.html" class="nav-list-link">What-is-Kubernetes</a></li><li class="nav-list-item"><a href="/docs/k8s/grammer.html" class="nav-list-link">How-to-write-helm-chart</a></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="toggle items in Kubernetes Components category" aria-pressed="false"> <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg> </button><a href="/k8s/componentes/" class="nav-list-link">Kubernetes Components</a><ul class="nav-list"><li class="nav-list-item"><a href="/docs/k8s/componentes/clusterrole.html" class="nav-list-link">ClusterRole</a></li><li class="nav-list-item"><a href="/docs/k8s/componentes/pod.html" class="nav-list-link">Pod</a></li><li class="nav-list-item"><a href="/docs/k8s/componentes/deployment.html" class="nav-list-link">Deployment</a></li><li class="nav-list-item"><a href="/docs/k8s/componentes/service.html" class="nav-list-link">Service</a></li><li class="nav-list-item"><a href="/docs/k8s/componentes/ingress.html" class="nav-list-link">Ingress</a></li><li class="nav-list-item"><a href="/docs/k8s/componentes/configmap.html" class="nav-list-link">ConfigMap</a></li><li class="nav-list-item"><a href="/docs/k8s/componentes/role.html" class="nav-list-link">Role</a></li><li class="nav-list-item"><a href="/docs/k8s/componentes/rolebinding.html" class="nav-list-link">RoleBinding</a></li><li class="nav-list-item"><a href="/docs/k8s/componentes/clusterrolebinding.html" class="nav-list-link">ClusterRoleBinding</a></li><li class="nav-list-item"><a href="/docs/k8s/componentes/serviceaccount.html" class="nav-list-link">ServiceAccount</a></li><li class="nav-list-item"><a href="/docs/k8s/componentes/statefulset.html" class="nav-list-link">StatefulSet</a></li><li class="nav-list-item"><a href="/docs/k8s/componentes/kube-system.html" class="nav-list-link">kube-system</a></li></ul></li></ul></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="toggle items in Markdown category" aria-pressed="false"> <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg> </button><a href="/diagram/" class="nav-list-link">Markdown</a><ul class="nav-list"><li class="nav-list-item"><a href="/docs/markdown/diagram.html" class="nav-list-link">How to make diagram in markdown</a></li></ul></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="toggle items in Container category" aria-pressed="false"> <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg> </button><a href="/all-container/" class="nav-list-link">Container</a><ul class="nav-list"><li class="nav-list-item"><a href="/docs/all-container/container-runtime.html" class="nav-list-link">What-is-Container-Runtime</a></li><li class="nav-list-item"><a href="/docs/all-container/container.html" class="nav-list-link">What-is-Container</a></li><li class="nav-list-item"><a href="/docs/all-container/docker.html" class="nav-list-link">All-of-docker</a></li><li class="nav-list-item"><a href="/docs/all-container/registry.html" class="nav-list-link">Docker Registry</a></li></ul></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="toggle items in Git category" aria-pressed="false"> <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg> </button><a href="/git/" class="nav-list-link">Git</a><ul class="nav-list"><li class="nav-list-item"><a href="/docs/git/command.html" class="nav-list-link">git-command</a></li><li class="nav-list-item"><a href="/docs/git/git-concepts.html" class="nav-list-link">Git 개념</a></li><li class="nav-list-item"><a href="/docs/git/git-filter-repo.html" class="nav-list-link">git-filter-repo</a></li></ul></li></ul> </nav> <footer class="site-footer"> This site uses <a href="https://github.com/just-the-docs/just-the-docs">Just the Docs</a>, a documentation theme for Jekyll. </footer> </div> <div class="main" id="top"> <div id="main-header" class="main-header"> <div class="search" role="search"> <div class="search-input-wrap"> <input type="text" id="search-input" class="search-input" tabindex="0" placeholder="Search Seungeon's blog" aria-label="Search Seungeon's blog" autocomplete="off"> <label for="search-input" class="search-label"><svg viewBox="0 0 24 24" class="search-icon"><use xlink:href="#svg-search"></use></svg></label> </div> <div id="search-results" class="search-results"></div> </div> </div> <div class="main-content-wrap"> <nav aria-label="Breadcrumb" class="breadcrumb-nav"> <ol class="breadcrumb-nav-list"> <li class="breadcrumb-nav-list-item"><a href="/k8s/">Kubernetes</a></li> <li class="breadcrumb-nav-list-item"><a href="/k8s/componentes/">Kubernetes Components</a></li> <li class="breadcrumb-nav-list-item"><span>Service</span></li> </ol> </nav> <div id="main-content" class="main-content"> <main> <h2 id="service-개요"> <a href="#service-개요" class="anchor-heading" aria-labelledby="service-개요"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Service 개요 </h2> <p>Service는 Kubernetes에서 Pod 집합에 대한 네트워크 엔드포인트를 제공하는 리소스입니다. Pod의 IP는 일시적이므로, Service를 통해 안정적인 네트워크 접근을 제공합니다.</p> <h3 id="service의-특징"> <a href="#service의-특징" class="anchor-heading" aria-labelledby="service의-특징"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Service의 특징 </h3> <ol> <li><strong>안정적인 엔드포인트</strong>: Pod가 재시작되어도 동일한 IP와 포트로 접근 가능</li> <li><strong>로드 밸런싱</strong>: 여러 Pod에 트래픽을 분산</li> <li><strong>서비스 디스커버리</strong>: DNS를 통한 자동 서비스 발견</li> <li><strong>다양한 타입</strong>: ClusterIP, NodePort, LoadBalancer, ExternalName</li> </ol><hr /> <h2 id="service-구조"> <a href="#service-구조" class="anchor-heading" aria-labelledby="service-구조"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Service 구조 </h2><pre><code class="language-mermaid">graph TD
+    A[Client] --&gt; B[Service]
+    B --&gt; C[Pod 1]
+    B --&gt; D[Pod 2]
+    B --&gt; E[Pod 3]
+
+    F[External Client] --&gt; G[LoadBalancer]
+    G --&gt; H[NodePort]
+    H --&gt; I[ClusterIP]
+    I --&gt; C
+    I --&gt; D
+    I --&gt; E
+
+    style A fill:#e3f2fd
+    style B fill:#e1f5fe
+    style C fill:#f3e5f5
+    style D fill:#f3e5f5
+    style E fill:#f3e5f5
+    style F fill:#e3f2fd
+    style G fill:#fff3e0
+    style H fill:#fff3e0
+    style I fill:#e1f5fe
+</code></pre><hr /> <h2 id="service-타입"> <a href="#service-타입" class="anchor-heading" aria-labelledby="service-타입"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Service 타입 </h2> <h3 id="1-clusterip-기본값"> <a href="#1-clusterip-기본값" class="anchor-heading" aria-labelledby="1-clusterip-기본값"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 1. ClusterIP (기본값) </h3> <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">apiVersion</span><span class="pi">:</span> <span class="s">v1</span>
+<span class="na">kind</span><span class="pi">:</span> <span class="s">Service</span>
+<span class="na">metadata</span><span class="pi">:</span>
+  <span class="na">name</span><span class="pi">:</span> <span class="s">my-service</span>
+  <span class="na">labels</span><span class="pi">:</span>
+    <span class="na">app</span><span class="pi">:</span> <span class="s">myapp</span>
+<span class="na">spec</span><span class="pi">:</span>
+  <span class="na">type</span><span class="pi">:</span> <span class="s">ClusterIP</span>
+  <span class="na">ports</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="na">port</span><span class="pi">:</span> <span class="m">80</span> <span class="c1"># Service 포트</span>
+      <span class="na">targetPort</span><span class="pi">:</span> <span class="m">8080</span> <span class="c1"># Pod 포트</span>
+      <span class="na">protocol</span><span class="pi">:</span> <span class="s">TCP</span>
+      <span class="na">name</span><span class="pi">:</span> <span class="s">http</span>
+    <span class="pi">-</span> <span class="na">port</span><span class="pi">:</span> <span class="m">443</span>
+      <span class="na">targetPort</span><span class="pi">:</span> <span class="m">8443</span>
+      <span class="na">protocol</span><span class="pi">:</span> <span class="s">TCP</span>
+      <span class="na">name</span><span class="pi">:</span> <span class="s">https</span>
+  <span class="na">selector</span><span class="pi">:</span>
+    <span class="na">app</span><span class="pi">:</span> <span class="s">myapp</span>
+</code></pre></div></div> <h3 id="2-nodeport"> <a href="#2-nodeport" class="anchor-heading" aria-labelledby="2-nodeport"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 2. NodePort </h3> <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">apiVersion</span><span class="pi">:</span> <span class="s">v1</span>
+<span class="na">kind</span><span class="pi">:</span> <span class="s">Service</span>
+<span class="na">metadata</span><span class="pi">:</span>
+  <span class="na">name</span><span class="pi">:</span> <span class="s">my-nodeport-service</span>
+<span class="na">spec</span><span class="pi">:</span>
+  <span class="na">type</span><span class="pi">:</span> <span class="s">NodePort</span>
+  <span class="na">ports</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="na">port</span><span class="pi">:</span> <span class="m">80</span>
+      <span class="na">targetPort</span><span class="pi">:</span> <span class="m">8080</span>
+      <span class="na">nodePort</span><span class="pi">:</span> <span class="m">30080</span> <span class="c1"># 노드 포트 (30000-32767)</span>
+      <span class="na">protocol</span><span class="pi">:</span> <span class="s">TCP</span>
+      <span class="na">name</span><span class="pi">:</span> <span class="s">http</span>
+  <span class="na">selector</span><span class="pi">:</span>
+    <span class="na">app</span><span class="pi">:</span> <span class="s">myapp</span>
+</code></pre></div></div> <h3 id="3-loadbalancer"> <a href="#3-loadbalancer" class="anchor-heading" aria-labelledby="3-loadbalancer"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 3. LoadBalancer </h3> <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">apiVersion</span><span class="pi">:</span> <span class="s">v1</span>
+<span class="na">kind</span><span class="pi">:</span> <span class="s">Service</span>
+<span class="na">metadata</span><span class="pi">:</span>
+  <span class="na">name</span><span class="pi">:</span> <span class="s">my-loadbalancer-service</span>
+<span class="na">spec</span><span class="pi">:</span>
+  <span class="na">type</span><span class="pi">:</span> <span class="s">LoadBalancer</span>
+  <span class="na">ports</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="na">port</span><span class="pi">:</span> <span class="m">80</span>
+      <span class="na">targetPort</span><span class="pi">:</span> <span class="m">8080</span>
+      <span class="na">protocol</span><span class="pi">:</span> <span class="s">TCP</span>
+      <span class="na">name</span><span class="pi">:</span> <span class="s">http</span>
+  <span class="na">selector</span><span class="pi">:</span>
+    <span class="na">app</span><span class="pi">:</span> <span class="s">myapp</span>
+  <span class="na">externalTrafficPolicy</span><span class="pi">:</span> <span class="s">Local</span> <span class="c1"># 노드 로컬 트래픽 정책</span>
+</code></pre></div></div> <h3 id="4-externalname"> <a href="#4-externalname" class="anchor-heading" aria-labelledby="4-externalname"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 4. ExternalName </h3> <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">apiVersion</span><span class="pi">:</span> <span class="s">v1</span>
+<span class="na">kind</span><span class="pi">:</span> <span class="s">Service</span>
+<span class="na">metadata</span><span class="pi">:</span>
+  <span class="na">name</span><span class="pi">:</span> <span class="s">my-external-service</span>
+<span class="na">spec</span><span class="pi">:</span>
+  <span class="na">type</span><span class="pi">:</span> <span class="s">ExternalName</span>
+  <span class="na">externalName</span><span class="pi">:</span> <span class="s">api.example.com</span>
+  <span class="na">ports</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="na">port</span><span class="pi">:</span> <span class="m">80</span>
+      <span class="na">protocol</span><span class="pi">:</span> <span class="s">TCP</span>
+      <span class="na">name</span><span class="pi">:</span> <span class="s">http</span>
+</code></pre></div></div><hr /> <h2 id="service-네트워킹"> <a href="#service-네트워킹" class="anchor-heading" aria-labelledby="service-네트워킹"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Service 네트워킹 </h2> <h3 id="service-ip-할당"> <a href="#service-ip-할당" class="anchor-heading" aria-labelledby="service-ip-할당"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Service IP 할당 </h3><pre><code class="language-mermaid">graph TD
+    A[Service] --&gt; B[ClusterIP: 10.96.1.100]
+    B --&gt; C[Endpoints]
+    C --&gt; D[Pod 1: 172.16.1.10:8080]
+    C --&gt; E[Pod 2: 172.16.1.11:8080]
+    C --&gt; F[Pod 3: 172.16.1.12:8080]
+
+    G[DNS Resolution] --&gt; H[my-service.default.svc.cluster.local]
+    H --&gt; B
+
+    style A fill:#e1f5fe
+    style B fill:#f3e5f5
+    style C fill:#e8f5e8
+    style D fill:#fff3e0
+    style E fill:#fff3e0
+    style F fill:#fff3e0
+    style G fill:#e3f2fd
+    style H fill:#e3f2fd
+</code></pre><h3 id="dns-서비스-디스커버리"> <a href="#dns-서비스-디스커버리" class="anchor-heading" aria-labelledby="dns-서비스-디스커버리"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> DNS 서비스 디스커버리 </h3> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Service DNS 이름 형식</span>
+&lt;service-name&gt;.&lt;namespace&gt;.svc.&lt;cluster-domain&gt;
+
+<span class="c"># 예시</span>
+my-service.default.svc.cluster.local
+web-app.production.svc.cluster.local
+</code></pre></div></div><hr /> <h2 id="service-예시"> <a href="#service-예시" class="anchor-heading" aria-labelledby="service-예시"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Service 예시 </h2> <h3 id="기본-웹-서비스"> <a href="#기본-웹-서비스" class="anchor-heading" aria-labelledby="기본-웹-서비스"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 기본 웹 서비스 </h3> <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">apiVersion</span><span class="pi">:</span> <span class="s">v1</span>
+<span class="na">kind</span><span class="pi">:</span> <span class="s">Service</span>
+<span class="na">metadata</span><span class="pi">:</span>
+  <span class="na">name</span><span class="pi">:</span> <span class="s">web-service</span>
+  <span class="na">labels</span><span class="pi">:</span>
+    <span class="na">app</span><span class="pi">:</span> <span class="s">web</span>
+<span class="na">spec</span><span class="pi">:</span>
+  <span class="na">ports</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="na">port</span><span class="pi">:</span> <span class="m">80</span>
+      <span class="na">targetPort</span><span class="pi">:</span> <span class="m">8080</span>
+      <span class="na">protocol</span><span class="pi">:</span> <span class="s">TCP</span>
+      <span class="na">name</span><span class="pi">:</span> <span class="s">http</span>
+  <span class="na">selector</span><span class="pi">:</span>
+    <span class="na">app</span><span class="pi">:</span> <span class="s">web</span>
+</code></pre></div></div> <h3 id="다중-포트-서비스"> <a href="#다중-포트-서비스" class="anchor-heading" aria-labelledby="다중-포트-서비스"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 다중 포트 서비스 </h3> <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">apiVersion</span><span class="pi">:</span> <span class="s">v1</span>
+<span class="na">kind</span><span class="pi">:</span> <span class="s">Service</span>
+<span class="na">metadata</span><span class="pi">:</span>
+  <span class="na">name</span><span class="pi">:</span> <span class="s">multi-port-service</span>
+<span class="na">spec</span><span class="pi">:</span>
+  <span class="na">ports</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">http</span>
+      <span class="na">port</span><span class="pi">:</span> <span class="m">80</span>
+      <span class="na">targetPort</span><span class="pi">:</span> <span class="m">8080</span>
+      <span class="na">protocol</span><span class="pi">:</span> <span class="s">TCP</span>
+    <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">https</span>
+      <span class="na">port</span><span class="pi">:</span> <span class="m">443</span>
+      <span class="na">targetPort</span><span class="pi">:</span> <span class="m">8443</span>
+      <span class="na">protocol</span><span class="pi">:</span> <span class="s">TCP</span>
+    <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">metrics</span>
+      <span class="na">port</span><span class="pi">:</span> <span class="m">9090</span>
+      <span class="na">targetPort</span><span class="pi">:</span> <span class="m">9090</span>
+      <span class="na">protocol</span><span class="pi">:</span> <span class="s">TCP</span>
+  <span class="na">selector</span><span class="pi">:</span>
+    <span class="na">app</span><span class="pi">:</span> <span class="s">myapp</span>
+</code></pre></div></div> <h3 id="세션-어피니티가-있는-서비스"> <a href="#세션-어피니티가-있는-서비스" class="anchor-heading" aria-labelledby="세션-어피니티가-있는-서비스"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 세션 어피니티가 있는 서비스 </h3> <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">apiVersion</span><span class="pi">:</span> <span class="s">v1</span>
+<span class="na">kind</span><span class="pi">:</span> <span class="s">Service</span>
+<span class="na">metadata</span><span class="pi">:</span>
+  <span class="na">name</span><span class="pi">:</span> <span class="s">session-service</span>
+<span class="na">spec</span><span class="pi">:</span>
+  <span class="na">ports</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="na">port</span><span class="pi">:</span> <span class="m">80</span>
+      <span class="na">targetPort</span><span class="pi">:</span> <span class="m">8080</span>
+      <span class="na">protocol</span><span class="pi">:</span> <span class="s">TCP</span>
+  <span class="na">selector</span><span class="pi">:</span>
+    <span class="na">app</span><span class="pi">:</span> <span class="s">session-app</span>
+  <span class="na">sessionAffinity</span><span class="pi">:</span> <span class="s">ClientIP</span>
+  <span class="na">sessionAffinityConfig</span><span class="pi">:</span>
+    <span class="na">clientIP</span><span class="pi">:</span>
+      <span class="na">timeoutSeconds</span><span class="pi">:</span> <span class="m">3600</span>
+</code></pre></div></div><hr /> <h2 id="endpoints"> <a href="#endpoints" class="anchor-heading" aria-labelledby="endpoints"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Endpoints </h2> <h3 id="자동-생성되는-endpoints"> <a href="#자동-생성되는-endpoints" class="anchor-heading" aria-labelledby="자동-생성되는-endpoints"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 자동 생성되는 Endpoints </h3> <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">apiVersion</span><span class="pi">:</span> <span class="s">v1</span>
+<span class="na">kind</span><span class="pi">:</span> <span class="s">Endpoints</span>
+<span class="na">metadata</span><span class="pi">:</span>
+  <span class="na">name</span><span class="pi">:</span> <span class="s">my-service</span>
+<span class="na">subsets</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="na">addresses</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="na">ip</span><span class="pi">:</span> <span class="s">172.16.1.10</span>
+        <span class="na">nodeName</span><span class="pi">:</span> <span class="s">node-1</span>
+      <span class="pi">-</span> <span class="na">ip</span><span class="pi">:</span> <span class="s">172.16.1.11</span>
+        <span class="na">nodeName</span><span class="pi">:</span> <span class="s">node-2</span>
+      <span class="pi">-</span> <span class="na">ip</span><span class="pi">:</span> <span class="s">172.16.1.12</span>
+        <span class="na">nodeName</span><span class="pi">:</span> <span class="s">node-3</span>
+    <span class="na">ports</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="na">port</span><span class="pi">:</span> <span class="m">8080</span>
+        <span class="na">protocol</span><span class="pi">:</span> <span class="s">TCP</span>
+</code></pre></div></div> <h3 id="수동-endpoints"> <a href="#수동-endpoints" class="anchor-heading" aria-labelledby="수동-endpoints"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 수동 Endpoints </h3> <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">apiVersion</span><span class="pi">:</span> <span class="s">v1</span>
+<span class="na">kind</span><span class="pi">:</span> <span class="s">Service</span>
+<span class="na">metadata</span><span class="pi">:</span>
+  <span class="na">name</span><span class="pi">:</span> <span class="s">external-service</span>
+<span class="na">spec</span><span class="pi">:</span>
+  <span class="na">ports</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="na">port</span><span class="pi">:</span> <span class="m">80</span>
+      <span class="na">protocol</span><span class="pi">:</span> <span class="s">TCP</span>
+<span class="nn">---</span>
+<span class="na">apiVersion</span><span class="pi">:</span> <span class="s">v1</span>
+<span class="na">kind</span><span class="pi">:</span> <span class="s">Endpoints</span>
+<span class="na">metadata</span><span class="pi">:</span>
+  <span class="na">name</span><span class="pi">:</span> <span class="s">external-service</span>
+<span class="na">subsets</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="na">addresses</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="na">ip</span><span class="pi">:</span> <span class="s">192.168.1.100</span>
+    <span class="na">ports</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="na">port</span><span class="pi">:</span> <span class="m">80</span>
+        <span class="na">protocol</span><span class="pi">:</span> <span class="s">TCP</span>
+</code></pre></div></div><hr /> <h2 id="service-관리-명령어"> <a href="#service-관리-명령어" class="anchor-heading" aria-labelledby="service-관리-명령어"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Service 관리 명령어 </h2> <h3 id="기본-명령어"> <a href="#기본-명령어" class="anchor-heading" aria-labelledby="기본-명령어"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 기본 명령어 </h3> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Service 생성</span>
+kubectl apply <span class="nt">-f</span> service.yaml
+
+<span class="c"># Service 목록 확인</span>
+kubectl get services
+kubectl get svc
+
+<span class="c"># Service 상세 정보 확인</span>
+kubectl describe service &lt;service-name&gt;
+
+<span class="c"># Service 삭제</span>
+kubectl delete service &lt;service-name&gt;
+
+<span class="c"># Service IP 확인</span>
+kubectl get service &lt;service-name&gt; <span class="nt">-o</span> wide
+</code></pre></div></div> <h3 id="디버깅-명령어"> <a href="#디버깅-명령어" class="anchor-heading" aria-labelledby="디버깅-명령어"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 디버깅 명령어 </h3> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Endpoints 확인</span>
+kubectl get endpoints &lt;service-name&gt;
+
+<span class="c"># Service DNS 확인</span>
+kubectl run test-dns <span class="nt">--image</span><span class="o">=</span>busybox <span class="nt">--rm</span> <span class="nt">-it</span> <span class="nt">--restart</span><span class="o">=</span>Never <span class="nt">--</span> nslookup &lt;service-name&gt;
+
+<span class="c"># Service 연결 테스트</span>
+kubectl run test-connection <span class="nt">--image</span><span class="o">=</span>busybox <span class="nt">--rm</span> <span class="nt">-it</span> <span class="nt">--restart</span><span class="o">=</span>Never <span class="nt">--</span> wget <span class="nt">-O-</span> &lt;service-name&gt;:&lt;port&gt;
+
+<span class="c"># Service 로그 확인</span>
+kubectl logs <span class="nt">-l</span> <span class="nv">app</span><span class="o">=</span>&lt;app-label&gt;
+</code></pre></div></div><hr /> <h2 id="service-사용-사례"> <a href="#service-사용-사례" class="anchor-heading" aria-labelledby="service-사용-사례"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Service 사용 사례 </h2> <h3 id="1-웹-애플리케이션"> <a href="#1-웹-애플리케이션" class="anchor-heading" aria-labelledby="1-웹-애플리케이션"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 1. 웹 애플리케이션 </h3> <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">apiVersion</span><span class="pi">:</span> <span class="s">v1</span>
+<span class="na">kind</span><span class="pi">:</span> <span class="s">Service</span>
+<span class="na">metadata</span><span class="pi">:</span>
+  <span class="na">name</span><span class="pi">:</span> <span class="s">web-app-service</span>
+  <span class="na">labels</span><span class="pi">:</span>
+    <span class="na">app</span><span class="pi">:</span> <span class="s">web-app</span>
+<span class="na">spec</span><span class="pi">:</span>
+  <span class="na">type</span><span class="pi">:</span> <span class="s">LoadBalancer</span>
+  <span class="na">ports</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="na">port</span><span class="pi">:</span> <span class="m">80</span>
+      <span class="na">targetPort</span><span class="pi">:</span> <span class="m">8080</span>
+      <span class="na">protocol</span><span class="pi">:</span> <span class="s">TCP</span>
+      <span class="na">name</span><span class="pi">:</span> <span class="s">http</span>
+    <span class="pi">-</span> <span class="na">port</span><span class="pi">:</span> <span class="m">443</span>
+      <span class="na">targetPort</span><span class="pi">:</span> <span class="m">8443</span>
+      <span class="na">protocol</span><span class="pi">:</span> <span class="s">TCP</span>
+      <span class="na">name</span><span class="pi">:</span> <span class="s">https</span>
+  <span class="na">selector</span><span class="pi">:</span>
+    <span class="na">app</span><span class="pi">:</span> <span class="s">web-app</span>
+  <span class="na">sessionAffinity</span><span class="pi">:</span> <span class="s">ClientIP</span>
+</code></pre></div></div> <h3 id="2-데이터베이스-서비스"> <a href="#2-데이터베이스-서비스" class="anchor-heading" aria-labelledby="2-데이터베이스-서비스"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 2. 데이터베이스 서비스 </h3> <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">apiVersion</span><span class="pi">:</span> <span class="s">v1</span>
+<span class="na">kind</span><span class="pi">:</span> <span class="s">Service</span>
+<span class="na">metadata</span><span class="pi">:</span>
+  <span class="na">name</span><span class="pi">:</span> <span class="s">database-service</span>
+<span class="na">spec</span><span class="pi">:</span>
+  <span class="na">type</span><span class="pi">:</span> <span class="s">ClusterIP</span>
+  <span class="na">ports</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="na">port</span><span class="pi">:</span> <span class="m">5432</span>
+      <span class="na">targetPort</span><span class="pi">:</span> <span class="m">5432</span>
+      <span class="na">protocol</span><span class="pi">:</span> <span class="s">TCP</span>
+      <span class="na">name</span><span class="pi">:</span> <span class="s">postgresql</span>
+  <span class="na">selector</span><span class="pi">:</span>
+    <span class="na">app</span><span class="pi">:</span> <span class="s">database</span>
+  <span class="na">sessionAffinity</span><span class="pi">:</span> <span class="s">None</span>
+</code></pre></div></div> <h3 id="3-api-서비스"> <a href="#3-api-서비스" class="anchor-heading" aria-labelledby="3-api-서비스"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 3. API 서비스 </h3> <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">apiVersion</span><span class="pi">:</span> <span class="s">v1</span>
+<span class="na">kind</span><span class="pi">:</span> <span class="s">Service</span>
+<span class="na">metadata</span><span class="pi">:</span>
+  <span class="na">name</span><span class="pi">:</span> <span class="s">api-service</span>
+  <span class="na">annotations</span><span class="pi">:</span>
+    <span class="na">service.beta.kubernetes.io/aws-load-balancer-type</span><span class="pi">:</span> <span class="s2">"</span><span class="s">nlb"</span>
+<span class="na">spec</span><span class="pi">:</span>
+  <span class="na">type</span><span class="pi">:</span> <span class="s">LoadBalancer</span>
+  <span class="na">ports</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="na">port</span><span class="pi">:</span> <span class="m">80</span>
+      <span class="na">targetPort</span><span class="pi">:</span> <span class="m">8080</span>
+      <span class="na">protocol</span><span class="pi">:</span> <span class="s">TCP</span>
+      <span class="na">name</span><span class="pi">:</span> <span class="s">http</span>
+    <span class="pi">-</span> <span class="na">port</span><span class="pi">:</span> <span class="m">443</span>
+      <span class="na">targetPort</span><span class="pi">:</span> <span class="m">8443</span>
+      <span class="na">protocol</span><span class="pi">:</span> <span class="s">TCP</span>
+      <span class="na">name</span><span class="pi">:</span> <span class="s">https</span>
+  <span class="na">selector</span><span class="pi">:</span>
+    <span class="na">app</span><span class="pi">:</span> <span class="s">api</span>
+  <span class="na">externalTrafficPolicy</span><span class="pi">:</span> <span class="s">Local</span>
+</code></pre></div></div><hr /> <h2 id="service-네트워크-정책"> <a href="#service-네트워크-정책" class="anchor-heading" aria-labelledby="service-네트워크-정책"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Service 네트워크 정책 </h2> <h3 id="networkpolicy-예시"> <a href="#networkpolicy-예시" class="anchor-heading" aria-labelledby="networkpolicy-예시"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> NetworkPolicy 예시 </h3> <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">apiVersion</span><span class="pi">:</span> <span class="s">networking.k8s.io/v1</span>
+<span class="na">kind</span><span class="pi">:</span> <span class="s">NetworkPolicy</span>
+<span class="na">metadata</span><span class="pi">:</span>
+  <span class="na">name</span><span class="pi">:</span> <span class="s">api-network-policy</span>
+<span class="na">spec</span><span class="pi">:</span>
+  <span class="na">podSelector</span><span class="pi">:</span>
+    <span class="na">matchLabels</span><span class="pi">:</span>
+      <span class="na">app</span><span class="pi">:</span> <span class="s">api</span>
+  <span class="na">policyTypes</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="s">Ingress</span>
+    <span class="pi">-</span> <span class="s">Egress</span>
+  <span class="na">ingress</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="na">from</span><span class="pi">:</span>
+        <span class="pi">-</span> <span class="na">podSelector</span><span class="pi">:</span>
+            <span class="na">matchLabels</span><span class="pi">:</span>
+              <span class="na">app</span><span class="pi">:</span> <span class="s">web</span>
+      <span class="na">ports</span><span class="pi">:</span>
+        <span class="pi">-</span> <span class="na">protocol</span><span class="pi">:</span> <span class="s">TCP</span>
+          <span class="na">port</span><span class="pi">:</span> <span class="m">8080</span>
+  <span class="na">egress</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="na">to</span><span class="pi">:</span>
+        <span class="pi">-</span> <span class="na">podSelector</span><span class="pi">:</span>
+            <span class="na">matchLabels</span><span class="pi">:</span>
+              <span class="na">app</span><span class="pi">:</span> <span class="s">database</span>
+      <span class="na">ports</span><span class="pi">:</span>
+        <span class="pi">-</span> <span class="na">protocol</span><span class="pi">:</span> <span class="s">TCP</span>
+          <span class="na">port</span><span class="pi">:</span> <span class="m">5432</span>
+</code></pre></div></div><hr /> <h2 id="service-모니터링"> <a href="#service-모니터링" class="anchor-heading" aria-labelledby="service-모니터링"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Service 모니터링 </h2> <h3 id="헬스-체크"> <a href="#헬스-체크" class="anchor-heading" aria-labelledby="헬스-체크"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 헬스 체크 </h3> <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">apiVersion</span><span class="pi">:</span> <span class="s">v1</span>
+<span class="na">kind</span><span class="pi">:</span> <span class="s">Service</span>
+<span class="na">metadata</span><span class="pi">:</span>
+  <span class="na">name</span><span class="pi">:</span> <span class="s">health-check-service</span>
+  <span class="na">annotations</span><span class="pi">:</span>
+    <span class="na">service.beta.kubernetes.io/aws-load-balancer-health-check-path</span><span class="pi">:</span> <span class="s2">"</span><span class="s">/health"</span>
+    <span class="na">service.beta.kubernetes.io/aws-load-balancer-health-check-port</span><span class="pi">:</span> <span class="s2">"</span><span class="s">8080"</span>
+<span class="na">spec</span><span class="pi">:</span>
+  <span class="na">type</span><span class="pi">:</span> <span class="s">LoadBalancer</span>
+  <span class="na">ports</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="na">port</span><span class="pi">:</span> <span class="m">80</span>
+      <span class="na">targetPort</span><span class="pi">:</span> <span class="m">8080</span>
+      <span class="na">protocol</span><span class="pi">:</span> <span class="s">TCP</span>
+  <span class="na">selector</span><span class="pi">:</span>
+    <span class="na">app</span><span class="pi">:</span> <span class="s">web</span>
+</code></pre></div></div> <h3 id="메트릭-수집"> <a href="#메트릭-수집" class="anchor-heading" aria-labelledby="메트릭-수집"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 메트릭 수집 </h3> <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">apiVersion</span><span class="pi">:</span> <span class="s">v1</span>
+<span class="na">kind</span><span class="pi">:</span> <span class="s">Service</span>
+<span class="na">metadata</span><span class="pi">:</span>
+  <span class="na">name</span><span class="pi">:</span> <span class="s">metrics-service</span>
+<span class="na">spec</span><span class="pi">:</span>
+  <span class="na">ports</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="na">port</span><span class="pi">:</span> <span class="m">9090</span>
+      <span class="na">targetPort</span><span class="pi">:</span> <span class="m">9090</span>
+      <span class="na">protocol</span><span class="pi">:</span> <span class="s">TCP</span>
+      <span class="na">name</span><span class="pi">:</span> <span class="s">metrics</span>
+  <span class="na">selector</span><span class="pi">:</span>
+    <span class="na">app</span><span class="pi">:</span> <span class="s">myapp</span>
+</code></pre></div></div><hr /> <h2 id="service-vs-ingress"> <a href="#service-vs-ingress" class="anchor-heading" aria-labelledby="service-vs-ingress"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Service vs Ingress </h2> <div class="table-wrapper"><table> <thead> <tr> <th>특징</th> <th>Service</th> <th>Ingress</th> </tr> </thead> <tbody> <tr> <td><strong>OSI 레이어</strong></td> <td>L4 (Transport)</td> <td>L7 (Application)</td> </tr> <tr> <td><strong>로드 밸런싱</strong></td> <td>기본 로드 밸런싱</td> <td>고급 로드 밸런싱</td> </tr> <tr> <td><strong>SSL/TLS</strong></td> <td>지원 안함</td> <td>지원</td> </tr> <tr> <td><strong>Path 기반 라우팅</strong></td> <td>지원 안함</td> <td>지원</td> </tr> <tr> <td><strong>Host 기반 라우팅</strong></td> <td>지원 안함</td> <td>지원</td> </tr> <tr> <td><strong>사용 사례</strong></td> <td>내부 서비스</td> <td>외부 웹 트래픽</td> </tr> </tbody> </table></div><hr /> <h2 id="주의사항"> <a href="#주의사항" class="anchor-heading" aria-labelledby="주의사항"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 주의사항 </h2> <ol> <li><strong>포트 매핑</strong>: Service 포트와 Pod 포트를 올바르게 매핑해야 합니다</li> <li><strong>세션 어피니티</strong>: 필요한 경우 세션 어피니티를 설정해야 합니다</li> <li><strong>네트워크 정책</strong>: 보안을 위해 NetworkPolicy를 설정해야 합니다</li> <li><strong>모니터링</strong>: Service의 상태와 성능을 지속적으로 모니터링해야 합니다</li> <li><strong>DNS 캐싱</strong>: DNS 캐싱으로 인한 문제를 고려해야 합니다</li> </ol> </main> </div> </div> <div class="search-overlay"></div> </div> <script type="module"> import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10.6.1/dist/mermaid.esm.min.mjs'; var config = {} ; mermaid.initialize(config); mermaid.run({ querySelector: '.language-mermaid', }); </script> </body> </html>

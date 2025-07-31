@@ -1,0 +1,450 @@
+<!DOCTYPE html> <html lang="en"> <head> <meta charset="UTF-8"> <meta http-equiv="X-UA-Compatible" content="IE=Edge"> <link rel="stylesheet" href="/assets/css/just-the-docs-default.css"> <link rel="stylesheet" href="/assets/css/just-the-docs-head-nav.css" id="jtd-head-nav-stylesheet"> <style id="jtd-nav-activation"> .site-nav > ul.nav-list:first-child > li > a, .site-nav > ul.nav-list:first-child > li > ul > li > a, .site-nav > ul.nav-list:first-child > li > ul > li > ul > li:not(:nth-child(6)) > a, .site-nav > ul.nav-list:first-child > li > ul > li > ul > li > ul > li a { background-image: none; } .site-nav > ul.nav-list:not(:first-child) a, .site-nav li.external a { background-image: none; } .site-nav > ul.nav-list:first-child > li:nth-child(4) > ul > li:nth-child(4) > ul > li:nth-child(6) > a { font-weight: 600; text-decoration: none; }.site-nav > ul.nav-list:first-child > li:nth-child(4) > button svg, .site-nav > ul.nav-list:first-child > li:nth-child(4) > ul > li:nth-child(4) > button svg, .site-nav > ul.nav-list:first-child > li:nth-child(4) > ul > li:nth-child(4) > ul > li:nth-child(6) > button svg { transform: rotate(-90deg); }.site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(4) > ul.nav-list, .site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(4) > ul.nav-list > li.nav-list-item:nth-child(4) > ul.nav-list, .site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(4) > ul.nav-list > li.nav-list-item:nth-child(4) > ul.nav-list > li.nav-list-item:nth-child(6) > ul.nav-list { display: block; } </style> <script src="/assets/js/vendor/lunr.min.js"></script> <script src="/assets/js/just-the-docs.js"></script> <meta name="viewport" content="width=device-width, initial-scale=1"> <!-- Begin Jekyll SEO tag v2.8.0 --> <title>ConfigMap | Seungeon’s blog</title> <meta name="generator" content="Jekyll v3.10.0" /> <meta property="og:title" content="ConfigMap" /> <meta property="og:locale" content="en" /> <meta name="description" content="ConfigMap component in Kubernetes" /> <meta property="og:description" content="ConfigMap component in Kubernetes" /> <meta property="og:site_name" content="Seungeon’s blog" /> <meta property="og:type" content="article" /> <meta property="article:published_time" content="2025-07-31T00:00:00+09:00" /> <meta name="twitter:card" content="summary" /> <meta property="twitter:title" content="ConfigMap" /> <script type="application/ld+json"> {"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2025-07-31T00:00:00+09:00","datePublished":"2025-07-31T00:00:00+09:00","description":"ConfigMap component in Kubernetes","headline":"ConfigMap","mainEntityOfPage":{"@type":"WebPage","@id":"/docs/k8s/componentes/configmap.html"},"url":"/docs/k8s/componentes/configmap.html"}</script> <!-- End Jekyll SEO tag --> </head> <body> <a class="skip-to-main" href="#main-content">Skip to main content</a> <svg xmlns="http://www.w3.org/2000/svg" class="d-none"> <symbol id="svg-link" viewBox="0 0 24 24"> <title>Link</title> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-link"> <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path> </svg> </symbol> <symbol id="svg-menu" viewBox="0 0 24 24"> <title>Menu</title> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"> <line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line> </svg> </symbol> <symbol id="svg-arrow-right" viewBox="0 0 24 24"> <title>Expand</title> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"> <polyline points="9 18 15 12 9 6"></polyline> </svg> </symbol> <!-- Feather. MIT License: https://github.com/feathericons/feather/blob/master/LICENSE --> <symbol id="svg-external-link" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link"> <title id="svg-external-link-title">(external link)</title> <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line> </symbol> <symbol id="svg-doc" viewBox="0 0 24 24"> <title>Document</title> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file"> <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline> </svg> </symbol> <symbol id="svg-search" viewBox="0 0 24 24"> <title>Search</title> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"> <circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line> </svg> </symbol> <!-- Bootstrap Icons. MIT License: https://github.com/twbs/icons/blob/main/LICENSE.md --> <symbol id="svg-copy" viewBox="0 0 16 16"> <title>Copy</title> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard" viewBox="0 0 16 16"> <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/> <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/> </svg> </symbol> <symbol id="svg-copied" viewBox="0 0 16 16"> <title>Copied</title> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard-check-fill" viewBox="0 0 16 16"> <path d="M6.5 0A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3Zm3 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3Z"/> <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1A2.5 2.5 0 0 1 9.5 5h-3A2.5 2.5 0 0 1 4 2.5v-1Zm6.854 7.354-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L7.5 10.793l2.646-2.647a.5.5 0 0 1 .708.708Z"/> </svg> </symbol> </svg> <div class="side-bar"> <div class="site-header" role="banner"> <a href="/" class="site-title lh-tight"> Seungeon's blog </a> <button id="menu-button" class="site-button btn-reset" aria-label="Toggle menu" aria-pressed="false"> <svg viewBox="0 0 24 24" class="icon" aria-hidden="true"><use xlink:href="#svg-menu"></use></svg> </button> </div> <nav aria-label="Main" id="site-nav" class="site-nav"> <ul class="nav-list"><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="toggle items in Deploy category" aria-pressed="false"> <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg> </button><a href="/deploy/" class="nav-list-link">Deploy</a><ul class="nav-list"><li class="nav-list-item"><a href="/docs/deploy/rolling-update.html" class="nav-list-link">Rolling Update</a></li><li class="nav-list-item"><a href="/docs/deploy/blue-green.html" class="nav-list-link">Blue/Green Deployment</a></li><li class="nav-list-item"><a href="/docs/deploy/canary.html" class="nav-list-link">Canary Deployment</a></li></ul></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="toggle items in Helm category" aria-pressed="false"> <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg> </button><a href="/helm/" class="nav-list-link">Helm</a><ul class="nav-list"><li class="nav-list-item"><a href="/docs/helm/command.html" class="nav-list-link">How-to-use-Helm</a></li><li class="nav-list-item"><a href="/docs/helm/concept.html" class="nav-list-link">What-is-Helm</a></li><li class="nav-list-item"><a href="/docs/helm/grammer.html" class="nav-list-link">How-to-write-helm-chart</a></li></ul></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="toggle items in Jekyll category" aria-pressed="false"> <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg> </button><a href="/jekyll/" class="nav-list-link">Jekyll</a><ul class="nav-list"><li class="nav-list-item"><a href="/docs/jekyll/install-jekyll.html" class="nav-list-link">How to Install Jekyll</a></li><li class="nav-list-item"><a href="/docs/jekyll/just-the-docs.html" class="nav-list-link">How to use just-the-docs docs</a></li></ul></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="toggle items in Kubernetes category" aria-pressed="false"> <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg> </button><a href="/k8s/" class="nav-list-link">Kubernetes</a><ul class="nav-list"><li class="nav-list-item"><a href="/docs/k8s/command.html" class="nav-list-link">How to use kubectl</a></li><li class="nav-list-item"><a href="/docs/k8s/concept.html" class="nav-list-link">What-is-Kubernetes</a></li><li class="nav-list-item"><a href="/docs/k8s/grammer.html" class="nav-list-link">How-to-write-helm-chart</a></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="toggle items in Kubernetes Components category" aria-pressed="false"> <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg> </button><a href="/k8s/componentes/" class="nav-list-link">Kubernetes Components</a><ul class="nav-list"><li class="nav-list-item"><a href="/docs/k8s/componentes/clusterrole.html" class="nav-list-link">ClusterRole</a></li><li class="nav-list-item"><a href="/docs/k8s/componentes/pod.html" class="nav-list-link">Pod</a></li><li class="nav-list-item"><a href="/docs/k8s/componentes/deployment.html" class="nav-list-link">Deployment</a></li><li class="nav-list-item"><a href="/docs/k8s/componentes/service.html" class="nav-list-link">Service</a></li><li class="nav-list-item"><a href="/docs/k8s/componentes/ingress.html" class="nav-list-link">Ingress</a></li><li class="nav-list-item"><a href="/docs/k8s/componentes/configmap.html" class="nav-list-link">ConfigMap</a></li><li class="nav-list-item"><a href="/docs/k8s/componentes/role.html" class="nav-list-link">Role</a></li><li class="nav-list-item"><a href="/docs/k8s/componentes/rolebinding.html" class="nav-list-link">RoleBinding</a></li><li class="nav-list-item"><a href="/docs/k8s/componentes/clusterrolebinding.html" class="nav-list-link">ClusterRoleBinding</a></li><li class="nav-list-item"><a href="/docs/k8s/componentes/serviceaccount.html" class="nav-list-link">ServiceAccount</a></li><li class="nav-list-item"><a href="/docs/k8s/componentes/statefulset.html" class="nav-list-link">StatefulSet</a></li><li class="nav-list-item"><a href="/docs/k8s/componentes/kube-system.html" class="nav-list-link">kube-system</a></li></ul></li></ul></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="toggle items in Markdown category" aria-pressed="false"> <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg> </button><a href="/diagram/" class="nav-list-link">Markdown</a><ul class="nav-list"><li class="nav-list-item"><a href="/docs/markdown/diagram.html" class="nav-list-link">How to make diagram in markdown</a></li></ul></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="toggle items in Container category" aria-pressed="false"> <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg> </button><a href="/all-container/" class="nav-list-link">Container</a><ul class="nav-list"><li class="nav-list-item"><a href="/docs/all-container/container-runtime.html" class="nav-list-link">What-is-Container-Runtime</a></li><li class="nav-list-item"><a href="/docs/all-container/container.html" class="nav-list-link">What-is-Container</a></li><li class="nav-list-item"><a href="/docs/all-container/docker.html" class="nav-list-link">All-of-docker</a></li><li class="nav-list-item"><a href="/docs/all-container/registry.html" class="nav-list-link">Docker Registry</a></li></ul></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="toggle items in Git category" aria-pressed="false"> <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg> </button><a href="/git/" class="nav-list-link">Git</a><ul class="nav-list"><li class="nav-list-item"><a href="/docs/git/command.html" class="nav-list-link">git-command</a></li><li class="nav-list-item"><a href="/docs/git/git-concepts.html" class="nav-list-link">Git 개념</a></li><li class="nav-list-item"><a href="/docs/git/git-filter-repo.html" class="nav-list-link">git-filter-repo</a></li></ul></li></ul> </nav> <footer class="site-footer"> This site uses <a href="https://github.com/just-the-docs/just-the-docs">Just the Docs</a>, a documentation theme for Jekyll. </footer> </div> <div class="main" id="top"> <div id="main-header" class="main-header"> <div class="search" role="search"> <div class="search-input-wrap"> <input type="text" id="search-input" class="search-input" tabindex="0" placeholder="Search Seungeon's blog" aria-label="Search Seungeon's blog" autocomplete="off"> <label for="search-input" class="search-label"><svg viewBox="0 0 24 24" class="search-icon"><use xlink:href="#svg-search"></use></svg></label> </div> <div id="search-results" class="search-results"></div> </div> </div> <div class="main-content-wrap"> <nav aria-label="Breadcrumb" class="breadcrumb-nav"> <ol class="breadcrumb-nav-list"> <li class="breadcrumb-nav-list-item"><a href="/k8s/">Kubernetes</a></li> <li class="breadcrumb-nav-list-item"><a href="/k8s/componentes/">Kubernetes Components</a></li> <li class="breadcrumb-nav-list-item"><span>ConfigMap</span></li> </ol> </nav> <div id="main-content" class="main-content"> <main> <h2 id="configmap-개요"> <a href="#configmap-개요" class="anchor-heading" aria-labelledby="configmap-개요"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> ConfigMap 개요 </h2> <p>ConfigMap은 Kubernetes에서 설정 데이터를 Pod와 분리하여 관리하는 리소스입니다. 애플리케이션의 설정 파일, 환경변수, 명령행 인수 등을 외부화하여 컨테이너 이미지와 독립적으로 관리할 수 있습니다.</p> <h3 id="configmap의-특징"> <a href="#configmap의-특징" class="anchor-heading" aria-labelledby="configmap의-특징"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> ConfigMap의 특징 </h3> <ol> <li><strong>설정 분리</strong>: 애플리케이션 코드와 설정을 분리</li> <li><strong>환경별 관리</strong>: 개발, 스테이징, 프로덕션 환경별 설정 관리</li> <li><strong>동적 업데이트</strong>: Pod 재시작 없이 설정 변경 가능 (일부 경우)</li> <li><strong>보안</strong>: 민감한 정보는 Secret을 사용하여 관리</li> </ol><hr /> <h2 id="configmap-구조"> <a href="#configmap-구조" class="anchor-heading" aria-labelledby="configmap-구조"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> ConfigMap 구조 </h2><pre><code class="language-mermaid">graph TD
+    A[ConfigMap] --&gt; B[Key-Value Pairs]
+    A --&gt; C[Configuration Files]
+    A --&gt; D[Environment Variables]
+
+    B --&gt; E[app.properties]
+    B --&gt; F[database.conf]
+    B --&gt; G[nginx.conf]
+
+    H[Pod] --&gt; I[Container]
+    I --&gt; J[Volume Mount]
+    I --&gt; K[Environment Variable]
+
+    J --&gt; L[/etc/config/app.properties]
+    K --&gt; M[APP_CONFIG=database.conf]
+
+    style A fill:#e1f5fe
+    style B fill:#f3e5f5
+    style C fill:#f3e5f5
+    style D fill:#f3e5f5
+    style H fill:#e8f5e8
+    style I fill:#fff3e0
+    style J fill:#e3f2fd
+    style K fill:#e3f2fd
+</code></pre><hr /> <h2 id="configmap-생성-방법"> <a href="#configmap-생성-방법" class="anchor-heading" aria-labelledby="configmap-생성-방법"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> ConfigMap 생성 방법 </h2> <h3 id="1-명령행에서-생성"> <a href="#1-명령행에서-생성" class="anchor-heading" aria-labelledby="1-명령행에서-생성"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 1. 명령행에서 생성 </h3> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># 키-값 쌍으로 생성</span>
+kubectl create configmap my-config <span class="nt">--from-literal</span><span class="o">=</span><span class="nv">key1</span><span class="o">=</span>value1 <span class="nt">--from-literal</span><span class="o">=</span><span class="nv">key2</span><span class="o">=</span>value2
+
+<span class="c"># 파일에서 생성</span>
+kubectl create configmap my-config <span class="nt">--from-file</span><span class="o">=</span>app.properties <span class="nt">--from-file</span><span class="o">=</span>database.conf
+
+<span class="c"># 디렉토리에서 생성</span>
+kubectl create configmap my-config <span class="nt">--from-file</span><span class="o">=</span>./config/
+
+<span class="c"># 환경변수 파일에서 생성</span>
+kubectl create configmap my-config <span class="nt">--from-env-file</span><span class="o">=</span>app.env
+</code></pre></div></div> <h3 id="2-yaml-파일로-생성"> <a href="#2-yaml-파일로-생성" class="anchor-heading" aria-labelledby="2-yaml-파일로-생성"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 2. YAML 파일로 생성 </h3> <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">apiVersion</span><span class="pi">:</span> <span class="s">v1</span>
+<span class="na">kind</span><span class="pi">:</span> <span class="s">ConfigMap</span>
+<span class="na">metadata</span><span class="pi">:</span>
+  <span class="na">name</span><span class="pi">:</span> <span class="s">my-config</span>
+  <span class="na">namespace</span><span class="pi">:</span> <span class="s">default</span>
+<span class="na">data</span><span class="pi">:</span>
+  <span class="c1"># 키-값 쌍</span>
+  <span class="na">log-level</span><span class="pi">:</span> <span class="s2">"</span><span class="s">INFO"</span>
+  <span class="na">database-url</span><span class="pi">:</span> <span class="s2">"</span><span class="s">postgresql://user:pass@db:5432/mydb"</span>
+
+  <span class="c1"># 설정 파일</span>
+  <span class="na">app.properties</span><span class="pi">:</span> <span class="pi">|</span>
+    <span class="s">server.port=8080</span>
+    <span class="s">logging.level.root=INFO</span>
+    <span class="s">spring.profiles.active=production</span>
+
+  <span class="na">nginx.conf</span><span class="pi">:</span> <span class="pi">|</span>
+    <span class="s">server {</span>
+        <span class="s">listen 80;</span>
+        <span class="s">server_name localhost;</span>
+    <span class="no">    </span>
+        <span class="s">location / {</span>
+            <span class="s">root /usr/share/nginx/html;</span>
+            <span class="s">index index.html index.htm;</span>
+        <span class="s">}</span>
+    <span class="s">}</span>
+
+  <span class="na">database.conf</span><span class="pi">:</span> <span class="pi">|</span>
+    <span class="s">[database]</span>
+    <span class="s">host=db.example.com</span>
+    <span class="s">port=5432</span>
+    <span class="s">name=myapp</span>
+    <span class="s">user=appuser</span>
+</code></pre></div></div><hr /> <h2 id="configmap-사용-방법"> <a href="#configmap-사용-방법" class="anchor-heading" aria-labelledby="configmap-사용-방법"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> ConfigMap 사용 방법 </h2> <h3 id="1-환경변수로-사용"> <a href="#1-환경변수로-사용" class="anchor-heading" aria-labelledby="1-환경변수로-사용"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 1. 환경변수로 사용 </h3> <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">apiVersion</span><span class="pi">:</span> <span class="s">v1</span>
+<span class="na">kind</span><span class="pi">:</span> <span class="s">Pod</span>
+<span class="na">metadata</span><span class="pi">:</span>
+  <span class="na">name</span><span class="pi">:</span> <span class="s">config-pod</span>
+<span class="na">spec</span><span class="pi">:</span>
+  <span class="na">containers</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">app</span>
+      <span class="na">image</span><span class="pi">:</span> <span class="s">myapp:1.0</span>
+      <span class="na">env</span><span class="pi">:</span>
+        <span class="c1"># 단일 값</span>
+        <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">LOG_LEVEL</span>
+          <span class="na">valueFrom</span><span class="pi">:</span>
+            <span class="na">configMapKeyRef</span><span class="pi">:</span>
+              <span class="na">name</span><span class="pi">:</span> <span class="s">my-config</span>
+              <span class="na">key</span><span class="pi">:</span> <span class="s">log-level</span>
+      <span class="c1"># 전체 ConfigMap을 환경변수로</span>
+      <span class="na">envFrom</span><span class="pi">:</span>
+        <span class="pi">-</span> <span class="na">configMapRef</span><span class="pi">:</span>
+            <span class="na">name</span><span class="pi">:</span> <span class="s">my-config</span>
+</code></pre></div></div> <h3 id="2-볼륨으로-마운트"> <a href="#2-볼륨으로-마운트" class="anchor-heading" aria-labelledby="2-볼륨으로-마운트"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 2. 볼륨으로 마운트 </h3> <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">apiVersion</span><span class="pi">:</span> <span class="s">v1</span>
+<span class="na">kind</span><span class="pi">:</span> <span class="s">Pod</span>
+<span class="na">metadata</span><span class="pi">:</span>
+  <span class="na">name</span><span class="pi">:</span> <span class="s">config-pod</span>
+<span class="na">spec</span><span class="pi">:</span>
+  <span class="na">containers</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">app</span>
+      <span class="na">image</span><span class="pi">:</span> <span class="s">myapp:1.0</span>
+      <span class="na">volumeMounts</span><span class="pi">:</span>
+        <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">config-volume</span>
+          <span class="na">mountPath</span><span class="pi">:</span> <span class="s">/etc/config</span>
+          <span class="na">readOnly</span><span class="pi">:</span> <span class="no">true</span>
+        <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">nginx-config</span>
+          <span class="na">mountPath</span><span class="pi">:</span> <span class="s">/etc/nginx/conf.d</span>
+          <span class="na">readOnly</span><span class="pi">:</span> <span class="no">true</span>
+  <span class="na">volumes</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">config-volume</span>
+      <span class="na">configMap</span><span class="pi">:</span>
+        <span class="na">name</span><span class="pi">:</span> <span class="s">my-config</span>
+        <span class="na">items</span><span class="pi">:</span>
+          <span class="pi">-</span> <span class="na">key</span><span class="pi">:</span> <span class="s">app.properties</span>
+            <span class="na">path</span><span class="pi">:</span> <span class="s">app.properties</span>
+          <span class="pi">-</span> <span class="na">key</span><span class="pi">:</span> <span class="s">database.conf</span>
+            <span class="na">path</span><span class="pi">:</span> <span class="s">database.conf</span>
+    <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">nginx-config</span>
+      <span class="na">configMap</span><span class="pi">:</span>
+        <span class="na">name</span><span class="pi">:</span> <span class="s">my-config</span>
+        <span class="na">items</span><span class="pi">:</span>
+          <span class="pi">-</span> <span class="na">key</span><span class="pi">:</span> <span class="s">nginx.conf</span>
+            <span class="na">path</span><span class="pi">:</span> <span class="s">default.conf</span>
+</code></pre></div></div> <h3 id="3-하위-경로로-마운트"> <a href="#3-하위-경로로-마운트" class="anchor-heading" aria-labelledby="3-하위-경로로-마운트"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 3. 하위 경로로 마운트 </h3> <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">apiVersion</span><span class="pi">:</span> <span class="s">v1</span>
+<span class="na">kind</span><span class="pi">:</span> <span class="s">Pod</span>
+<span class="na">metadata</span><span class="pi">:</span>
+  <span class="na">name</span><span class="pi">:</span> <span class="s">config-pod</span>
+<span class="na">spec</span><span class="pi">:</span>
+  <span class="na">containers</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">app</span>
+      <span class="na">image</span><span class="pi">:</span> <span class="s">myapp:1.0</span>
+      <span class="na">volumeMounts</span><span class="pi">:</span>
+        <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">config-volume</span>
+          <span class="na">mountPath</span><span class="pi">:</span> <span class="s">/etc/config</span>
+          <span class="na">readOnly</span><span class="pi">:</span> <span class="no">true</span>
+  <span class="na">volumes</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">config-volume</span>
+      <span class="na">configMap</span><span class="pi">:</span>
+        <span class="na">name</span><span class="pi">:</span> <span class="s">my-config</span>
+        <span class="c1"># 전체 ConfigMap을 개별 파일로 마운트</span>
+</code></pre></div></div><hr /> <h2 id="configmap-예시"> <a href="#configmap-예시" class="anchor-heading" aria-labelledby="configmap-예시"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> ConfigMap 예시 </h2> <h3 id="1-웹-애플리케이션-설정"> <a href="#1-웹-애플리케이션-설정" class="anchor-heading" aria-labelledby="1-웹-애플리케이션-설정"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 1. 웹 애플리케이션 설정 </h3> <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">apiVersion</span><span class="pi">:</span> <span class="s">v1</span>
+<span class="na">kind</span><span class="pi">:</span> <span class="s">ConfigMap</span>
+<span class="na">metadata</span><span class="pi">:</span>
+  <span class="na">name</span><span class="pi">:</span> <span class="s">web-app-config</span>
+<span class="na">data</span><span class="pi">:</span>
+  <span class="c1"># 환경변수</span>
+  <span class="na">NODE_ENV</span><span class="pi">:</span> <span class="s2">"</span><span class="s">production"</span>
+  <span class="na">PORT</span><span class="pi">:</span> <span class="s2">"</span><span class="s">8080"</span>
+  <span class="na">DATABASE_URL</span><span class="pi">:</span> <span class="s2">"</span><span class="s">postgresql://user:pass@db:5432/webapp"</span>
+
+  <span class="c1"># 설정 파일</span>
+  <span class="na">config.json</span><span class="pi">:</span> <span class="pi">|</span>
+    <span class="s">{</span>
+      <span class="s">"server": {</span>
+        <span class="s">"port": 8080,</span>
+        <span class="s">"host": "0.0.0.0"</span>
+      <span class="s">},</span>
+      <span class="s">"database": {</span>
+        <span class="s">"host": "db.example.com",</span>
+        <span class="s">"port": 5432,</span>
+        <span class="s">"name": "webapp"</span>
+      <span class="s">},</span>
+      <span class="s">"logging": {</span>
+        <span class="s">"level": "info",</span>
+        <span class="s">"format": "json"</span>
+      <span class="s">}</span>
+    <span class="s">}</span>
+
+  <span class="na">nginx.conf</span><span class="pi">:</span> <span class="pi">|</span>
+    <span class="s">server {</span>
+        <span class="s">listen 80;</span>
+        <span class="s">server_name localhost;</span>
+    <span class="no">    </span>
+        <span class="s">location / {</span>
+            <span class="s">proxy_pass http://localhost:8080;</span>
+            <span class="s">proxy_set_header Host $host;</span>
+            <span class="s">proxy_set_header X-Real-IP $remote_addr;</span>
+        <span class="s">}</span>
+    <span class="s">}</span>
+</code></pre></div></div> <h3 id="2-데이터베이스-설정"> <a href="#2-데이터베이스-설정" class="anchor-heading" aria-labelledby="2-데이터베이스-설정"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 2. 데이터베이스 설정 </h3> <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">apiVersion</span><span class="pi">:</span> <span class="s">v1</span>
+<span class="na">kind</span><span class="pi">:</span> <span class="s">ConfigMap</span>
+<span class="na">metadata</span><span class="pi">:</span>
+  <span class="na">name</span><span class="pi">:</span> <span class="s">database-config</span>
+<span class="na">data</span><span class="pi">:</span>
+  <span class="c1"># PostgreSQL 설정</span>
+  <span class="na">postgresql.conf</span><span class="pi">:</span> <span class="pi">|</span>
+    <span class="s"># 기본 설정</span>
+    <span class="s">listen_addresses = '*'</span>
+    <span class="s">port = 5432</span>
+    <span class="s">max_connections = 100</span>
+
+    <span class="s"># 메모리 설정</span>
+    <span class="s">shared_buffers = 256MB</span>
+    <span class="s">effective_cache_size = 1GB</span>
+
+    <span class="s"># 로깅 설정</span>
+    <span class="s">log_destination = 'stderr'</span>
+    <span class="s">logging_collector = on</span>
+    <span class="s">log_directory = 'log'</span>
+    <span class="s">log_filename = 'postgresql-%Y-%m-%d_%H%M%S.log'</span>
+
+  <span class="c1"># 초기화 스크립트</span>
+  <span class="na">init.sql</span><span class="pi">:</span> <span class="pi">|</span>
+    <span class="s">CREATE DATABASE myapp;</span>
+    <span class="s">CREATE USER appuser WITH PASSWORD 'password';</span>
+    <span class="s">GRANT ALL PRIVILEGES ON DATABASE myapp TO appuser;</span>
+
+  <span class="c1"># 환경변수</span>
+  <span class="na">POSTGRES_DB</span><span class="pi">:</span> <span class="s2">"</span><span class="s">myapp"</span>
+  <span class="na">POSTGRES_USER</span><span class="pi">:</span> <span class="s2">"</span><span class="s">appuser"</span>
+  <span class="na">POSTGRES_PASSWORD</span><span class="pi">:</span> <span class="s2">"</span><span class="s">password"</span>
+</code></pre></div></div> <h3 id="3-마이크로서비스-설정"> <a href="#3-마이크로서비스-설정" class="anchor-heading" aria-labelledby="3-마이크로서비스-설정"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 3. 마이크로서비스 설정 </h3> <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">apiVersion</span><span class="pi">:</span> <span class="s">v1</span>
+<span class="na">kind</span><span class="pi">:</span> <span class="s">ConfigMap</span>
+<span class="na">metadata</span><span class="pi">:</span>
+  <span class="na">name</span><span class="pi">:</span> <span class="s">microservice-config</span>
+<span class="na">data</span><span class="pi">:</span>
+  <span class="c1"># API 서비스 설정</span>
+  <span class="na">api-service.properties</span><span class="pi">:</span> <span class="pi">|</span>
+    <span class="s">server.port=8080</span>
+    <span class="s">spring.application.name=api-service</span>
+    <span class="s">spring.profiles.active=production</span>
+
+    <span class="s"># 데이터베이스 설정</span>
+    <span class="s">spring.datasource.url=jdbc:postgresql://db:5432/myapp</span>
+    <span class="s">spring.datasource.username=appuser</span>
+    <span class="s">spring.datasource.password=password</span>
+
+    <span class="s"># 로깅 설정</span>
+    <span class="s">logging.level.root=INFO</span>
+    <span class="s">logging.level.com.myapp=DEBUG</span>
+
+    <span class="s"># 보안 설정</span>
+    <span class="s">security.oauth2.client.client-id=myapp</span>
+    <span class="s">security.oauth2.client.client-secret=secret</span>
+
+  <span class="c1"># 사용자 서비스 설정</span>
+  <span class="na">user-service.properties</span><span class="pi">:</span> <span class="pi">|</span>
+    <span class="s">server.port=8081</span>
+    <span class="s">spring.application.name=user-service</span>
+    <span class="s">spring.profiles.active=production</span>
+
+    <span class="s"># 데이터베이스 설정</span>
+    <span class="s">spring.datasource.url=jdbc:postgresql://db:5432/users</span>
+    <span class="s">spring.datasource.username=userapp</span>
+    <span class="s">spring.datasource.password=password</span>
+
+    <span class="s"># 캐시 설정</span>
+    <span class="s">spring.cache.type=redis</span>
+    <span class="s">spring.redis.host=redis</span>
+    <span class="s">spring.redis.port=6379</span>
+
+  <span class="c1"># 주문 서비스 설정</span>
+  <span class="na">order-service.properties</span><span class="pi">:</span> <span class="pi">|</span>
+    <span class="s">server.port=8082</span>
+    <span class="s">spring.application.name=order-service</span>
+    <span class="s">spring.profiles.active=production</span>
+
+    <span class="s"># 데이터베이스 설정</span>
+    <span class="s">spring.datasource.url=jdbc:postgresql://db:5432/orders</span>
+    <span class="s">spring.datasource.username=orderapp</span>
+    <span class="s">spring.datasource.password=password</span>
+
+    <span class="s"># 메시징 설정</span>
+    <span class="s">spring.kafka.bootstrap-servers=kafka:9092</span>
+    <span class="s">spring.kafka.consumer.group-id=order-service</span>
+</code></pre></div></div><hr /> <h2 id="configmap-관리-명령어"> <a href="#configmap-관리-명령어" class="anchor-heading" aria-labelledby="configmap-관리-명령어"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> ConfigMap 관리 명령어 </h2> <h3 id="기본-명령어"> <a href="#기본-명령어" class="anchor-heading" aria-labelledby="기본-명령어"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 기본 명령어 </h3> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># ConfigMap 생성</span>
+kubectl create configmap my-config <span class="nt">--from-literal</span><span class="o">=</span><span class="nv">key</span><span class="o">=</span>value
+kubectl apply <span class="nt">-f</span> configmap.yaml
+
+<span class="c"># ConfigMap 목록 확인</span>
+kubectl get configmaps
+kubectl get cm
+
+<span class="c"># ConfigMap 상세 정보 확인</span>
+kubectl describe configmap &lt;configmap-name&gt;
+
+<span class="c"># ConfigMap 내용 확인</span>
+kubectl get configmap &lt;configmap-name&gt; <span class="nt">-o</span> yaml
+
+<span class="c"># ConfigMap 삭제</span>
+kubectl delete configmap &lt;configmap-name&gt;
+</code></pre></div></div> <h3 id="편집-명령어"> <a href="#편집-명령어" class="anchor-heading" aria-labelledby="편집-명령어"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 편집 명령어 </h3> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># ConfigMap 편집</span>
+kubectl edit configmap &lt;configmap-name&gt;
+
+<span class="c"># ConfigMap 복사</span>
+kubectl get configmap &lt;source-configmap&gt; <span class="nt">-o</span> yaml | <span class="nb">sed</span> <span class="s1">'s/name: &lt;source-configmap&gt;/name: &lt;target-configmap&gt;/'</span> | kubectl apply <span class="nt">-f</span> -
+
+<span class="c"># ConfigMap 내보내기</span>
+kubectl get configmap &lt;configmap-name&gt; <span class="nt">-o</span> yaml <span class="o">&gt;</span> configmap-backup.yaml
+</code></pre></div></div><hr /> <h2 id="configmap-업데이트"> <a href="#configmap-업데이트" class="anchor-heading" aria-labelledby="configmap-업데이트"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> ConfigMap 업데이트 </h2> <h3 id="1-configmap-업데이트"> <a href="#1-configmap-업데이트" class="anchor-heading" aria-labelledby="1-configmap-업데이트"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 1. ConfigMap 업데이트 </h3> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># ConfigMap 업데이트</span>
+kubectl patch configmap my-config <span class="nt">-p</span> <span class="s1">'{"data":{"log-level":"DEBUG"}}'</span>
+
+<span class="c"># 또는 편집</span>
+kubectl edit configmap my-config
+</code></pre></div></div> <h3 id="2-pod-재시작-없이-업데이트"> <a href="#2-pod-재시작-없이-업데이트" class="anchor-heading" aria-labelledby="2-pod-재시작-없이-업데이트"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 2. Pod 재시작 없이 업데이트 </h3> <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">apiVersion</span><span class="pi">:</span> <span class="s">apps/v1</span>
+<span class="na">kind</span><span class="pi">:</span> <span class="s">Deployment</span>
+<span class="na">metadata</span><span class="pi">:</span>
+  <span class="na">name</span><span class="pi">:</span> <span class="s">my-app</span>
+<span class="na">spec</span><span class="pi">:</span>
+  <span class="na">template</span><span class="pi">:</span>
+    <span class="na">spec</span><span class="pi">:</span>
+      <span class="na">containers</span><span class="pi">:</span>
+        <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">app</span>
+          <span class="na">image</span><span class="pi">:</span> <span class="s">myapp:1.0</span>
+          <span class="na">volumeMounts</span><span class="pi">:</span>
+            <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">config-volume</span>
+              <span class="na">mountPath</span><span class="pi">:</span> <span class="s">/etc/config</span>
+              <span class="na">readOnly</span><span class="pi">:</span> <span class="no">true</span>
+      <span class="na">volumes</span><span class="pi">:</span>
+        <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">config-volume</span>
+          <span class="na">configMap</span><span class="pi">:</span>
+            <span class="na">name</span><span class="pi">:</span> <span class="s">my-config</span>
+      <span class="c1"># ConfigMap 변경 시 Pod 재시작</span>
+      <span class="na">annotations</span><span class="pi">:</span>
+        <span class="na">checksum/config</span><span class="pi">:</span> <span class="s2">"</span><span class="s">${CONFIG_CHECKSUM}"</span>
+</code></pre></div></div> <h3 id="3-자동-재시작-스크립트"> <a href="#3-자동-재시작-스크립트" class="anchor-heading" aria-labelledby="3-자동-재시작-스크립트"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 3. 자동 재시작 스크립트 </h3> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/bin/bash</span>
+<span class="c"># ConfigMap 변경 시 Deployment 재시작</span>
+
+<span class="nv">CONFIGMAP_NAME</span><span class="o">=</span><span class="s2">"my-config"</span>
+<span class="nv">DEPLOYMENT_NAME</span><span class="o">=</span><span class="s2">"my-app"</span>
+
+<span class="c"># ConfigMap의 체크섬 계산</span>
+<span class="nv">CHECKSUM</span><span class="o">=</span><span class="si">$(</span>kubectl get configmap <span class="nv">$CONFIGMAP_NAME</span> <span class="nt">-o</span> yaml | <span class="nb">sha256sum</span> | <span class="nb">cut</span> <span class="nt">-d</span><span class="s1">' '</span> <span class="nt">-f1</span><span class="si">)</span>
+
+<span class="c"># Deployment 패치</span>
+kubectl patch deployment <span class="nv">$DEPLOYMENT_NAME</span> <span class="nt">-p</span> <span class="s2">"{</span><span class="se">\"</span><span class="s2">spec</span><span class="se">\"</span><span class="s2">:{</span><span class="se">\"</span><span class="s2">template</span><span class="se">\"</span><span class="s2">:{</span><span class="se">\"</span><span class="s2">metadata</span><span class="se">\"</span><span class="s2">:{</span><span class="se">\"</span><span class="s2">annotations</span><span class="se">\"</span><span class="s2">:{</span><span class="se">\"</span><span class="s2">checksum/config</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="nv">$CHECKSUM</span><span class="se">\"</span><span class="s2">}}}}}"</span>
+</code></pre></div></div><hr /> <h2 id="configmap-사용-사례"> <a href="#configmap-사용-사례" class="anchor-heading" aria-labelledby="configmap-사용-사례"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> ConfigMap 사용 사례 </h2> <h3 id="1-환경별-설정-관리"> <a href="#1-환경별-설정-관리" class="anchor-heading" aria-labelledby="1-환경별-설정-관리"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 1. 환경별 설정 관리 </h3> <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 개발 환경</span>
+<span class="na">apiVersion</span><span class="pi">:</span> <span class="s">v1</span>
+<span class="na">kind</span><span class="pi">:</span> <span class="s">ConfigMap</span>
+<span class="na">metadata</span><span class="pi">:</span>
+  <span class="na">name</span><span class="pi">:</span> <span class="s">app-config-dev</span>
+  <span class="na">namespace</span><span class="pi">:</span> <span class="s">development</span>
+<span class="na">data</span><span class="pi">:</span>
+  <span class="na">LOG_LEVEL</span><span class="pi">:</span> <span class="s2">"</span><span class="s">DEBUG"</span>
+  <span class="na">DATABASE_URL</span><span class="pi">:</span> <span class="s2">"</span><span class="s">postgresql://dev:dev@localhost:5432/devdb"</span>
+  <span class="na">API_URL</span><span class="pi">:</span> <span class="s2">"</span><span class="s">http://localhost:3000"</span>
+
+<span class="nn">---</span>
+<span class="c1"># 스테이징 환경</span>
+<span class="na">apiVersion</span><span class="pi">:</span> <span class="s">v1</span>
+<span class="na">kind</span><span class="pi">:</span> <span class="s">ConfigMap</span>
+<span class="na">metadata</span><span class="pi">:</span>
+  <span class="na">name</span><span class="pi">:</span> <span class="s">app-config-staging</span>
+  <span class="na">namespace</span><span class="pi">:</span> <span class="s">staging</span>
+<span class="na">data</span><span class="pi">:</span>
+  <span class="na">LOG_LEVEL</span><span class="pi">:</span> <span class="s2">"</span><span class="s">INFO"</span>
+  <span class="na">DATABASE_URL</span><span class="pi">:</span> <span class="s2">"</span><span class="s">postgresql://staging:staging@db-staging:5432/stagingdb"</span>
+  <span class="na">API_URL</span><span class="pi">:</span> <span class="s2">"</span><span class="s">https://api-staging.example.com"</span>
+
+<span class="nn">---</span>
+<span class="c1"># 프로덕션 환경</span>
+<span class="na">apiVersion</span><span class="pi">:</span> <span class="s">v1</span>
+<span class="na">kind</span><span class="pi">:</span> <span class="s">ConfigMap</span>
+<span class="na">metadata</span><span class="pi">:</span>
+  <span class="na">name</span><span class="pi">:</span> <span class="s">app-config-prod</span>
+  <span class="na">namespace</span><span class="pi">:</span> <span class="s">production</span>
+<span class="na">data</span><span class="pi">:</span>
+  <span class="na">LOG_LEVEL</span><span class="pi">:</span> <span class="s2">"</span><span class="s">WARN"</span>
+  <span class="na">DATABASE_URL</span><span class="pi">:</span> <span class="s2">"</span><span class="s">postgresql://prod:prod@db-prod:5432/proddb"</span>
+  <span class="na">API_URL</span><span class="pi">:</span> <span class="s2">"</span><span class="s">https://api.example.com"</span>
+</code></pre></div></div> <h3 id="2-설정-파일-관리"> <a href="#2-설정-파일-관리" class="anchor-heading" aria-labelledby="2-설정-파일-관리"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 2. 설정 파일 관리 </h3> <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">apiVersion</span><span class="pi">:</span> <span class="s">v1</span>
+<span class="na">kind</span><span class="pi">:</span> <span class="s">ConfigMap</span>
+<span class="na">metadata</span><span class="pi">:</span>
+  <span class="na">name</span><span class="pi">:</span> <span class="s">application-config</span>
+<span class="na">data</span><span class="pi">:</span>
+  <span class="c1"># 애플리케이션 설정</span>
+  <span class="na">application.yml</span><span class="pi">:</span> <span class="pi">|</span>
+    <span class="s">spring:</span>
+      <span class="s">application:</span>
+        <span class="s">name: myapp</span>
+      <span class="s">profiles:</span>
+        <span class="s">active: production</span>
+      <span class="s">datasource:</span>
+        <span class="s">url: jdbc:postgresql://db:5432/myapp</span>
+        <span class="s">username: appuser</span>
+        <span class="s">password: password</span>
+      <span class="s">jpa:</span>
+        <span class="s">hibernate:</span>
+          <span class="s">ddl-auto: validate</span>
+        <span class="s">show-sql: false</span>
+      <span class="s">logging:</span>
+        <span class="s">level:</span>
+          <span class="s">root: INFO</span>
+          <span class="s">com.myapp: DEBUG</span>
+
+  <span class="c1"># 로그백 설정</span>
+  <span class="na">logback.xml</span><span class="pi">:</span> <span class="pi">|</span>
+    <span class="s">&lt;configuration&gt;</span>
+      <span class="s">&lt;appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender"&gt;</span>
+        <span class="s">&lt;encoder&gt;</span>
+          <span class="s">&lt;pattern&gt;%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n&lt;/pattern&gt;</span>
+        <span class="s">&lt;/encoder&gt;</span>
+      <span class="s">&lt;/appender&gt;</span>
+    <span class="no">  </span>
+      <span class="s">&lt;root level="INFO"&gt;</span>
+        <span class="s">&lt;appender-ref ref="STDOUT" /&gt;</span>
+      <span class="s">&lt;/root&gt;</span>
+    <span class="s">&lt;/configuration&gt;</span>
+
+  <span class="c1"># Nginx 설정</span>
+  <span class="na">nginx.conf</span><span class="pi">:</span> <span class="pi">|</span>
+    <span class="s">events {</span>
+        <span class="s">worker_connections 1024;</span>
+    <span class="s">}</span>
+
+    <span class="s">http {</span>
+        <span class="s">upstream backend {</span>
+            <span class="s">server app:8080;</span>
+        <span class="s">}</span>
+    <span class="no">    </span>
+        <span class="s">server {</span>
+            <span class="s">listen 80;</span>
+            <span class="s">location / {</span>
+                <span class="s">proxy_pass http://backend;</span>
+            <span class="s">}</span>
+        <span class="s">}</span>
+    <span class="s">}</span>
+</code></pre></div></div> <h3 id="3-기능-플래그-관리"> <a href="#3-기능-플래그-관리" class="anchor-heading" aria-labelledby="3-기능-플래그-관리"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 3. 기능 플래그 관리 </h3> <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">apiVersion</span><span class="pi">:</span> <span class="s">v1</span>
+<span class="na">kind</span><span class="pi">:</span> <span class="s">ConfigMap</span>
+<span class="na">metadata</span><span class="pi">:</span>
+  <span class="na">name</span><span class="pi">:</span> <span class="s">feature-flags</span>
+<span class="na">data</span><span class="pi">:</span>
+  <span class="na">features.json</span><span class="pi">:</span> <span class="pi">|</span>
+    <span class="s">{</span>
+      <span class="s">"newUI": true,</span>
+      <span class="s">"darkMode": false,</span>
+      <span class="s">"analytics": true,</span>
+      <span class="s">"betaFeatures": {</span>
+        <span class="s">"advancedSearch": true,</span>
+        <span class="s">"realTimeUpdates": false,</span>
+        <span class="s">"aiRecommendations": true</span>
+      <span class="s">},</span>
+      <span class="s">"experiments": {</span>
+        <span class="s">"abTest1": {</span>
+          <span class="s">"enabled": true,</span>
+          <span class="s">"weight": 0.5</span>
+        <span class="s">},</span>
+        <span class="s">"abTest2": {</span>
+          <span class="s">"enabled": false,</span>
+          <span class="s">"weight": 0.0</span>
+        <span class="s">}</span>
+      <span class="s">}</span>
+    <span class="s">}</span>
+
+  <span class="na">feature-flags.properties</span><span class="pi">:</span> <span class="pi">|</span>
+    <span class="s">feature.new-ui.enabled=true</span>
+    <span class="s">feature.dark-mode.enabled=false</span>
+    <span class="s">feature.analytics.enabled=true</span>
+    <span class="s">feature.advanced-search.enabled=true</span>
+    <span class="s">feature.real-time-updates.enabled=false</span>
+    <span class="s">feature.ai-recommendations.enabled=true</span>
+    <span class="s">experiment.ab-test-1.enabled=true</span>
+    <span class="s">experiment.ab-test-1.weight=0.5</span>
+    <span class="s">experiment.ab-test-2.enabled=false</span>
+    <span class="s">experiment.ab-test-2.weight=0.0</span>
+</code></pre></div></div><hr /> <h2 id="configmap-vs-secret"> <a href="#configmap-vs-secret" class="anchor-heading" aria-labelledby="configmap-vs-secret"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> ConfigMap vs Secret </h2> <div class="table-wrapper"><table> <thead> <tr> <th>특징</th> <th>ConfigMap</th> <th>Secret</th> </tr> </thead> <tbody> <tr> <td><strong>용도</strong></td> <td>일반 설정 데이터</td> <td>민감한 데이터</td> </tr> <tr> <td><strong>암호화</strong></td> <td>Base64 인코딩만</td> <td>암호화 저장</td> </tr> <tr> <td><strong>볼륨 마운트</strong></td> <td>지원</td> <td>지원</td> </tr> <tr> <td><strong>환경변수</strong></td> <td>지원</td> <td>지원</td> </tr> <tr> <td><strong>사용 사례</strong></td> <td>애플리케이션 설정</td> <td>비밀번호, 토큰</td> </tr> </tbody> </table></div><hr /> <h2 id="주의사항"> <a href="#주의사항" class="anchor-heading" aria-labelledby="주의사항"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 주의사항 </h2> <ol> <li><strong>크기 제한</strong>: ConfigMap은 1MB로 제한됩니다</li> <li><strong>민감한 정보</strong>: 비밀번호, 토큰 등은 Secret을 사용해야 합니다</li> <li><strong>업데이트</strong>: ConfigMap 변경 시 Pod 재시작이 필요할 수 있습니다</li> <li><strong>네임스페이스</strong>: ConfigMap은 네임스페이스 범위입니다</li> <li><strong>버전 관리</strong>: 설정 변경 시 버전 관리를 고려해야 합니다</li> </ol> </main> </div> </div> <div class="search-overlay"></div> </div> <script type="module"> import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10.6.1/dist/mermaid.esm.min.mjs'; var config = {} ; mermaid.initialize(config); mermaid.run({ querySelector: '.language-mermaid', }); </script> </body> </html>

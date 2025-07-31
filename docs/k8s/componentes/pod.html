@@ -1,0 +1,249 @@
+<!DOCTYPE html> <html lang="en"> <head> <meta charset="UTF-8"> <meta http-equiv="X-UA-Compatible" content="IE=Edge"> <link rel="stylesheet" href="/assets/css/just-the-docs-default.css"> <link rel="stylesheet" href="/assets/css/just-the-docs-head-nav.css" id="jtd-head-nav-stylesheet"> <style id="jtd-nav-activation"> .site-nav > ul.nav-list:first-child > li > a, .site-nav > ul.nav-list:first-child > li > ul > li > a, .site-nav > ul.nav-list:first-child > li > ul > li > ul > li:not(:nth-child(2)) > a, .site-nav > ul.nav-list:first-child > li > ul > li > ul > li > ul > li a { background-image: none; } .site-nav > ul.nav-list:not(:first-child) a, .site-nav li.external a { background-image: none; } .site-nav > ul.nav-list:first-child > li:nth-child(4) > ul > li:nth-child(4) > ul > li:nth-child(2) > a { font-weight: 600; text-decoration: none; }.site-nav > ul.nav-list:first-child > li:nth-child(4) > button svg, .site-nav > ul.nav-list:first-child > li:nth-child(4) > ul > li:nth-child(4) > button svg, .site-nav > ul.nav-list:first-child > li:nth-child(4) > ul > li:nth-child(4) > ul > li:nth-child(2) > button svg { transform: rotate(-90deg); }.site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(4) > ul.nav-list, .site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(4) > ul.nav-list > li.nav-list-item:nth-child(4) > ul.nav-list, .site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(4) > ul.nav-list > li.nav-list-item:nth-child(4) > ul.nav-list > li.nav-list-item:nth-child(2) > ul.nav-list { display: block; } </style> <script src="/assets/js/vendor/lunr.min.js"></script> <script src="/assets/js/just-the-docs.js"></script> <meta name="viewport" content="width=device-width, initial-scale=1"> <!-- Begin Jekyll SEO tag v2.8.0 --> <title>Pod | Seungeon’s blog</title> <meta name="generator" content="Jekyll v3.10.0" /> <meta property="og:title" content="Pod" /> <meta property="og:locale" content="en" /> <meta name="description" content="Pod component in Kubernetes" /> <meta property="og:description" content="Pod component in Kubernetes" /> <meta property="og:site_name" content="Seungeon’s blog" /> <meta property="og:type" content="article" /> <meta property="article:published_time" content="2025-07-31T00:00:00+09:00" /> <meta name="twitter:card" content="summary" /> <meta property="twitter:title" content="Pod" /> <script type="application/ld+json"> {"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2025-07-31T00:00:00+09:00","datePublished":"2025-07-31T00:00:00+09:00","description":"Pod component in Kubernetes","headline":"Pod","mainEntityOfPage":{"@type":"WebPage","@id":"/docs/k8s/componentes/pod.html"},"url":"/docs/k8s/componentes/pod.html"}</script> <!-- End Jekyll SEO tag --> </head> <body> <a class="skip-to-main" href="#main-content">Skip to main content</a> <svg xmlns="http://www.w3.org/2000/svg" class="d-none"> <symbol id="svg-link" viewBox="0 0 24 24"> <title>Link</title> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-link"> <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path> </svg> </symbol> <symbol id="svg-menu" viewBox="0 0 24 24"> <title>Menu</title> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"> <line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line> </svg> </symbol> <symbol id="svg-arrow-right" viewBox="0 0 24 24"> <title>Expand</title> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"> <polyline points="9 18 15 12 9 6"></polyline> </svg> </symbol> <!-- Feather. MIT License: https://github.com/feathericons/feather/blob/master/LICENSE --> <symbol id="svg-external-link" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link"> <title id="svg-external-link-title">(external link)</title> <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line> </symbol> <symbol id="svg-doc" viewBox="0 0 24 24"> <title>Document</title> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file"> <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline> </svg> </symbol> <symbol id="svg-search" viewBox="0 0 24 24"> <title>Search</title> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"> <circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line> </svg> </symbol> <!-- Bootstrap Icons. MIT License: https://github.com/twbs/icons/blob/main/LICENSE.md --> <symbol id="svg-copy" viewBox="0 0 16 16"> <title>Copy</title> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard" viewBox="0 0 16 16"> <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/> <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/> </svg> </symbol> <symbol id="svg-copied" viewBox="0 0 16 16"> <title>Copied</title> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard-check-fill" viewBox="0 0 16 16"> <path d="M6.5 0A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3Zm3 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3Z"/> <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1A2.5 2.5 0 0 1 9.5 5h-3A2.5 2.5 0 0 1 4 2.5v-1Zm6.854 7.354-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L7.5 10.793l2.646-2.647a.5.5 0 0 1 .708.708Z"/> </svg> </symbol> </svg> <div class="side-bar"> <div class="site-header" role="banner"> <a href="/" class="site-title lh-tight"> Seungeon's blog </a> <button id="menu-button" class="site-button btn-reset" aria-label="Toggle menu" aria-pressed="false"> <svg viewBox="0 0 24 24" class="icon" aria-hidden="true"><use xlink:href="#svg-menu"></use></svg> </button> </div> <nav aria-label="Main" id="site-nav" class="site-nav"> <ul class="nav-list"><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="toggle items in Deploy category" aria-pressed="false"> <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg> </button><a href="/deploy/" class="nav-list-link">Deploy</a><ul class="nav-list"><li class="nav-list-item"><a href="/docs/deploy/rolling-update.html" class="nav-list-link">Rolling Update</a></li><li class="nav-list-item"><a href="/docs/deploy/blue-green.html" class="nav-list-link">Blue/Green Deployment</a></li><li class="nav-list-item"><a href="/docs/deploy/canary.html" class="nav-list-link">Canary Deployment</a></li></ul></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="toggle items in Helm category" aria-pressed="false"> <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg> </button><a href="/helm/" class="nav-list-link">Helm</a><ul class="nav-list"><li class="nav-list-item"><a href="/docs/helm/command.html" class="nav-list-link">How-to-use-Helm</a></li><li class="nav-list-item"><a href="/docs/helm/concept.html" class="nav-list-link">What-is-Helm</a></li><li class="nav-list-item"><a href="/docs/helm/grammer.html" class="nav-list-link">How-to-write-helm-chart</a></li></ul></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="toggle items in Jekyll category" aria-pressed="false"> <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg> </button><a href="/jekyll/" class="nav-list-link">Jekyll</a><ul class="nav-list"><li class="nav-list-item"><a href="/docs/jekyll/install-jekyll.html" class="nav-list-link">How to Install Jekyll</a></li><li class="nav-list-item"><a href="/docs/jekyll/just-the-docs.html" class="nav-list-link">How to use just-the-docs docs</a></li></ul></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="toggle items in Kubernetes category" aria-pressed="false"> <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg> </button><a href="/k8s/" class="nav-list-link">Kubernetes</a><ul class="nav-list"><li class="nav-list-item"><a href="/docs/k8s/command.html" class="nav-list-link">How to use kubectl</a></li><li class="nav-list-item"><a href="/docs/k8s/concept.html" class="nav-list-link">What-is-Kubernetes</a></li><li class="nav-list-item"><a href="/docs/k8s/grammer.html" class="nav-list-link">How-to-write-helm-chart</a></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="toggle items in Kubernetes Components category" aria-pressed="false"> <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg> </button><a href="/k8s/componentes/" class="nav-list-link">Kubernetes Components</a><ul class="nav-list"><li class="nav-list-item"><a href="/docs/k8s/componentes/clusterrole.html" class="nav-list-link">ClusterRole</a></li><li class="nav-list-item"><a href="/docs/k8s/componentes/pod.html" class="nav-list-link">Pod</a></li><li class="nav-list-item"><a href="/docs/k8s/componentes/deployment.html" class="nav-list-link">Deployment</a></li><li class="nav-list-item"><a href="/docs/k8s/componentes/service.html" class="nav-list-link">Service</a></li><li class="nav-list-item"><a href="/docs/k8s/componentes/ingress.html" class="nav-list-link">Ingress</a></li><li class="nav-list-item"><a href="/docs/k8s/componentes/configmap.html" class="nav-list-link">ConfigMap</a></li><li class="nav-list-item"><a href="/docs/k8s/componentes/role.html" class="nav-list-link">Role</a></li><li class="nav-list-item"><a href="/docs/k8s/componentes/rolebinding.html" class="nav-list-link">RoleBinding</a></li><li class="nav-list-item"><a href="/docs/k8s/componentes/clusterrolebinding.html" class="nav-list-link">ClusterRoleBinding</a></li><li class="nav-list-item"><a href="/docs/k8s/componentes/serviceaccount.html" class="nav-list-link">ServiceAccount</a></li><li class="nav-list-item"><a href="/docs/k8s/componentes/statefulset.html" class="nav-list-link">StatefulSet</a></li><li class="nav-list-item"><a href="/docs/k8s/componentes/kube-system.html" class="nav-list-link">kube-system</a></li></ul></li></ul></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="toggle items in Markdown category" aria-pressed="false"> <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg> </button><a href="/diagram/" class="nav-list-link">Markdown</a><ul class="nav-list"><li class="nav-list-item"><a href="/docs/markdown/diagram.html" class="nav-list-link">How to make diagram in markdown</a></li></ul></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="toggle items in Container category" aria-pressed="false"> <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg> </button><a href="/all-container/" class="nav-list-link">Container</a><ul class="nav-list"><li class="nav-list-item"><a href="/docs/all-container/container-runtime.html" class="nav-list-link">What-is-Container-Runtime</a></li><li class="nav-list-item"><a href="/docs/all-container/container.html" class="nav-list-link">What-is-Container</a></li><li class="nav-list-item"><a href="/docs/all-container/docker.html" class="nav-list-link">All-of-docker</a></li><li class="nav-list-item"><a href="/docs/all-container/registry.html" class="nav-list-link">Docker Registry</a></li></ul></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="toggle items in Git category" aria-pressed="false"> <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg> </button><a href="/git/" class="nav-list-link">Git</a><ul class="nav-list"><li class="nav-list-item"><a href="/docs/git/command.html" class="nav-list-link">git-command</a></li><li class="nav-list-item"><a href="/docs/git/git-concepts.html" class="nav-list-link">Git 개념</a></li><li class="nav-list-item"><a href="/docs/git/git-filter-repo.html" class="nav-list-link">git-filter-repo</a></li></ul></li></ul> </nav> <footer class="site-footer"> This site uses <a href="https://github.com/just-the-docs/just-the-docs">Just the Docs</a>, a documentation theme for Jekyll. </footer> </div> <div class="main" id="top"> <div id="main-header" class="main-header"> <div class="search" role="search"> <div class="search-input-wrap"> <input type="text" id="search-input" class="search-input" tabindex="0" placeholder="Search Seungeon's blog" aria-label="Search Seungeon's blog" autocomplete="off"> <label for="search-input" class="search-label"><svg viewBox="0 0 24 24" class="search-icon"><use xlink:href="#svg-search"></use></svg></label> </div> <div id="search-results" class="search-results"></div> </div> </div> <div class="main-content-wrap"> <nav aria-label="Breadcrumb" class="breadcrumb-nav"> <ol class="breadcrumb-nav-list"> <li class="breadcrumb-nav-list-item"><a href="/k8s/">Kubernetes</a></li> <li class="breadcrumb-nav-list-item"><a href="/k8s/componentes/">Kubernetes Components</a></li> <li class="breadcrumb-nav-list-item"><span>Pod</span></li> </ol> </nav> <div id="main-content" class="main-content"> <main> <h2 id="pod-개요"> <a href="#pod-개요" class="anchor-heading" aria-labelledby="pod-개요"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Pod 개요 </h2> <p>Pod는 Kubernetes에서 가장 작은 배포 가능한 컴퓨팅 단위입니다. Pod는 하나 이상의 컨테이너를 포함할 수 있으며, 이러한 컨테이너들은 네트워크와 스토리지를 공유합니다.</p> <h3 id="pod의-특징"> <a href="#pod의-특징" class="anchor-heading" aria-labelledby="pod의-특징"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Pod의 특징 </h3> <ol> <li><strong>최소 배포 단위</strong>: Kubernetes에서 관리하는 가장 작은 단위</li> <li><strong>컨테이너 그룹</strong>: 하나 이상의 컨테이너를 포함</li> <li><strong>공유 리소스</strong>: 네트워크, 스토리지, IPC 공유</li> <li><strong>수명 주기</strong>: 생성, 실행, 종료의 생명주기를 가짐</li> </ol><hr /> <h2 id="pod-구조"> <a href="#pod-구조" class="anchor-heading" aria-labelledby="pod-구조"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Pod 구조 </h2><pre><code class="language-mermaid">graph TD
+    A[Pod] --&gt; B[Container 1]
+    A --&gt; C[Container 2]
+    A --&gt; D[Container 3]
+
+    A --&gt; E[Shared Network]
+    A --&gt; F[Shared Storage]
+    A --&gt; G[Shared IPC]
+
+    B --&gt; H[Process 1]
+    C --&gt; I[Process 2]
+    D --&gt; J[Process 3]
+
+    style A fill:#e3f2fd
+    style B fill:#f3e5f5
+    style C fill:#f3e5f5
+    style D fill:#f3e5f5
+    style E fill:#e8f5e8
+    style F fill:#e8f5e8
+    style G fill:#e8f5e8
+</code></pre><hr /> <h2 id="pod-예시"> <a href="#pod-예시" class="anchor-heading" aria-labelledby="pod-예시"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Pod 예시 </h2> <h3 id="단일-컨테이너-pod"> <a href="#단일-컨테이너-pod" class="anchor-heading" aria-labelledby="단일-컨테이너-pod"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 단일 컨테이너 Pod </h3> <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">apiVersion</span><span class="pi">:</span> <span class="s">v1</span>
+<span class="na">kind</span><span class="pi">:</span> <span class="s">Pod</span>
+<span class="na">metadata</span><span class="pi">:</span>
+  <span class="na">name</span><span class="pi">:</span> <span class="s">nginx-pod</span>
+  <span class="na">labels</span><span class="pi">:</span>
+    <span class="na">app</span><span class="pi">:</span> <span class="s">nginx</span>
+<span class="na">spec</span><span class="pi">:</span>
+  <span class="na">containers</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">nginx</span>
+      <span class="na">image</span><span class="pi">:</span> <span class="s">nginx:1.14.2</span>
+      <span class="na">ports</span><span class="pi">:</span>
+        <span class="pi">-</span> <span class="na">containerPort</span><span class="pi">:</span> <span class="m">80</span>
+      <span class="na">resources</span><span class="pi">:</span>
+        <span class="na">requests</span><span class="pi">:</span>
+          <span class="na">memory</span><span class="pi">:</span> <span class="s2">"</span><span class="s">64Mi"</span>
+          <span class="na">cpu</span><span class="pi">:</span> <span class="s2">"</span><span class="s">250m"</span>
+        <span class="na">limits</span><span class="pi">:</span>
+          <span class="na">memory</span><span class="pi">:</span> <span class="s2">"</span><span class="s">128Mi"</span>
+          <span class="na">cpu</span><span class="pi">:</span> <span class="s2">"</span><span class="s">500m"</span>
+</code></pre></div></div> <h3 id="다중-컨테이너-pod-sidecar-패턴"> <a href="#다중-컨테이너-pod-sidecar-패턴" class="anchor-heading" aria-labelledby="다중-컨테이너-pod-sidecar-패턴"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 다중 컨테이너 Pod (Sidecar 패턴) </h3> <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">apiVersion</span><span class="pi">:</span> <span class="s">v1</span>
+<span class="na">kind</span><span class="pi">:</span> <span class="s">Pod</span>
+<span class="na">metadata</span><span class="pi">:</span>
+  <span class="na">name</span><span class="pi">:</span> <span class="s">web-app</span>
+  <span class="na">labels</span><span class="pi">:</span>
+    <span class="na">app</span><span class="pi">:</span> <span class="s">web</span>
+<span class="na">spec</span><span class="pi">:</span>
+  <span class="na">containers</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">web</span>
+      <span class="na">image</span><span class="pi">:</span> <span class="s">nginx:1.14.2</span>
+      <span class="na">ports</span><span class="pi">:</span>
+        <span class="pi">-</span> <span class="na">containerPort</span><span class="pi">:</span> <span class="m">80</span>
+      <span class="na">volumeMounts</span><span class="pi">:</span>
+        <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">shared-data</span>
+          <span class="na">mountPath</span><span class="pi">:</span> <span class="s">/usr/share/nginx/html</span>
+    <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">log-collector</span>
+      <span class="na">image</span><span class="pi">:</span> <span class="s">busybox</span>
+      <span class="na">command</span><span class="pi">:</span>
+        <span class="pi">[</span>
+          <span class="s2">"</span><span class="s">sh"</span><span class="pi">,</span>
+          <span class="s2">"</span><span class="s">-c"</span><span class="pi">,</span>
+          <span class="s1">'</span><span class="s">while</span><span class="nv"> </span><span class="s">true;</span><span class="nv"> </span><span class="s">do</span><span class="nv"> </span><span class="s">echo</span><span class="nv"> </span><span class="s">"$(date)</span><span class="nv"> </span><span class="s">-</span><span class="nv"> </span><span class="s">Log</span><span class="nv"> </span><span class="s">entry"</span><span class="nv"> </span><span class="s">&gt;&gt;</span><span class="nv"> </span><span class="s">/logs/app.log;</span><span class="nv"> </span><span class="s">sleep</span><span class="nv"> </span><span class="s">10;</span><span class="nv"> </span><span class="s">done'</span><span class="pi">,</span>
+        <span class="pi">]</span>
+      <span class="na">volumeMounts</span><span class="pi">:</span>
+        <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">shared-data</span>
+          <span class="na">mountPath</span><span class="pi">:</span> <span class="s">/logs</span>
+  <span class="na">volumes</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">shared-data</span>
+      <span class="na">emptyDir</span><span class="pi">:</span> <span class="pi">{}</span>
+</code></pre></div></div> <h3 id="init-container가-있는-pod"> <a href="#init-container가-있는-pod" class="anchor-heading" aria-labelledby="init-container가-있는-pod"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Init Container가 있는 Pod </h3> <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">apiVersion</span><span class="pi">:</span> <span class="s">v1</span>
+<span class="na">kind</span><span class="pi">:</span> <span class="s">Pod</span>
+<span class="na">metadata</span><span class="pi">:</span>
+  <span class="na">name</span><span class="pi">:</span> <span class="s">init-demo</span>
+<span class="na">spec</span><span class="pi">:</span>
+  <span class="na">containers</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">nginx</span>
+      <span class="na">image</span><span class="pi">:</span> <span class="s">nginx:1.14.2</span>
+      <span class="na">ports</span><span class="pi">:</span>
+        <span class="pi">-</span> <span class="na">containerPort</span><span class="pi">:</span> <span class="m">80</span>
+      <span class="na">volumeMounts</span><span class="pi">:</span>
+        <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">workdir</span>
+          <span class="na">mountPath</span><span class="pi">:</span> <span class="s">/usr/share/nginx/html</span>
+  <span class="na">initContainers</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">init-myservice</span>
+      <span class="na">image</span><span class="pi">:</span> <span class="s">busybox</span>
+      <span class="na">command</span><span class="pi">:</span>
+        <span class="pi">[</span>
+          <span class="s2">"</span><span class="s">sh"</span><span class="pi">,</span>
+          <span class="s2">"</span><span class="s">-c"</span><span class="pi">,</span>
+          <span class="s2">"</span><span class="s">until</span><span class="nv"> </span><span class="s">nslookup</span><span class="nv"> </span><span class="s">myservice.$(cat</span><span class="nv"> </span><span class="s">/var/run/secrets/kubernetes.io/serviceaccount/namespace).svc.cluster.local;</span><span class="nv"> </span><span class="s">do</span><span class="nv"> </span><span class="s">echo</span><span class="nv"> </span><span class="s">waiting</span><span class="nv"> </span><span class="s">for</span><span class="nv"> </span><span class="s">myservice;</span><span class="nv"> </span><span class="s">sleep</span><span class="nv"> </span><span class="s">2;</span><span class="nv"> </span><span class="s">done"</span><span class="pi">,</span>
+        <span class="pi">]</span>
+    <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">init-mydb</span>
+      <span class="na">image</span><span class="pi">:</span> <span class="s">busybox</span>
+      <span class="na">command</span><span class="pi">:</span>
+        <span class="pi">[</span>
+          <span class="s2">"</span><span class="s">sh"</span><span class="pi">,</span>
+          <span class="s2">"</span><span class="s">-c"</span><span class="pi">,</span>
+          <span class="s2">"</span><span class="s">until</span><span class="nv"> </span><span class="s">nslookup</span><span class="nv"> </span><span class="s">mydb.$(cat</span><span class="nv"> </span><span class="s">/var/run/secrets/kubernetes.io/serviceaccount/namespace).svc.cluster.local;</span><span class="nv"> </span><span class="s">do</span><span class="nv"> </span><span class="s">echo</span><span class="nv"> </span><span class="s">waiting</span><span class="nv"> </span><span class="s">for</span><span class="nv"> </span><span class="s">mydb;</span><span class="nv"> </span><span class="s">sleep</span><span class="nv"> </span><span class="s">2;</span><span class="nv"> </span><span class="s">done"</span><span class="pi">,</span>
+        <span class="pi">]</span>
+  <span class="na">volumes</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">workdir</span>
+      <span class="na">emptyDir</span><span class="pi">:</span> <span class="pi">{}</span>
+</code></pre></div></div><hr /> <h2 id="pod-생명주기"> <a href="#pod-생명주기" class="anchor-heading" aria-labelledby="pod-생명주기"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Pod 생명주기 </h2><pre><code class="language-mermaid">graph LR
+    A[Pending] --&gt; B[Running]
+    B --&gt; C[Succeeded]
+    B --&gt; D[Failed]
+    B --&gt; E[Unknown]
+
+    style A fill:#fff3e0
+    style B fill:#e8f5e8
+    style C fill:#e3f2fd
+    style D fill:#ffebee
+    style E fill:#f3e5f5
+</code></pre><h3 id="pod-상태-설명"> <a href="#pod-상태-설명" class="anchor-heading" aria-labelledby="pod-상태-설명"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Pod 상태 설명 </h3> <div class="table-wrapper"><table> <thead> <tr> <th>상태</th> <th>설명</th> </tr> </thead> <tbody> <tr> <td><strong>Pending</strong></td> <td>Pod가 Kubernetes 시스템에 수락되었지만, 하나 이상의 컨테이너가 설정되지 않았거나 실행되지 않음</td> </tr> <tr> <td><strong>Running</strong></td> <td>Pod가 노드에 바인딩되었고, 모든 컨테이너가 생성되었으며, 최소 하나의 컨테이너가 실행 중이거나 시작/재시작 중</td> </tr> <tr> <td><strong>Succeeded</strong></td> <td>Pod의 모든 컨테이너가 성공적으로 종료되었고 재시작되지 않음</td> </tr> <tr> <td><strong>Failed</strong></td> <td>Pod의 모든 컨테이너가 종료되었고, 최소 하나의 컨테이너가 실패로 종료됨</td> </tr> <tr> <td><strong>Unknown</strong></td> <td>Pod의 상태를 확인할 수 없음</td> </tr> </tbody> </table></div><hr /> <h2 id="pod-네트워킹"> <a href="#pod-네트워킹" class="anchor-heading" aria-labelledby="pod-네트워킹"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Pod 네트워킹 </h2> <h3 id="pod-네트워크-모델"> <a href="#pod-네트워크-모델" class="anchor-heading" aria-labelledby="pod-네트워크-모델"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Pod 네트워크 모델 </h3><pre><code class="language-mermaid">graph TD
+    A[Pod] --&gt; B[Container Network Namespace]
+    B --&gt; C[eth0 - Pod IP]
+    B --&gt; D[lo - localhost]
+
+    E[Node Network] --&gt; F[Node IP]
+    G[Service Network] --&gt; H[Service IP]
+
+    style A fill:#e3f2fd
+    style B fill:#f3e5f5
+    style C fill:#e8f5e8
+    style D fill:#e8f5e8
+</code></pre><h3 id="pod-간-통신"> <a href="#pod-간-통신" class="anchor-heading" aria-labelledby="pod-간-통신"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Pod 간 통신 </h3> <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">apiVersion</span><span class="pi">:</span> <span class="s">v1</span>
+<span class="na">kind</span><span class="pi">:</span> <span class="s">Pod</span>
+<span class="na">metadata</span><span class="pi">:</span>
+  <span class="na">name</span><span class="pi">:</span> <span class="s">pod-1</span>
+  <span class="na">labels</span><span class="pi">:</span>
+    <span class="na">app</span><span class="pi">:</span> <span class="s">frontend</span>
+<span class="na">spec</span><span class="pi">:</span>
+  <span class="na">containers</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">nginx</span>
+      <span class="na">image</span><span class="pi">:</span> <span class="s">nginx:1.14.2</span>
+      <span class="na">ports</span><span class="pi">:</span>
+        <span class="pi">-</span> <span class="na">containerPort</span><span class="pi">:</span> <span class="m">80</span>
+<span class="nn">---</span>
+<span class="na">apiVersion</span><span class="pi">:</span> <span class="s">v1</span>
+<span class="na">kind</span><span class="pi">:</span> <span class="s">Pod</span>
+<span class="na">metadata</span><span class="pi">:</span>
+  <span class="na">name</span><span class="pi">:</span> <span class="s">pod-2</span>
+  <span class="na">labels</span><span class="pi">:</span>
+    <span class="na">app</span><span class="pi">:</span> <span class="s">backend</span>
+<span class="na">spec</span><span class="pi">:</span>
+  <span class="na">containers</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">app</span>
+      <span class="na">image</span><span class="pi">:</span> <span class="s">myapp:1.0</span>
+      <span class="na">ports</span><span class="pi">:</span>
+        <span class="pi">-</span> <span class="na">containerPort</span><span class="pi">:</span> <span class="m">8080</span>
+</code></pre></div></div><hr /> <h2 id="pod-스토리지"> <a href="#pod-스토리지" class="anchor-heading" aria-labelledby="pod-스토리지"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Pod 스토리지 </h2> <h3 id="볼륨-마운트-예시"> <a href="#볼륨-마운트-예시" class="anchor-heading" aria-labelledby="볼륨-마운트-예시"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 볼륨 마운트 예시 </h3> <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">apiVersion</span><span class="pi">:</span> <span class="s">v1</span>
+<span class="na">kind</span><span class="pi">:</span> <span class="s">Pod</span>
+<span class="na">metadata</span><span class="pi">:</span>
+  <span class="na">name</span><span class="pi">:</span> <span class="s">storage-pod</span>
+<span class="na">spec</span><span class="pi">:</span>
+  <span class="na">containers</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">app</span>
+      <span class="na">image</span><span class="pi">:</span> <span class="s">nginx:1.14.2</span>
+      <span class="na">volumeMounts</span><span class="pi">:</span>
+        <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">config-volume</span>
+          <span class="na">mountPath</span><span class="pi">:</span> <span class="s">/etc/nginx/conf.d</span>
+        <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">data-volume</span>
+          <span class="na">mountPath</span><span class="pi">:</span> <span class="s">/var/www/html</span>
+        <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">secret-volume</span>
+          <span class="na">mountPath</span><span class="pi">:</span> <span class="s">/etc/secrets</span>
+          <span class="na">readOnly</span><span class="pi">:</span> <span class="no">true</span>
+  <span class="na">volumes</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">config-volume</span>
+      <span class="na">configMap</span><span class="pi">:</span>
+        <span class="na">name</span><span class="pi">:</span> <span class="s">nginx-config</span>
+    <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">data-volume</span>
+      <span class="na">persistentVolumeClaim</span><span class="pi">:</span>
+        <span class="na">claimName</span><span class="pi">:</span> <span class="s">data-pvc</span>
+    <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">secret-volume</span>
+      <span class="na">secret</span><span class="pi">:</span>
+        <span class="na">secretName</span><span class="pi">:</span> <span class="s">app-secret</span>
+</code></pre></div></div><hr /> <h2 id="pod-리소스-관리"> <a href="#pod-리소스-관리" class="anchor-heading" aria-labelledby="pod-리소스-관리"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Pod 리소스 관리 </h2> <h3 id="리소스-요청과-제한"> <a href="#리소스-요청과-제한" class="anchor-heading" aria-labelledby="리소스-요청과-제한"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 리소스 요청과 제한 </h3> <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">apiVersion</span><span class="pi">:</span> <span class="s">v1</span>
+<span class="na">kind</span><span class="pi">:</span> <span class="s">Pod</span>
+<span class="na">metadata</span><span class="pi">:</span>
+  <span class="na">name</span><span class="pi">:</span> <span class="s">resource-pod</span>
+<span class="na">spec</span><span class="pi">:</span>
+  <span class="na">containers</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">app</span>
+      <span class="na">image</span><span class="pi">:</span> <span class="s">nginx:1.14.2</span>
+      <span class="na">resources</span><span class="pi">:</span>
+        <span class="na">requests</span><span class="pi">:</span>
+          <span class="na">memory</span><span class="pi">:</span> <span class="s2">"</span><span class="s">64Mi"</span>
+          <span class="na">cpu</span><span class="pi">:</span> <span class="s2">"</span><span class="s">250m"</span>
+          <span class="na">ephemeral-storage</span><span class="pi">:</span> <span class="s2">"</span><span class="s">2Gi"</span>
+        <span class="na">limits</span><span class="pi">:</span>
+          <span class="na">memory</span><span class="pi">:</span> <span class="s2">"</span><span class="s">128Mi"</span>
+          <span class="na">cpu</span><span class="pi">:</span> <span class="s2">"</span><span class="s">500m"</span>
+          <span class="na">ephemeral-storage</span><span class="pi">:</span> <span class="s2">"</span><span class="s">4Gi"</span>
+      <span class="na">ports</span><span class="pi">:</span>
+        <span class="pi">-</span> <span class="na">containerPort</span><span class="pi">:</span> <span class="m">80</span>
+</code></pre></div></div> <h3 id="qos-클래스"> <a href="#qos-클래스" class="anchor-heading" aria-labelledby="qos-클래스"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> QoS 클래스 </h3> <div class="table-wrapper"><table> <thead> <tr> <th>QoS 클래스</th> <th>조건</th> <th>설명</th> </tr> </thead> <tbody> <tr> <td><strong>Guaranteed</strong></td> <td>requests = limits (모든 리소스)</td> <td>가장 높은 우선순위</td> </tr> <tr> <td><strong>Burstable</strong></td> <td>requests &lt; limits</td> <td>중간 우선순위</td> </tr> <tr> <td><strong>BestEffort</strong></td> <td>requests와 limits 모두 설정 안함</td> <td>가장 낮은 우선순위</td> </tr> </tbody> </table></div><hr /> <h2 id="pod-관리-명령어"> <a href="#pod-관리-명령어" class="anchor-heading" aria-labelledby="pod-관리-명령어"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Pod 관리 명령어 </h2> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Pod 생성</span>
+kubectl apply <span class="nt">-f</span> pod.yaml
+
+<span class="c"># Pod 목록 확인</span>
+kubectl get pods
+kubectl get pods <span class="nt">-o</span> wide
+
+<span class="c"># Pod 상세 정보 확인</span>
+kubectl describe pod &lt;pod-name&gt;
+
+<span class="c"># Pod 로그 확인</span>
+kubectl logs &lt;pod-name&gt;
+kubectl logs &lt;pod-name&gt; <span class="nt">-c</span> &lt;container-name&gt;
+
+<span class="c"># Pod에 접속</span>
+kubectl <span class="nb">exec</span> <span class="nt">-it</span> &lt;pod-name&gt; <span class="nt">--</span> /bin/bash
+kubectl <span class="nb">exec</span> <span class="nt">-it</span> &lt;pod-name&gt; <span class="nt">-c</span> &lt;container-name&gt; <span class="nt">--</span> /bin/bash
+
+<span class="c"># Pod 삭제</span>
+kubectl delete pod &lt;pod-name&gt;
+
+<span class="c"># Pod 복사</span>
+kubectl <span class="nb">cp</span> &lt;pod-name&gt;:/path/to/file /local/path
+</code></pre></div></div><hr /> <h2 id="pod-보안"> <a href="#pod-보안" class="anchor-heading" aria-labelledby="pod-보안"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Pod 보안 </h2> <h3 id="security-context-예시"> <a href="#security-context-예시" class="anchor-heading" aria-labelledby="security-context-예시"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Security Context 예시 </h3> <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">apiVersion</span><span class="pi">:</span> <span class="s">v1</span>
+<span class="na">kind</span><span class="pi">:</span> <span class="s">Pod</span>
+<span class="na">metadata</span><span class="pi">:</span>
+  <span class="na">name</span><span class="pi">:</span> <span class="s">security-pod</span>
+<span class="na">spec</span><span class="pi">:</span>
+  <span class="na">securityContext</span><span class="pi">:</span>
+    <span class="na">runAsUser</span><span class="pi">:</span> <span class="m">1000</span>
+    <span class="na">runAsGroup</span><span class="pi">:</span> <span class="m">3000</span>
+    <span class="na">fsGroup</span><span class="pi">:</span> <span class="m">2000</span>
+  <span class="na">containers</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">app</span>
+      <span class="na">image</span><span class="pi">:</span> <span class="s">nginx:1.14.2</span>
+      <span class="na">securityContext</span><span class="pi">:</span>
+        <span class="na">allowPrivilegeEscalation</span><span class="pi">:</span> <span class="no">false</span>
+        <span class="na">readOnlyRootFilesystem</span><span class="pi">:</span> <span class="no">true</span>
+        <span class="na">runAsNonRoot</span><span class="pi">:</span> <span class="no">true</span>
+        <span class="na">capabilities</span><span class="pi">:</span>
+          <span class="na">drop</span><span class="pi">:</span>
+            <span class="pi">-</span> <span class="s">ALL</span>
+      <span class="na">volumeMounts</span><span class="pi">:</span>
+        <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">tmp</span>
+          <span class="na">mountPath</span><span class="pi">:</span> <span class="s">/tmp</span>
+  <span class="na">volumes</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">tmp</span>
+      <span class="na">emptyDir</span><span class="pi">:</span> <span class="pi">{}</span>
+</code></pre></div></div><hr /> <h2 id="pod-디버깅"> <a href="#pod-디버깅" class="anchor-heading" aria-labelledby="pod-디버깅"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Pod 디버깅 </h2> <h3 id="일반적인-pod-문제-해결"> <a href="#일반적인-pod-문제-해결" class="anchor-heading" aria-labelledby="일반적인-pod-문제-해결"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 일반적인 Pod 문제 해결 </h3> <ol> <li> <p><strong>Pod가 Pending 상태인 경우</strong></p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>kubectl describe pod &lt;pod-name&gt;
+kubectl get events <span class="nt">--sort-by</span><span class="o">=</span><span class="s1">'.lastTimestamp'</span>
+</code></pre></div> </div> </li> <li> <p><strong>Pod가 Running이지만 애플리케이션이 응답하지 않는 경우</strong></p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>kubectl logs &lt;pod-name&gt;
+kubectl <span class="nb">exec</span> <span class="nt">-it</span> &lt;pod-name&gt; <span class="nt">--</span> /bin/bash
+</code></pre></div> </div> </li> <li> <p><strong>Pod가 계속 재시작되는 경우</strong></p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>kubectl logs &lt;pod-name&gt; <span class="nt">--previous</span>
+kubectl describe pod &lt;pod-name&gt;
+</code></pre></div> </div> </li> </ol><hr /> <h2 id="주의사항"> <a href="#주의사항" class="anchor-heading" aria-labelledby="주의사항"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 주의사항 </h2> <ol> <li><strong>Pod는 일시적</strong>: Pod는 재시작되면 새로운 IP를 받습니다</li> <li><strong>리소스 제한</strong>: 적절한 리소스 요청과 제한을 설정해야 합니다</li> <li><strong>보안</strong>: Security Context를 사용하여 보안을 강화해야 합니다</li> <li><strong>모니터링</strong>: Pod의 상태와 리소스 사용량을 지속적으로 모니터링해야 합니다</li> </ol> </main> </div> </div> <div class="search-overlay"></div> </div> <script type="module"> import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10.6.1/dist/mermaid.esm.min.mjs'; var config = {} ; mermaid.initialize(config); mermaid.run({ querySelector: '.language-mermaid', }); </script> </body> </html>
