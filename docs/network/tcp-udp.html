@@ -1,0 +1,188 @@
+<!DOCTYPE html> <html lang="en"> <head> <meta charset="UTF-8"> <meta http-equiv="X-UA-Compatible" content="IE=Edge"> <link rel="stylesheet" href="/assets/css/just-the-docs-default.css"> <link rel="stylesheet" href="/assets/css/just-the-docs-head-nav.css" id="jtd-head-nav-stylesheet"> <style id="jtd-nav-activation"> .site-nav > ul.nav-list:first-child > li > a, .site-nav > ul.nav-list:first-child > li > ul > li:not(:nth-child(2)) > a, .site-nav > ul.nav-list:first-child > li > ul > li > ul > li a { background-image: none; } .site-nav > ul.nav-list:not(:first-child) a, .site-nav li.external a { background-image: none; } .site-nav > ul.nav-list:first-child > li:nth-child(8) > ul > li:nth-child(2) > a { font-weight: 600; text-decoration: none; }.site-nav > ul.nav-list:first-child > li:nth-child(8) > button svg, .site-nav > ul.nav-list:first-child > li:nth-child(8) > ul > li:nth-child(2) > button svg { transform: rotate(-90deg); }.site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(8) > ul.nav-list, .site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(8) > ul.nav-list > li.nav-list-item:nth-child(2) > ul.nav-list { display: block; } </style> <script src="/assets/js/vendor/lunr.min.js"></script> <script src="/assets/js/just-the-docs.js"></script> <meta name="viewport" content="width=device-width, initial-scale=1"> <!-- Begin Jekyll SEO tag v2.8.0 --> <title>TCP vs UDP | Seungeon’s blog</title> <meta name="generator" content="Jekyll v3.10.0" /> <meta property="og:title" content="TCP vs UDP" /> <meta property="og:locale" content="en" /> <meta name="description" content="TCP와 UDP 프로토콜의 작동 방식과 차이점에 대한 설명" /> <meta property="og:description" content="TCP와 UDP 프로토콜의 작동 방식과 차이점에 대한 설명" /> <meta property="og:site_name" content="Seungeon’s blog" /> <meta property="og:type" content="article" /> <meta property="article:published_time" content="2025-07-31T00:00:00+09:00" /> <meta name="twitter:card" content="summary" /> <meta property="twitter:title" content="TCP vs UDP" /> <script type="application/ld+json"> {"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2025-07-31T00:00:00+09:00","datePublished":"2025-07-31T00:00:00+09:00","description":"TCP와 UDP 프로토콜의 작동 방식과 차이점에 대한 설명","headline":"TCP vs UDP","mainEntityOfPage":{"@type":"WebPage","@id":"/docs/network/tcp-udp.html"},"url":"/docs/network/tcp-udp.html"}</script> <!-- End Jekyll SEO tag --> </head> <body> <a class="skip-to-main" href="#main-content">Skip to main content</a> <svg xmlns="http://www.w3.org/2000/svg" class="d-none"> <symbol id="svg-link" viewBox="0 0 24 24"> <title>Link</title> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-link"> <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path> </svg> </symbol> <symbol id="svg-menu" viewBox="0 0 24 24"> <title>Menu</title> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"> <line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line> </svg> </symbol> <symbol id="svg-arrow-right" viewBox="0 0 24 24"> <title>Expand</title> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"> <polyline points="9 18 15 12 9 6"></polyline> </svg> </symbol> <!-- Feather. MIT License: https://github.com/feathericons/feather/blob/master/LICENSE --> <symbol id="svg-external-link" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link"> <title id="svg-external-link-title">(external link)</title> <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line> </symbol> <symbol id="svg-doc" viewBox="0 0 24 24"> <title>Document</title> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file"> <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline> </svg> </symbol> <symbol id="svg-search" viewBox="0 0 24 24"> <title>Search</title> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"> <circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line> </svg> </symbol> <!-- Bootstrap Icons. MIT License: https://github.com/twbs/icons/blob/main/LICENSE.md --> <symbol id="svg-copy" viewBox="0 0 16 16"> <title>Copy</title> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard" viewBox="0 0 16 16"> <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/> <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/> </svg> </symbol> <symbol id="svg-copied" viewBox="0 0 16 16"> <title>Copied</title> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard-check-fill" viewBox="0 0 16 16"> <path d="M6.5 0A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3Zm3 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3Z"/> <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1A2.5 2.5 0 0 1 9.5 5h-3A2.5 2.5 0 0 1 4 2.5v-1Zm6.854 7.354-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L7.5 10.793l2.646-2.647a.5.5 0 0 1 .708.708Z"/> </svg> </symbol> </svg> <div class="side-bar"> <div class="site-header" role="banner"> <a href="/" class="site-title lh-tight"> Seungeon's blog </a> <button id="menu-button" class="site-button btn-reset" aria-label="Toggle menu" aria-pressed="false"> <svg viewBox="0 0 24 24" class="icon" aria-hidden="true"><use xlink:href="#svg-menu"></use></svg> </button> </div> <nav aria-label="Main" id="site-nav" class="site-nav"> <ul class="nav-list"><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="toggle items in Deploy category" aria-pressed="false"> <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg> </button><a href="/deploy/" class="nav-list-link">Deploy</a><ul class="nav-list"><li class="nav-list-item"><a href="/docs/deploy/rolling-update.html" class="nav-list-link">Rolling Update</a></li><li class="nav-list-item"><a href="/docs/deploy/blue-green.html" class="nav-list-link">Blue/Green Deployment</a></li><li class="nav-list-item"><a href="/docs/deploy/canary.html" class="nav-list-link">Canary Deployment</a></li></ul></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="toggle items in Helm category" aria-pressed="false"> <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg> </button><a href="/helm/" class="nav-list-link">Helm</a><ul class="nav-list"><li class="nav-list-item"><a href="/docs/helm/command.html" class="nav-list-link">How-to-use-Helm</a></li><li class="nav-list-item"><a href="/docs/helm/concept.html" class="nav-list-link">What-is-Helm</a></li><li class="nav-list-item"><a href="/docs/helm/grammer.html" class="nav-list-link">How-to-write-helm-chart</a></li></ul></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="toggle items in Jekyll category" aria-pressed="false"> <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg> </button><a href="/jekyll/" class="nav-list-link">Jekyll</a><ul class="nav-list"><li class="nav-list-item"><a href="/docs/jekyll/install-jekyll.html" class="nav-list-link">How to Install Jekyll</a></li><li class="nav-list-item"><a href="/docs/jekyll/just-the-docs.html" class="nav-list-link">How to use just-the-docs docs</a></li></ul></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="toggle items in Kubernetes category" aria-pressed="false"> <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg> </button><a href="/k8s/" class="nav-list-link">Kubernetes</a><ul class="nav-list"><li class="nav-list-item"><a href="/docs/k8s/command.html" class="nav-list-link">How to use kubectl</a></li><li class="nav-list-item"><a href="/docs/k8s/concept.html" class="nav-list-link">What-is-Kubernetes</a></li><li class="nav-list-item"><a href="/docs/k8s/grammer.html" class="nav-list-link">How-to-write-helm-chart</a></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="toggle items in Kubernetes Components category" aria-pressed="false"> <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg> </button><a href="/k8s/componentes/" class="nav-list-link">Kubernetes Components</a><ul class="nav-list"><li class="nav-list-item"><a href="/docs/k8s/componentes/clusterrole.html" class="nav-list-link">ClusterRole</a></li><li class="nav-list-item"><a href="/docs/k8s/componentes/pod.html" class="nav-list-link">Pod</a></li><li class="nav-list-item"><a href="/docs/k8s/componentes/deployment.html" class="nav-list-link">Deployment</a></li><li class="nav-list-item"><a href="/docs/k8s/componentes/service.html" class="nav-list-link">Service</a></li><li class="nav-list-item"><a href="/docs/k8s/componentes/ingress.html" class="nav-list-link">Ingress</a></li><li class="nav-list-item"><a href="/docs/k8s/componentes/configmap.html" class="nav-list-link">ConfigMap</a></li><li class="nav-list-item"><a href="/docs/k8s/componentes/role.html" class="nav-list-link">Role</a></li><li class="nav-list-item"><a href="/docs/k8s/componentes/rolebinding.html" class="nav-list-link">RoleBinding</a></li><li class="nav-list-item"><a href="/docs/k8s/componentes/clusterrolebinding.html" class="nav-list-link">ClusterRoleBinding</a></li><li class="nav-list-item"><a href="/docs/k8s/componentes/serviceaccount.html" class="nav-list-link">ServiceAccount</a></li><li class="nav-list-item"><a href="/docs/k8s/componentes/statefulset.html" class="nav-list-link">StatefulSet</a></li><li class="nav-list-item"><a href="/docs/k8s/componentes/kube-system.html" class="nav-list-link">kube-system</a></li></ul></li></ul></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="toggle items in Markdown category" aria-pressed="false"> <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg> </button><a href="/diagram/" class="nav-list-link">Markdown</a><ul class="nav-list"><li class="nav-list-item"><a href="/docs/markdown/diagram.html" class="nav-list-link">How to make diagram in markdown</a></li></ul></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="toggle items in Container category" aria-pressed="false"> <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg> </button><a href="/all-container/" class="nav-list-link">Container</a><ul class="nav-list"><li class="nav-list-item"><a href="/docs/all-container/container-runtime.html" class="nav-list-link">What-is-Container-Runtime</a></li><li class="nav-list-item"><a href="/docs/all-container/container.html" class="nav-list-link">What-is-Container</a></li><li class="nav-list-item"><a href="/docs/all-container/docker.html" class="nav-list-link">All-of-docker</a></li><li class="nav-list-item"><a href="/docs/all-container/registry.html" class="nav-list-link">Docker Registry</a></li></ul></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="toggle items in Git category" aria-pressed="false"> <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg> </button><a href="/git/" class="nav-list-link">Git</a><ul class="nav-list"><li class="nav-list-item"><a href="/docs/git/command.html" class="nav-list-link">git-command</a></li><li class="nav-list-item"><a href="/docs/git/git-concepts.html" class="nav-list-link">Git 개념</a></li><li class="nav-list-item"><a href="/docs/git/git-filter-repo.html" class="nav-list-link">git-filter-repo</a></li></ul></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="toggle items in Network category" aria-pressed="false"> <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg> </button><a href="/network/" class="nav-list-link">Network</a><ul class="nav-list"><li class="nav-list-item"><a href="/docs/network/3way-handshake.html" class="nav-list-link">3-Way Handshake</a></li><li class="nav-list-item"><a href="/docs/network/tcp-udp.html" class="nav-list-link">TCP vs UDP</a></li></ul></li></ul> </nav> <footer class="site-footer"> This site uses <a href="https://github.com/just-the-docs/just-the-docs">Just the Docs</a>, a documentation theme for Jekyll. </footer> </div> <div class="main" id="top"> <div id="main-header" class="main-header"> <div class="search" role="search"> <div class="search-input-wrap"> <input type="text" id="search-input" class="search-input" tabindex="0" placeholder="Search Seungeon's blog" aria-label="Search Seungeon's blog" autocomplete="off"> <label for="search-input" class="search-label"><svg viewBox="0 0 24 24" class="search-icon"><use xlink:href="#svg-search"></use></svg></label> </div> <div id="search-results" class="search-results"></div> </div> </div> <div class="main-content-wrap"> <nav aria-label="Breadcrumb" class="breadcrumb-nav"> <ol class="breadcrumb-nav-list"> <li class="breadcrumb-nav-list-item"><a href="/network/">Network</a></li> <li class="breadcrumb-nav-list-item"><span>TCP vs UDP</span></li> </ol> </nav> <div id="main-content" class="main-content"> <main> <h1 id="tcp-vs-udp"> <a href="#tcp-vs-udp" class="anchor-heading" aria-labelledby="tcp-vs-udp"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> TCP vs UDP </h1> <h2 id="개요"> <a href="#개요" class="anchor-heading" aria-labelledby="개요"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 개요 </h2> <p>TCP(Transmission Control Protocol)와 UDP(User Datagram Protocol)는 인터넷에서 데이터를 전송하는 두 가지 주요 전송 계층 프로토콜입니다. 각각의 특성과 사용 사례가 다르며, 애플리케이션의 요구사항에 따라 적절한 프로토콜을 선택해야 합니다.</p> <h2 id="프로토콜-비교"> <a href="#프로토콜-비교" class="anchor-heading" aria-labelledby="프로토콜-비교"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 프로토콜 비교 </h2><pre><code class="language-mermaid">graph TB
+    subgraph "TCP (Transmission Control Protocol)"
+        A[연결 지향적]
+        B[신뢰성 보장]
+        C[순서 보장]
+        D[흐름 제어]
+        E[혼잡 제어]
+        F[오버헤드 높음]
+    end
+
+    subgraph "UDP (User Datagram Protocol)"
+        G[비연결형]
+        H[신뢰성 없음]
+        I[순서 보장 없음]
+        J[흐름 제어 없음]
+        K[혼잡 제어 없음]
+        L[오버헤드 낮음]
+    end
+</code></pre><h2 id="tcp-transmission-control-protocol"> <a href="#tcp-transmission-control-protocol" class="anchor-heading" aria-labelledby="tcp-transmission-control-protocol"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> TCP (Transmission Control Protocol) </h2> <h3 id="tcp의-특징"> <a href="#tcp의-특징" class="anchor-heading" aria-labelledby="tcp의-특징"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> TCP의 특징 </h3><pre><code class="language-mermaid">graph LR
+    A[연결 설정] --&gt; B[데이터 전송]
+    B --&gt; C[연결 종료]
+
+    subgraph "신뢰성 보장"
+        D[재전송]
+        E[순서 보장]
+        F[흐름 제어]
+    end
+</code></pre><h4 id="1-연결-지향적-connection-oriented"> <a href="#1-연결-지향적-connection-oriented" class="anchor-heading" aria-labelledby="1-연결-지향적-connection-oriented"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 1. 연결 지향적 (Connection-Oriented) </h4> <ul> <li>통신 전에 연결을 설정 (3-Way Handshake)</li> <li>통신 후 연결을 종료 (4-Way Handshake)</li> <li>양방향 통신 지원</li> </ul> <h4 id="2-신뢰성-보장"> <a href="#2-신뢰성-보장" class="anchor-heading" aria-labelledby="2-신뢰성-보장"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 2. 신뢰성 보장 </h4> <ul> <li>데이터 손실 감지 및 재전송</li> <li>체크섬을 통한 데이터 무결성 검증</li> <li>ACK(Acknowledgment)를 통한 수신 확인</li> </ul> <h4 id="3-순서-보장"> <a href="#3-순서-보장" class="anchor-heading" aria-labelledby="3-순서-보장"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 3. 순서 보장 </h4> <ul> <li>시퀀스 번호를 통한 패킷 순서 관리</li> <li>순서가 바뀐 패킷을 올바른 순서로 재조립</li> </ul> <h4 id="4-흐름-제어-flow-control"> <a href="#4-흐름-제어-flow-control" class="anchor-heading" aria-labelledby="4-흐름-제어-flow-control"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 4. 흐름 제어 (Flow Control) </h4> <ul> <li>수신자의 처리 능력을 고려한 데이터 전송 속도 조절</li> <li>슬라이딩 윈도우 기법 사용</li> </ul> <h4 id="5-혼잡-제어-congestion-control"> <a href="#5-혼잡-제어-congestion-control" class="anchor-heading" aria-labelledby="5-혼잡-제어-congestion-control"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 5. 혼잡 제어 (Congestion Control) </h4> <ul> <li>네트워크 상황에 따른 전송 속도 조절</li> <li>네트워크 혼잡을 방지</li> </ul> <h3 id="tcp-헤더-구조"> <a href="#tcp-헤더-구조" class="anchor-heading" aria-labelledby="tcp-헤더-구조"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> TCP 헤더 구조 </h3><pre><code class="language-mermaid">graph LR
+    subgraph "TCP 헤더 (20-60 bytes)"
+        A[Source Port&lt;br/&gt;16 bits]
+        B[Destination Port&lt;br/&gt;16 bits]
+        C[Sequence Number&lt;br/&gt;32 bits]
+        D[Acknowledgment Number&lt;br/&gt;32 bits]
+        E[Data Offset&lt;br/&gt;4 bits]
+        F[Reserved&lt;br/&gt;6 bits]
+        G[Flags&lt;br/&gt;6 bits]
+        H[Window Size&lt;br/&gt;16 bits]
+        I[Checksum&lt;br/&gt;16 bits]
+        J[Urgent Pointer&lt;br/&gt;16 bits]
+        K[Options&lt;br/&gt;0-40 bytes]
+    end
+</code></pre><h3 id="tcp-상태-머신"> <a href="#tcp-상태-머신" class="anchor-heading" aria-labelledby="tcp-상태-머신"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> TCP 상태 머신 </h3><pre><code class="language-mermaid">stateDiagram-v2
+    [*] --&gt; CLOSED
+    CLOSED --&gt; LISTEN : 서버 시작
+    CLOSED --&gt; SYN_SENT : 클라이언트 연결 요청
+    SYN_SENT --&gt; ESTABLISHED : SYN+ACK 수신 후 ACK 전송
+    LISTEN --&gt; SYN_RECEIVED : SYN 수신
+    SYN_RECEIVED --&gt; ESTABLISHED : ACK 수신
+    ESTABLISHED --&gt; FIN_WAIT_1 : FIN 전송
+    ESTABLISHED --&gt; CLOSE_WAIT : FIN 수신
+    FIN_WAIT_1 --&gt; FIN_WAIT_2 : ACK 수신
+    FIN_WAIT_2 --&gt; TIME_WAIT : FIN 수신
+    CLOSE_WAIT --&gt; LAST_ACK : FIN 전송
+    LAST_ACK --&gt; CLOSED : ACK 수신
+    TIME_WAIT --&gt; CLOSED : 2MSL 대기 후
+</code></pre><h3 id="tcp-사용-사례"> <a href="#tcp-사용-사례" class="anchor-heading" aria-labelledby="tcp-사용-사례"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> TCP 사용 사례 </h3><pre><code class="language-mermaid">graph TB
+    subgraph "TCP 사용 사례"
+        A[웹 브라우징&lt;br/&gt;HTTP/HTTPS]
+        B[이메일&lt;br/&gt;SMTP/POP3/IMAP]
+        C[파일 전송&lt;br/&gt;FTP/SFTP]
+        D[원격 접속&lt;br/&gt;SSH/Telnet]
+        E[데이터베이스&lt;br/&gt;MySQL/PostgreSQL]
+    end
+</code></pre><h2 id="udp-user-datagram-protocol"> <a href="#udp-user-datagram-protocol" class="anchor-heading" aria-labelledby="udp-user-datagram-protocol"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> UDP (User Datagram Protocol) </h2> <h3 id="udp의-특징"> <a href="#udp의-특징" class="anchor-heading" aria-labelledby="udp의-특징"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> UDP의 특징 </h3><pre><code class="language-mermaid">graph LR
+    A[데이터 전송] --&gt; B[완료]
+
+    subgraph "비연결형"
+        C[연결 설정 없음]
+        D[연결 종료 없음]
+        E[단방향 통신]
+    end
+</code></pre><h4 id="1-비연결형-connectionless"> <a href="#1-비연결형-connectionless" class="anchor-heading" aria-labelledby="1-비연결형-connectionless"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 1. 비연결형 (Connectionless) </h4> <ul> <li>통신 전 연결 설정 과정 없음</li> <li>각 패킷이 독립적으로 전송</li> <li>빠른 전송 속도</li> </ul> <h4 id="2-신뢰성-없음"> <a href="#2-신뢰성-없음" class="anchor-heading" aria-labelledby="2-신뢰성-없음"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 2. 신뢰성 없음 </h4> <ul> <li>데이터 손실에 대한 재전송 없음</li> <li>수신 확인(ACK) 없음</li> <li>애플리케이션에서 신뢰성 처리</li> </ul> <h4 id="3-순서-보장-없음"> <a href="#3-순서-보장-없음" class="anchor-heading" aria-labelledby="3-순서-보장-없음"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 3. 순서 보장 없음 </h4> <ul> <li>패킷 순서가 바뀔 수 있음</li> <li>애플리케이션에서 순서 처리</li> </ul> <h4 id="4-흐름-제어-없음"> <a href="#4-흐름-제어-없음" class="anchor-heading" aria-labelledby="4-흐름-제어-없음"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 4. 흐름 제어 없음 </h4> <ul> <li>수신자 처리 능력 고려하지 않음</li> <li>전송 속도 제한 없음</li> </ul> <h4 id="5-혼잡-제어-없음"> <a href="#5-혼잡-제어-없음" class="anchor-heading" aria-labelledby="5-혼잡-제어-없음"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 5. 혼잡 제어 없음 </h4> <ul> <li>네트워크 상황 고려하지 않음</li> <li>네트워크 혼잡 가능성</li> </ul> <h3 id="udp-헤더-구조"> <a href="#udp-헤더-구조" class="anchor-heading" aria-labelledby="udp-헤더-구조"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> UDP 헤더 구조 </h3><pre><code class="language-mermaid">graph LR
+    subgraph "UDP 헤더 (8 bytes)"
+        A[Source Port&lt;br/&gt;16 bits]
+        B[Destination Port&lt;br/&gt;16 bits]
+        C[Length&lt;br/&gt;16 bits]
+        D[Checksum&lt;br/&gt;16 bits]
+    end
+</code></pre><h3 id="udp-사용-사례"> <a href="#udp-사용-사례" class="anchor-heading" aria-labelledby="udp-사용-사례"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> UDP 사용 사례 </h3><pre><code class="language-mermaid">graph TB
+    subgraph "UDP 사용 사례"
+        A[실시간 스트리밍&lt;br/&gt;영상/음성]
+        B[온라인 게임&lt;br/&gt;실시간 데이터]
+        C[DNS 조회&lt;br/&gt;도메인 이름 해석]
+        D[DHCP&lt;br/&gt;IP 주소 할당]
+        E[SNMP&lt;br/&gt;네트워크 관리]
+    end
+</code></pre><h2 id="상세-비교"> <a href="#상세-비교" class="anchor-heading" aria-labelledby="상세-비교"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 상세 비교 </h2> <h3 id="1-연결-방식"> <a href="#1-연결-방식" class="anchor-heading" aria-labelledby="1-연결-방식"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 1. 연결 방식 </h3><pre><code class="language-mermaid">sequenceDiagram
+    participant Client as 클라이언트
+    participant Server as 서버
+
+    Note over Client,Server: TCP 연결 과정
+    Client-&gt;&gt;Server: SYN
+    Server-&gt;&gt;Client: SYN+ACK
+    Client-&gt;&gt;Server: ACK
+    Note over Client,Server: 데이터 전송
+    Client-&gt;&gt;Server: 데이터
+    Server-&gt;&gt;Client: ACK
+    Note over Client,Server: 연결 종료
+    Client-&gt;&gt;Server: FIN
+    Server-&gt;&gt;Client: ACK
+    Server-&gt;&gt;Client: FIN
+    Client-&gt;&gt;Server: ACK
+
+    Note over Client,Server: UDP 통신
+    Client-&gt;&gt;Server: 데이터 (연결 없음)
+    Server-&gt;&gt;Client: 응답 (연결 없음)
+</code></pre><h3 id="2-데이터-전송-방식"> <a href="#2-데이터-전송-방식" class="anchor-heading" aria-labelledby="2-데이터-전송-방식"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 2. 데이터 전송 방식 </h3><pre><code class="language-mermaid">graph TB
+    subgraph "TCP 데이터 전송"
+        A[연결 설정] --&gt; B[데이터 전송]
+        B --&gt; C[수신 확인]
+        C --&gt; D[재전송 필요시]
+        D --&gt; E[연결 종료]
+    end
+
+    subgraph "UDP 데이터 전송"
+        F[데이터 전송] --&gt; G[완료]
+    end
+</code></pre><h3 id="3-오버헤드-비교"> <a href="#3-오버헤드-비교" class="anchor-heading" aria-labelledby="3-오버헤드-비교"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 3. 오버헤드 비교 </h3><pre><code class="language-mermaid">graph LR
+    subgraph "TCP 오버헤드"
+        A[연결 설정: 3 패킷]
+        B[데이터 전송: N 패킷]
+        C[수신 확인: N 패킷]
+        D[연결 종료: 4 패킷]
+    end
+
+    subgraph "UDP 오버헤드"
+        E[데이터 전송: N 패킷]
+    end
+</code></pre><h2 id="실제-사용-예시"> <a href="#실제-사용-예시" class="anchor-heading" aria-labelledby="실제-사용-예시"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 실제 사용 예시 </h2> <h3 id="1-웹-브라우징-tcp"> <a href="#1-웹-브라우징-tcp" class="anchor-heading" aria-labelledby="1-웹-브라우징-tcp"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 1. 웹 브라우징 (TCP) </h3><pre><code class="language-mermaid">sequenceDiagram
+    participant Browser as 웹 브라우저
+    participant WebServer as 웹 서버
+
+    Note over Browser,WebServer: TCP 연결 설정
+    Browser-&gt;&gt;WebServer: SYN
+    WebServer-&gt;&gt;Browser: SYN+ACK
+    Browser-&gt;&gt;WebServer: ACK
+
+    Note over Browser,WebServer: HTTP 요청/응답
+    Browser-&gt;&gt;WebServer: HTTP GET /index.html
+    WebServer-&gt;&gt;Browser: HTTP 200 OK + HTML 데이터
+
+    Note over Browser,WebServer: 연결 종료
+    Browser-&gt;&gt;WebServer: FIN
+    WebServer-&gt;&gt;Browser: ACK
+    WebServer-&gt;&gt;Browser: FIN
+    Browser-&gt;&gt;WebServer: ACK
+</code></pre><h3 id="2-실시간-게임-udp"> <a href="#2-실시간-게임-udp" class="anchor-heading" aria-labelledby="2-실시간-게임-udp"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 2. 실시간 게임 (UDP) </h3><pre><code class="language-mermaid">sequenceDiagram
+    participant GameClient as 게임 클라이언트
+    participant GameServer as 게임 서버
+
+    Note over GameClient,GameServer: UDP 통신 (연결 없음)
+    GameClient-&gt;&gt;GameServer: 플레이어 위치 데이터
+    GameServer-&gt;&gt;GameClient: 다른 플레이어 정보
+    GameClient-&gt;&gt;GameServer: 액션 데이터
+    GameServer-&gt;&gt;GameClient: 게임 상태 업데이트
+</code></pre><h3 id="3-dns-조회-udp"> <a href="#3-dns-조회-udp" class="anchor-heading" aria-labelledby="3-dns-조회-udp"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 3. DNS 조회 (UDP) </h3><pre><code class="language-mermaid">sequenceDiagram
+    participant Client as 클라이언트
+    participant DNSServer as DNS 서버
+
+    Note over Client,DNSServer: DNS 조회 (UDP)
+    Client-&gt;&gt;DNSServer: DNS Query (www.example.com)
+    DNSServer-&gt;&gt;Client: DNS Response (192.168.1.1)
+</code></pre><h2 id="성능-비교"> <a href="#성능-비교" class="anchor-heading" aria-labelledby="성능-비교"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 성능 비교 </h2> <h3 id="1-속도"> <a href="#1-속도" class="anchor-heading" aria-labelledby="1-속도"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 1. 속도 </h3><pre><code class="language-mermaid">graph LR
+    A[UDP] --&gt; B[빠름&lt;br/&gt;연결 설정 없음&lt;br/&gt;오버헤드 적음]
+    C[TCP] --&gt; D[상대적으로 느림&lt;br/&gt;연결 설정 필요&lt;br/&gt;오버헤드 많음]
+</code></pre><h3 id="2-신뢰성"> <a href="#2-신뢰성" class="anchor-heading" aria-labelledby="2-신뢰성"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 2. 신뢰성 </h3><pre><code class="language-mermaid">graph LR
+    A[TCP] --&gt; B[높음&lt;br/&gt;재전송 보장&lt;br/&gt;순서 보장]
+    C[UDP] --&gt; D[낮음&lt;br/&gt;재전송 없음&lt;br/&gt;순서 보장 없음]
+</code></pre><h3 id="3-리소스-사용량"> <a href="#3-리소스-사용량" class="anchor-heading" aria-labelledby="3-리소스-사용량"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 3. 리소스 사용량 </h3><pre><code class="language-mermaid">graph LR
+    A[UDP] --&gt; B[적음&lt;br/&gt;연결 상태 관리 없음&lt;br/&gt;버퍼 적음]
+    C[TCP] --&gt; D[많음&lt;br/&gt;연결 상태 관리&lt;br/&gt;버퍼 많음]
+</code></pre><h2 id="프로토콜-선택-가이드"> <a href="#프로토콜-선택-가이드" class="anchor-heading" aria-labelledby="프로토콜-선택-가이드"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 프로토콜 선택 가이드 </h2> <h3 id="tcp를-선택해야-하는-경우"> <a href="#tcp를-선택해야-하는-경우" class="anchor-heading" aria-labelledby="tcp를-선택해야-하는-경우"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> TCP를 선택해야 하는 경우 </h3><pre><code class="language-mermaid">graph TB
+    subgraph "TCP 선택 기준"
+        A[데이터 무결성이 중요한 경우]
+        B[순서가 중요한 경우]
+        C[신뢰성이 중요한 경우]
+        D[대용량 데이터 전송]
+        E[파일 전송]
+    end
+</code></pre><h3 id="udp를-선택해야-하는-경우"> <a href="#udp를-선택해야-하는-경우" class="anchor-heading" aria-labelledby="udp를-선택해야-하는-경우"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> UDP를 선택해야 하는 경우 </h3><pre><code class="language-mermaid">graph TB
+    subgraph "UDP 선택 기준"
+        A[실시간성이 중요한 경우]
+        B[속도가 중요한 경우]
+        C[간단한 요청/응답]
+        D[스트리밍 서비스]
+        E[게임 데이터]
+    end
+</code></pre><h2 id="결론"> <a href="#결론" class="anchor-heading" aria-labelledby="결론"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 결론 </h2> <p>TCP와 UDP는 각각의 장단점이 있으며, 애플리케이션의 요구사항에 따라 적절한 프로토콜을 선택해야 합니다. TCP는 신뢰성이 중요한 웹 서비스, 파일 전송 등에 적합하고, UDP는 실시간성이 중요한 스트리밍, 게임 등에 적합합니다. 현대의 네트워크 애플리케이션에서는 두 프로토콜을 상황에 맞게 혼용하여 사용하는 경우가 많습니다.</p> </main> </div> </div> <div class="search-overlay"></div> </div> <script type="module"> import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10.6.1/dist/mermaid.esm.min.mjs'; var config = {} ; mermaid.initialize(config); mermaid.run({ querySelector: '.language-mermaid', }); </script> </body> </html>
