@@ -1,0 +1,210 @@
+<!DOCTYPE html> <html lang="en"> <head> <meta charset="UTF-8"> <meta http-equiv="X-UA-Compatible" content="IE=Edge"> <link rel="stylesheet" href="/assets/css/just-the-docs-default.css"> <link rel="stylesheet" href="/assets/css/just-the-docs-head-nav.css" id="jtd-head-nav-stylesheet"> <style id="jtd-nav-activation"> .site-nav > ul.nav-list:first-child > li > a, .site-nav > ul.nav-list:first-child > li > ul > li:not(:nth-child(1)) > a, .site-nav > ul.nav-list:first-child > li > ul > li > ul > li a { background-image: none; } .site-nav > ul.nav-list:not(:first-child) a, .site-nav li.external a { background-image: none; } .site-nav > ul.nav-list:first-child > li:nth-child(5) > ul > li:nth-child(1) > a { font-weight: 600; text-decoration: none; }.site-nav > ul.nav-list:first-child > li:nth-child(5) > button svg, .site-nav > ul.nav-list:first-child > li:nth-child(5) > ul > li:nth-child(1) > button svg { transform: rotate(-90deg); }.site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(5) > ul.nav-list, .site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(5) > ul.nav-list > li.nav-list-item:nth-child(1) > ul.nav-list { display: block; } </style> <script src="/assets/js/vendor/lunr.min.js"></script> <script src="/assets/js/just-the-docs.js"></script> <meta name="viewport" content="width=device-width, initial-scale=1"> <!-- Begin Jekyll SEO tag v2.8.0 --> <title>Spring boot gateway | Seungeon’s blog</title> <meta name="generator" content="Jekyll v3.10.0" /> <meta property="og:title" content="Spring boot gateway" /> <meta property="og:locale" content="en" /> <meta property="og:site_name" content="Seungeon’s blog" /> <meta property="og:type" content="article" /> <meta property="article:published_time" content="2025-08-03T00:00:00+09:00" /> <meta name="twitter:card" content="summary" /> <meta property="twitter:title" content="Spring boot gateway" /> <script type="application/ld+json"> {"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2025-08-03T00:00:00+09:00","datePublished":"2025-08-03T00:00:00+09:00","headline":"Spring boot gateway","mainEntityOfPage":{"@type":"WebPage","@id":"/docs/spring/api-gateway-webflux.html"},"url":"/docs/spring/api-gateway-webflux.html"}</script> <!-- End Jekyll SEO tag --> </head> <body> <a class="skip-to-main" href="#main-content">Skip to main content</a> <svg xmlns="http://www.w3.org/2000/svg" class="d-none"> <symbol id="svg-link" viewBox="0 0 24 24"> <title>Link</title> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-link"> <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path> </svg> </symbol> <symbol id="svg-menu" viewBox="0 0 24 24"> <title>Menu</title> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"> <line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line> </svg> </symbol> <symbol id="svg-arrow-right" viewBox="0 0 24 24"> <title>Expand</title> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"> <polyline points="9 18 15 12 9 6"></polyline> </svg> </symbol> <!-- Feather. MIT License: https://github.com/feathericons/feather/blob/master/LICENSE --> <symbol id="svg-external-link" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link"> <title id="svg-external-link-title">(external link)</title> <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line> </symbol> <symbol id="svg-doc" viewBox="0 0 24 24"> <title>Document</title> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file"> <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline> </svg> </symbol> <symbol id="svg-search" viewBox="0 0 24 24"> <title>Search</title> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"> <circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line> </svg> </symbol> <!-- Bootstrap Icons. MIT License: https://github.com/twbs/icons/blob/main/LICENSE.md --> <symbol id="svg-copy" viewBox="0 0 16 16"> <title>Copy</title> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard" viewBox="0 0 16 16"> <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/> <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/> </svg> </symbol> <symbol id="svg-copied" viewBox="0 0 16 16"> <title>Copied</title> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard-check-fill" viewBox="0 0 16 16"> <path d="M6.5 0A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3Zm3 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3Z"/> <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1A2.5 2.5 0 0 1 9.5 5h-3A2.5 2.5 0 0 1 4 2.5v-1Zm6.854 7.354-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L7.5 10.793l2.646-2.647a.5.5 0 0 1 .708.708Z"/> </svg> </symbol> </svg> <div class="side-bar"> <div class="site-header" role="banner"> <a href="/" class="site-title lh-tight"> Seungeon's blog </a> <button id="menu-button" class="site-button btn-reset" aria-label="Toggle menu" aria-pressed="false"> <svg viewBox="0 0 24 24" class="icon" aria-hidden="true"><use xlink:href="#svg-menu"></use></svg> </button> </div> <nav aria-label="Main" id="site-nav" class="site-nav"> <ul class="nav-list"><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="toggle items in Deploy category" aria-pressed="false"> <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg> </button><a href="/deploy/" class="nav-list-link">Deploy</a><ul class="nav-list"><li class="nav-list-item"><a href="/docs/deploy/rolling-update.html" class="nav-list-link">Rolling Update</a></li><li class="nav-list-item"><a href="/docs/deploy/blue-green.html" class="nav-list-link">Blue/Green Deployment</a></li><li class="nav-list-item"><a href="/docs/deploy/canary.html" class="nav-list-link">Canary Deployment</a></li></ul></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="toggle items in Helm category" aria-pressed="false"> <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg> </button><a href="/helm/" class="nav-list-link">Helm</a><ul class="nav-list"><li class="nav-list-item"><a href="/docs/helm/command.html" class="nav-list-link">How-to-use-Helm</a></li><li class="nav-list-item"><a href="/docs/helm/concept.html" class="nav-list-link">What-is-Helm</a></li><li class="nav-list-item"><a href="/docs/helm/grammer.html" class="nav-list-link">How-to-write-helm-chart</a></li></ul></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="toggle items in Jekyll category" aria-pressed="false"> <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg> </button><a href="/jekyll/" class="nav-list-link">Jekyll</a><ul class="nav-list"><li class="nav-list-item"><a href="/docs/jekyll/install-jekyll.html" class="nav-list-link">How to Install Jekyll</a></li><li class="nav-list-item"><a href="/docs/jekyll/just-the-docs.html" class="nav-list-link">How to use just-the-docs docs</a></li></ul></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="toggle items in Kubernetes category" aria-pressed="false"> <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg> </button><a href="/k8s/" class="nav-list-link">Kubernetes</a><ul class="nav-list"><li class="nav-list-item"><a href="/docs/k8s/command.html" class="nav-list-link">How to use kubectl</a></li><li class="nav-list-item"><a href="/docs/k8s/concept.html" class="nav-list-link">What-is-Kubernetes</a></li><li class="nav-list-item"><a href="/docs/k8s/grammer.html" class="nav-list-link">How-to-write-helm-chart</a></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="toggle items in Kubernetes Components category" aria-pressed="false"> <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg> </button><a href="/k8s/componentes/" class="nav-list-link">Kubernetes Components</a><ul class="nav-list"><li class="nav-list-item"><a href="/docs/k8s/componentes/clusterrole.html" class="nav-list-link">ClusterRole</a></li><li class="nav-list-item"><a href="/docs/k8s/componentes/pod.html" class="nav-list-link">Pod</a></li><li class="nav-list-item"><a href="/docs/k8s/componentes/deployment.html" class="nav-list-link">Deployment</a></li><li class="nav-list-item"><a href="/docs/k8s/componentes/service.html" class="nav-list-link">Service</a></li><li class="nav-list-item"><a href="/docs/k8s/componentes/ingress.html" class="nav-list-link">Ingress</a></li><li class="nav-list-item"><a href="/docs/k8s/componentes/configmap.html" class="nav-list-link">ConfigMap</a></li><li class="nav-list-item"><a href="/docs/k8s/componentes/role.html" class="nav-list-link">Role</a></li><li class="nav-list-item"><a href="/docs/k8s/componentes/rolebinding.html" class="nav-list-link">RoleBinding</a></li><li class="nav-list-item"><a href="/docs/k8s/componentes/clusterrolebinding.html" class="nav-list-link">ClusterRoleBinding</a></li><li class="nav-list-item"><a href="/docs/k8s/componentes/serviceaccount.html" class="nav-list-link">ServiceAccount</a></li><li class="nav-list-item"><a href="/docs/k8s/componentes/statefulset.html" class="nav-list-link">StatefulSet</a></li><li class="nav-list-item"><a href="/docs/k8s/componentes/kube-system.html" class="nav-list-link">kube-system</a></li></ul></li></ul></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="toggle items in Spring category" aria-pressed="false"> <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg> </button><a href="/spring/" class="nav-list-link">Spring</a><ul class="nav-list"><li class="nav-list-item"><a href="/docs/spring/api-gateway-webflux.html" class="nav-list-link">Spring boot gateway</a></li><li class="nav-list-item"><a href="/docs/spring/overview.html" class="nav-list-link">Spring WebFlux Overview</a></li><li class="nav-list-item"><a href="/docs/spring/webflux.html" class="nav-list-link">Spring WebFlux</a></li><li class="nav-list-item"><a href="/docs/spring/flux-mono.html" class="nav-list-link">Flux와 Mono 이해하기</a></li></ul></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="toggle items in Markdown category" aria-pressed="false"> <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg> </button><a href="/diagram/" class="nav-list-link">Markdown</a><ul class="nav-list"><li class="nav-list-item"><a href="/docs/markdown/diagram.html" class="nav-list-link">How to make diagram in markdown</a></li></ul></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="toggle items in Container category" aria-pressed="false"> <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg> </button><a href="/all-container/" class="nav-list-link">Container</a><ul class="nav-list"><li class="nav-list-item"><a href="/docs/all-container/container-runtime.html" class="nav-list-link">What-is-Container-Runtime</a></li><li class="nav-list-item"><a href="/docs/all-container/container.html" class="nav-list-link">What-is-Container</a></li><li class="nav-list-item"><a href="/docs/all-container/docker.html" class="nav-list-link">All-of-docker</a></li><li class="nav-list-item"><a href="/docs/all-container/registry.html" class="nav-list-link">Docker Registry</a></li></ul></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="toggle items in Git category" aria-pressed="false"> <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg> </button><a href="/git/" class="nav-list-link">Git</a><ul class="nav-list"><li class="nav-list-item"><a href="/docs/git/command.html" class="nav-list-link">git-command</a></li><li class="nav-list-item"><a href="/docs/git/git-concepts.html" class="nav-list-link">Git 개념</a></li><li class="nav-list-item"><a href="/docs/git/git-filter-repo.html" class="nav-list-link">git-filter-repo</a></li></ul></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="toggle items in Network category" aria-pressed="false"> <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg> </button><a href="/network/" class="nav-list-link">Network</a><ul class="nav-list"><li class="nav-list-item"><a href="/docs/network/3way-handshake.html" class="nav-list-link">3-Way Handshake</a></li><li class="nav-list-item"><a href="/docs/network/tcp-udp.html" class="nav-list-link">TCP vs UDP</a></li></ul></li></ul> </nav> <footer class="site-footer"> This site uses <a href="https://github.com/just-the-docs/just-the-docs">Just the Docs</a>, a documentation theme for Jekyll. </footer> </div> <div class="main" id="top"> <div id="main-header" class="main-header"> <div class="search" role="search"> <div class="search-input-wrap"> <input type="text" id="search-input" class="search-input" tabindex="0" placeholder="Search Seungeon's blog" aria-label="Search Seungeon's blog" autocomplete="off"> <label for="search-input" class="search-label"><svg viewBox="0 0 24 24" class="search-icon"><use xlink:href="#svg-search"></use></svg></label> </div> <div id="search-results" class="search-results"></div> </div> </div> <div class="main-content-wrap"> <nav aria-label="Breadcrumb" class="breadcrumb-nav"> <ol class="breadcrumb-nav-list"> <li class="breadcrumb-nav-list-item"><a href="/spring/">Spring</a></li> <li class="breadcrumb-nav-list-item"><span>Spring boot gateway</span></li> </ol> </nav> <div id="main-content" class="main-content"> <main> <h1 id="spring-api-gateway--webflux"> <a href="#spring-api-gateway--webflux" class="anchor-heading" aria-labelledby="spring-api-gateway--webflux"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Spring API Gateway &amp; WebFlux </h1> <h2 id="개요"> <a href="#개요" class="anchor-heading" aria-labelledby="개요"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 개요 </h2> <p>Spring Cloud Gateway는 Spring Cloud 생태계의 API Gateway로, Spring WebFlux를 기반으로 구축되어 비동기 논블로킹 방식으로 동작합니다. 이 문서에서는 Spring API Gateway의 구조와 WebFlux의 핵심 개념을 다이어그램과 함께 상세히 설명합니다.</p> <h2 id="spring-cloud-gateway-아키텍처"> <a href="#spring-cloud-gateway-아키텍처" class="anchor-heading" aria-labelledby="spring-cloud-gateway-아키텍처"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Spring Cloud Gateway 아키텍처 </h2> <h3 id="1-전체-시스템-구조"> <a href="#1-전체-시스템-구조" class="anchor-heading" aria-labelledby="1-전체-시스템-구조"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 1. 전체 시스템 구조 </h3><pre><code class="language-mermaid">graph TB
+    Client[클라이언트] --&gt; Gateway[Spring Cloud Gateway]
+    Gateway --&gt; Route1[Route 1: /api/users]
+    Gateway --&gt; Route2[Route 2: /api/orders]
+    Gateway --&gt; Route3[Route 3: /api/products]
+
+    Route1 --&gt; Service1[User Service]
+    Route2 --&gt; Service2[Order Service]
+    Route3 --&gt; Service3[Product Service]
+
+    subgraph "Gateway Components"
+        Gateway --&gt; Predicate[Predicate]
+        Gateway --&gt; Filter[Filter]
+        Gateway --&gt; LoadBalancer[Load Balancer]
+    end
+
+    subgraph "WebFlux Core"
+        WebFlux[WebFlux Engine]
+        Netty[Netty Server]
+        EventLoop[Event Loop]
+    end
+
+    Gateway --&gt; WebFlux
+    WebFlux --&gt; Netty
+    Netty --&gt; EventLoop
+</code></pre><h3 id="2-gateway-핵심-컴포넌트"> <a href="#2-gateway-핵심-컴포넌트" class="anchor-heading" aria-labelledby="2-gateway-핵심-컴포넌트"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 2. Gateway 핵심 컴포넌트 </h3><pre><code class="language-mermaid">graph LR
+    Request[HTTP Request] --&gt; Predicate[Predicate&lt;br/&gt;요청 조건 확인]
+    Predicate --&gt; Filter[Filter&lt;br/&gt;요청/응답 처리]
+    Filter --&gt; Route[Route&lt;br/&gt;라우팅 결정]
+    Route --&gt; Target[Target Service]
+
+    subgraph "Predicate Types"
+        Path[Path Predicate]
+        Method[Method Predicate]
+        Header[Header Predicate]
+        Query[Query Predicate]
+    end
+
+    subgraph "Filter Types"
+        Pre[Pre Filter]
+        Post[Post Filter]
+        Global[Global Filter]
+        Gateway[Gateway Filter]
+    end
+</code></pre><h2 id="webflux-핵심-개념"> <a href="#webflux-핵심-개념" class="anchor-heading" aria-labelledby="webflux-핵심-개념"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> WebFlux 핵심 개념 </h2> <h3 id="1-reactive-streams-구조"> <a href="#1-reactive-streams-구조" class="anchor-heading" aria-labelledby="1-reactive-streams-구조"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 1. Reactive Streams 구조 </h3><pre><code class="language-mermaid">graph TB
+    Publisher[Publisher&lt;br/&gt;데이터 발행자] --&gt; Subscriber[Subscriber&lt;br/&gt;데이터 구독자]
+    Publisher --&gt; Subscription[Subscription&lt;br/&gt;구독 관계]
+    Subscription --&gt; Subscriber
+
+    subgraph "Reactive Streams"
+        Mono[Mono&lt;T&gt;&lt;br/&gt;0 또는 1개 요소]
+        Flux[Flux&lt;T&gt;&lt;br/&gt;0개 이상의 요소]
+    end
+
+    Publisher --&gt; Mono
+    Publisher --&gt; Flux
+</code></pre><h3 id="2-webflux-이벤트-루프-모델"> <a href="#2-webflux-이벤트-루프-모델" class="anchor-heading" aria-labelledby="2-webflux-이벤트-루프-모델"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 2. WebFlux 이벤트 루프 모델 </h3><pre><code class="language-mermaid">graph TB
+    Request[HTTP Request] --&gt; EventLoop[Event Loop Thread]
+
+    subgraph "Event Loop"
+        Accept[Accept Event]
+        Read[Read Event]
+        Process[Process Event]
+        Write[Write Event]
+    end
+
+    EventLoop --&gt; Accept
+    Accept --&gt; Read
+    Read --&gt; Process
+    Process --&gt; Write
+    Write --&gt; Response[HTTP Response]
+
+    subgraph "Non-blocking I/O"
+        NIO[NIO Channels]
+        Selector[Selector]
+    end
+
+    EventLoop --&gt; NIO
+    NIO --&gt; Selector
+</code></pre><h2 id="spring-cloud-gateway-설정-예제"> <a href="#spring-cloud-gateway-설정-예제" class="anchor-heading" aria-labelledby="spring-cloud-gateway-설정-예제"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Spring Cloud Gateway 설정 예제 </h2> <h3 id="1-기본-라우팅-설정"> <a href="#1-기본-라우팅-설정" class="anchor-heading" aria-labelledby="1-기본-라우팅-설정"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 1. 기본 라우팅 설정 </h3> <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">spring</span><span class="pi">:</span>
+  <span class="na">cloud</span><span class="pi">:</span>
+    <span class="na">gateway</span><span class="pi">:</span>
+      <span class="na">routes</span><span class="pi">:</span>
+        <span class="pi">-</span> <span class="na">id</span><span class="pi">:</span> <span class="s">user-service</span>
+          <span class="na">uri</span><span class="pi">:</span> <span class="s">lb://user-service</span>
+          <span class="na">predicates</span><span class="pi">:</span>
+            <span class="pi">-</span> <span class="s">Path=/api/users/**</span>
+          <span class="na">filters</span><span class="pi">:</span>
+            <span class="pi">-</span> <span class="s">StripPrefix=1</span>
+            <span class="pi">-</span> <span class="s">AddRequestHeader=X-Response-Time, {response_time}</span>
+
+        <span class="pi">-</span> <span class="na">id</span><span class="pi">:</span> <span class="s">order-service</span>
+          <span class="na">uri</span><span class="pi">:</span> <span class="s">lb://order-service</span>
+          <span class="na">predicates</span><span class="pi">:</span>
+            <span class="pi">-</span> <span class="s">Path=/api/orders/**</span>
+            <span class="pi">-</span> <span class="s">Method=GET,POST</span>
+          <span class="na">filters</span><span class="pi">:</span>
+            <span class="pi">-</span> <span class="s">CircuitBreaker=orderCircuitBreaker</span>
+            <span class="pi">-</span> <span class="s">Retry=3</span>
+</code></pre></div></div> <h3 id="2-커스텀-필터-구현"> <a href="#2-커스텀-필터-구현" class="anchor-heading" aria-labelledby="2-커스텀-필터-구현"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 2. 커스텀 필터 구현 </h3> <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@Component</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">CustomGlobalFilter</span> <span class="kd">implements</span> <span class="nc">GlobalFilter</span><span class="o">,</span> <span class="nc">Ordered</span> <span class="o">{</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="nc">Mono</span><span class="o">&lt;</span><span class="nc">Void</span><span class="o">&gt;</span> <span class="nf">filter</span><span class="o">(</span><span class="nc">ServerWebExchange</span> <span class="n">exchange</span><span class="o">,</span> <span class="nc">GatewayFilterChain</span> <span class="n">chain</span><span class="o">)</span> <span class="o">{</span>
+        <span class="nc">ServerHttpRequest</span> <span class="n">request</span> <span class="o">=</span> <span class="n">exchange</span><span class="o">.</span><span class="na">getRequest</span><span class="o">();</span>
+        <span class="nc">String</span> <span class="n">path</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="na">getPath</span><span class="o">().</span><span class="na">value</span><span class="o">();</span>
+
+        <span class="c1">// 요청 로깅</span>
+        <span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"Request: {} {}"</span><span class="o">,</span> <span class="n">request</span><span class="o">.</span><span class="na">getMethod</span><span class="o">(),</span> <span class="n">path</span><span class="o">);</span>
+
+        <span class="k">return</span> <span class="n">chain</span><span class="o">.</span><span class="na">filter</span><span class="o">(</span><span class="n">exchange</span><span class="o">)</span>
+            <span class="o">.</span><span class="na">then</span><span class="o">(</span><span class="nc">Mono</span><span class="o">.</span><span class="na">fromRunnable</span><span class="o">(()</span> <span class="o">-&gt;</span> <span class="o">{</span>
+                <span class="nc">ServerHttpResponse</span> <span class="n">response</span> <span class="o">=</span> <span class="n">exchange</span><span class="o">.</span><span class="na">getResponse</span><span class="o">();</span>
+                <span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"Response: {} {}"</span><span class="o">,</span> <span class="n">response</span><span class="o">.</span><span class="na">getStatusCode</span><span class="o">(),</span> <span class="n">path</span><span class="o">);</span>
+            <span class="o">}));</span>
+    <span class="o">}</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">getOrder</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="o">;</span> <span class="c1">// 높은 우선순위</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div> <h2 id="webflux-vs-spring-mvc-비교"> <a href="#webflux-vs-spring-mvc-비교" class="anchor-heading" aria-labelledby="webflux-vs-spring-mvc-비교"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> WebFlux vs Spring MVC 비교 </h2> <h3 id="1-스레드-모델-비교"> <a href="#1-스레드-모델-비교" class="anchor-heading" aria-labelledby="1-스레드-모델-비교"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 1. 스레드 모델 비교 </h3><pre><code class="language-mermaid">graph TB
+    subgraph "Spring MVC (Blocking)"
+        MVCRequest[Request] --&gt; MVCThread[Thread Pool]
+        MVCThread --&gt; MVCBlocking[Blocking I/O]
+        MVCBlocking --&gt; MVCResponse[Response]
+    end
+
+    subgraph "WebFlux (Non-blocking)"
+        FluxRequest[Request] --&gt; FluxEventLoop[Event Loop]
+        FluxEventLoop --&gt; FluxNonBlocking[Non-blocking I/O]
+        FluxNonBlocking --&gt; FluxResponse[Response]
+    end
+
+    style MVCThread fill:#ffcccc
+    style FluxEventLoop fill:#ccffcc
+</code></pre><h3 id="2-성능-특성-비교"> <a href="#2-성능-특성-비교" class="anchor-heading" aria-labelledby="2-성능-특성-비교"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 2. 성능 특성 비교 </h3> <div class="table-wrapper"><table> <thead> <tr> <th>특성</th> <th>Spring MVC</th> <th>WebFlux</th> </tr> </thead> <tbody> <tr> <td>스레드 모델</td> <td>Thread-per-request</td> <td>Event Loop</td> </tr> <tr> <td>메모리 사용량</td> <td>높음 (스레드당 1MB)</td> <td>낮음</td> </tr> <tr> <td>동시성 처리</td> <td>제한적</td> <td>높음</td> </tr> <tr> <td>학습 곡선</td> <td>낮음</td> <td>높음</td> </tr> <tr> <td>블로킹 작업</td> <td>적합</td> <td>부적합</td> </tr> </tbody> </table></div> <h2 id="실제-사용-사례"> <a href="#실제-사용-사례" class="anchor-heading" aria-labelledby="실제-사용-사례"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 실제 사용 사례 </h2> <h3 id="1-마이크로서비스-게이트웨이"> <a href="#1-마이크로서비스-게이트웨이" class="anchor-heading" aria-labelledby="1-마이크로서비스-게이트웨이"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 1. 마이크로서비스 게이트웨이 </h3><pre><code class="language-mermaid">graph TB
+    Client[모바일 앱/웹] --&gt; Gateway[API Gateway]
+
+    Gateway --&gt; Auth[인증/인가]
+    Gateway --&gt; RateLimit[Rate Limiting]
+    Gateway --&gt; CircuitBreaker[Circuit Breaker]
+
+    Auth --&gt; Service1[User Service]
+    Auth --&gt; Service2[Order Service]
+    Auth --&gt; Service3[Payment Service]
+
+    subgraph "Cross-cutting Concerns"
+        Logging[로깅]
+        Monitoring[모니터링]
+        Tracing[분산 추적]
+    end
+
+    Gateway --&gt; Logging
+    Gateway --&gt; Monitoring
+    Gateway --&gt; Tracing
+</code></pre><h3 id="2-실시간-데이터-스트리밍"> <a href="#2-실시간-데이터-스트리밍" class="anchor-heading" aria-labelledby="2-실시간-데이터-스트리밍"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 2. 실시간 데이터 스트리밍 </h3> <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@RestController</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">ReactiveController</span> <span class="o">{</span>
+
+    <span class="nd">@GetMapping</span><span class="o">(</span><span class="s">"/events"</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="nc">Flux</span><span class="o">&lt;</span><span class="nc">Event</span><span class="o">&gt;</span> <span class="nf">getEvents</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="nc">Flux</span><span class="o">.</span><span class="na">interval</span><span class="o">(</span><span class="nc">Duration</span><span class="o">.</span><span class="na">ofSeconds</span><span class="o">(</span><span class="mi">1</span><span class="o">))</span>
+            <span class="o">.</span><span class="na">map</span><span class="o">(</span><span class="n">sequence</span> <span class="o">-&gt;</span> <span class="k">new</span> <span class="nc">Event</span><span class="o">(</span><span class="s">"Event-"</span> <span class="o">+</span> <span class="n">sequence</span><span class="o">,</span> <span class="nc">Instant</span><span class="o">.</span><span class="na">now</span><span class="o">()))</span>
+            <span class="o">.</span><span class="na">take</span><span class="o">(</span><span class="mi">10</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="nd">@PostMapping</span><span class="o">(</span><span class="s">"/process"</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="nc">Mono</span><span class="o">&lt;</span><span class="nc">Result</span><span class="o">&gt;</span> <span class="nf">processData</span><span class="o">(</span><span class="nd">@RequestBody</span> <span class="nc">Flux</span><span class="o">&lt;</span><span class="nc">Data</span><span class="o">&gt;</span> <span class="n">dataStream</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">dataStream</span>
+            <span class="o">.</span><span class="na">filter</span><span class="o">(</span><span class="n">data</span> <span class="o">-&gt;</span> <span class="n">data</span><span class="o">.</span><span class="na">isValid</span><span class="o">())</span>
+            <span class="o">.</span><span class="na">map</span><span class="o">(</span><span class="n">data</span> <span class="o">-&gt;</span> <span class="n">data</span><span class="o">.</span><span class="na">process</span><span class="o">())</span>
+            <span class="o">.</span><span class="na">collectList</span><span class="o">()</span>
+            <span class="o">.</span><span class="na">map</span><span class="o">(</span><span class="n">results</span> <span class="o">-&gt;</span> <span class="k">new</span> <span class="nc">Result</span><span class="o">(</span><span class="n">results</span><span class="o">));</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div> <h2 id="모니터링-및-관찰성"> <a href="#모니터링-및-관찰성" class="anchor-heading" aria-labelledby="모니터링-및-관찰성"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 모니터링 및 관찰성 </h2> <h3 id="1-메트릭-수집"> <a href="#1-메트릭-수집" class="anchor-heading" aria-labelledby="1-메트릭-수집"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 1. 메트릭 수집 </h3><pre><code class="language-mermaid">graph TB
+    Gateway[Gateway] --&gt; Metrics[메트릭 수집]
+    Metrics --&gt; Prometheus[Prometheus]
+    Prometheus --&gt; Grafana[Grafana Dashboard]
+
+    subgraph "Key Metrics"
+        RequestRate[요청률]
+        ResponseTime[응답시간]
+        ErrorRate[에러율]
+        ActiveConnections[활성 연결수]
+    end
+
+    Metrics --&gt; RequestRate
+    Metrics --&gt; ResponseTime
+    Metrics --&gt; ErrorRate
+    Metrics --&gt; ActiveConnections
+</code></pre><h3 id="2-분산-추적"> <a href="#2-분산-추적" class="anchor-heading" aria-labelledby="2-분산-추적"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 2. 분산 추적 </h3> <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@Component</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">TracingFilter</span> <span class="kd">implements</span> <span class="nc">GlobalFilter</span> <span class="o">{</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="nc">Mono</span><span class="o">&lt;</span><span class="nc">Void</span><span class="o">&gt;</span> <span class="nf">filter</span><span class="o">(</span><span class="nc">ServerWebExchange</span> <span class="n">exchange</span><span class="o">,</span> <span class="nc">GatewayFilterChain</span> <span class="n">chain</span><span class="o">)</span> <span class="o">{</span>
+        <span class="nc">String</span> <span class="n">traceId</span> <span class="o">=</span> <span class="n">generateTraceId</span><span class="o">();</span>
+
+        <span class="k">return</span> <span class="n">chain</span><span class="o">.</span><span class="na">filter</span><span class="o">(</span><span class="n">exchange</span><span class="o">)</span>
+            <span class="o">.</span><span class="na">doFirst</span><span class="o">(()</span> <span class="o">-&gt;</span> <span class="o">{</span>
+                <span class="n">exchange</span><span class="o">.</span><span class="na">getAttributes</span><span class="o">().</span><span class="na">put</span><span class="o">(</span><span class="s">"traceId"</span><span class="o">,</span> <span class="n">traceId</span><span class="o">);</span>
+                <span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"Trace started: {}"</span><span class="o">,</span> <span class="n">traceId</span><span class="o">);</span>
+            <span class="o">})</span>
+            <span class="o">.</span><span class="na">doFinally</span><span class="o">(</span><span class="n">signalType</span> <span class="o">-&gt;</span> <span class="o">{</span>
+                <span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"Trace completed: {} with signal: {}"</span><span class="o">,</span> <span class="n">traceId</span><span class="o">,</span> <span class="n">signalType</span><span class="o">);</span>
+            <span class="o">});</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div> <h2 id="성능-최적화-팁"> <a href="#성능-최적화-팁" class="anchor-heading" aria-labelledby="성능-최적화-팁"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 성능 최적화 팁 </h2> <h3 id="1-메모리-사용량-최적화"> <a href="#1-메모리-사용량-최적화" class="anchor-heading" aria-labelledby="1-메모리-사용량-최적화"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 1. 메모리 사용량 최적화 </h3> <ul> <li><strong>백프레셔 활용</strong>: <code class="language-plaintext highlighter-rouge">onBackpressureBuffer()</code>, <code class="language-plaintext highlighter-rouge">onBackpressureDrop()</code></li> <li><strong>스트림 변환 최소화</strong>: 불필요한 <code class="language-plaintext highlighter-rouge">map()</code>, <code class="language-plaintext highlighter-rouge">filter()</code> 호출 줄이기</li> <li><strong>메모리 풀 사용</strong>: Netty의 메모리 풀 활용</li> </ul> <h3 id="2-네트워크-최적화"> <a href="#2-네트워크-최적화" class="anchor-heading" aria-labelledby="2-네트워크-최적화"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 2. 네트워크 최적화 </h3> <ul> <li><strong>Connection Pooling</strong>: 적절한 커넥션 풀 크기 설정</li> <li><strong>Timeout 설정</strong>: 적절한 타임아웃 값 설정</li> <li><strong>Load Balancing</strong>: 클라이언트 사이드 로드 밸런싱 활용</li> </ul> <h2 id="결론"> <a href="#결론" class="anchor-heading" aria-labelledby="결론"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 결론 </h2> <p>Spring Cloud Gateway와 WebFlux는 현대적인 마이크로서비스 아키텍처에서 필수적인 기술입니다. 비동기 논블로킹 방식으로 높은 성능과 확장성을 제공하며, 특히 대용량 트래픽을 처리하는 시스템에서 큰 장점을 보입니다.</p> <p>하지만 WebFlux의 학습 곡선이 높고, 모든 상황에서 적합하지 않을 수 있으므로, 프로젝트의 요구사항을 잘 분석하여 적절한 기술을 선택하는 것이 중요합니다.</p> </main> </div> </div> <div class="search-overlay"></div> </div> <script type="module"> import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10.6.1/dist/mermaid.esm.min.mjs'; var config = {} ; mermaid.initialize(config); mermaid.run({ querySelector: '.language-mermaid', }); </script> </body> </html>

@@ -1,0 +1,953 @@
+<!DOCTYPE html> <html lang="en"> <head> <meta charset="UTF-8"> <meta http-equiv="X-UA-Compatible" content="IE=Edge"> <link rel="stylesheet" href="/assets/css/just-the-docs-default.css"> <link rel="stylesheet" href="/assets/css/just-the-docs-head-nav.css" id="jtd-head-nav-stylesheet"> <style id="jtd-nav-activation"> .site-nav > ul.nav-list:first-child > li > a, .site-nav > ul.nav-list:first-child > li > ul > li:not(:nth-child(3)) > a, .site-nav > ul.nav-list:first-child > li > ul > li > ul > li a { background-image: none; } .site-nav > ul.nav-list:not(:first-child) a, .site-nav li.external a { background-image: none; } .site-nav > ul.nav-list:first-child > li:nth-child(5) > ul > li:nth-child(3) > a { font-weight: 600; text-decoration: none; }.site-nav > ul.nav-list:first-child > li:nth-child(5) > button svg, .site-nav > ul.nav-list:first-child > li:nth-child(5) > ul > li:nth-child(3) > button svg { transform: rotate(-90deg); }.site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(5) > ul.nav-list, .site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(5) > ul.nav-list > li.nav-list-item:nth-child(3) > ul.nav-list { display: block; } </style> <script src="/assets/js/vendor/lunr.min.js"></script> <script src="/assets/js/just-the-docs.js"></script> <meta name="viewport" content="width=device-width, initial-scale=1"> <!-- Begin Jekyll SEO tag v2.8.0 --> <title>Spring WebFlux | Seungeon’s blog</title> <meta name="generator" content="Jekyll v3.10.0" /> <meta property="og:title" content="Spring WebFlux" /> <meta property="og:locale" content="en" /> <meta property="og:site_name" content="Seungeon’s blog" /> <meta property="og:type" content="article" /> <meta property="article:published_time" content="2025-08-03T00:00:00+09:00" /> <meta name="twitter:card" content="summary" /> <meta property="twitter:title" content="Spring WebFlux" /> <script type="application/ld+json"> {"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2025-08-03T00:00:00+09:00","datePublished":"2025-08-03T00:00:00+09:00","headline":"Spring WebFlux","mainEntityOfPage":{"@type":"WebPage","@id":"/docs/spring/webflux.html"},"url":"/docs/spring/webflux.html"}</script> <!-- End Jekyll SEO tag --> </head> <body> <a class="skip-to-main" href="#main-content">Skip to main content</a> <svg xmlns="http://www.w3.org/2000/svg" class="d-none"> <symbol id="svg-link" viewBox="0 0 24 24"> <title>Link</title> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-link"> <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path> </svg> </symbol> <symbol id="svg-menu" viewBox="0 0 24 24"> <title>Menu</title> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"> <line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line> </svg> </symbol> <symbol id="svg-arrow-right" viewBox="0 0 24 24"> <title>Expand</title> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"> <polyline points="9 18 15 12 9 6"></polyline> </svg> </symbol> <!-- Feather. MIT License: https://github.com/feathericons/feather/blob/master/LICENSE --> <symbol id="svg-external-link" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link"> <title id="svg-external-link-title">(external link)</title> <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line> </symbol> <symbol id="svg-doc" viewBox="0 0 24 24"> <title>Document</title> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file"> <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline> </svg> </symbol> <symbol id="svg-search" viewBox="0 0 24 24"> <title>Search</title> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"> <circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line> </svg> </symbol> <!-- Bootstrap Icons. MIT License: https://github.com/twbs/icons/blob/main/LICENSE.md --> <symbol id="svg-copy" viewBox="0 0 16 16"> <title>Copy</title> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard" viewBox="0 0 16 16"> <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/> <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/> </svg> </symbol> <symbol id="svg-copied" viewBox="0 0 16 16"> <title>Copied</title> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard-check-fill" viewBox="0 0 16 16"> <path d="M6.5 0A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3Zm3 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3Z"/> <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1A2.5 2.5 0 0 1 9.5 5h-3A2.5 2.5 0 0 1 4 2.5v-1Zm6.854 7.354-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L7.5 10.793l2.646-2.647a.5.5 0 0 1 .708.708Z"/> </svg> </symbol> </svg> <div class="side-bar"> <div class="site-header" role="banner"> <a href="/" class="site-title lh-tight"> Seungeon's blog </a> <button id="menu-button" class="site-button btn-reset" aria-label="Toggle menu" aria-pressed="false"> <svg viewBox="0 0 24 24" class="icon" aria-hidden="true"><use xlink:href="#svg-menu"></use></svg> </button> </div> <nav aria-label="Main" id="site-nav" class="site-nav"> <ul class="nav-list"><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="toggle items in Deploy category" aria-pressed="false"> <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg> </button><a href="/deploy/" class="nav-list-link">Deploy</a><ul class="nav-list"><li class="nav-list-item"><a href="/docs/deploy/rolling-update.html" class="nav-list-link">Rolling Update</a></li><li class="nav-list-item"><a href="/docs/deploy/blue-green.html" class="nav-list-link">Blue/Green Deployment</a></li><li class="nav-list-item"><a href="/docs/deploy/canary.html" class="nav-list-link">Canary Deployment</a></li></ul></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="toggle items in Helm category" aria-pressed="false"> <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg> </button><a href="/helm/" class="nav-list-link">Helm</a><ul class="nav-list"><li class="nav-list-item"><a href="/docs/helm/command.html" class="nav-list-link">How-to-use-Helm</a></li><li class="nav-list-item"><a href="/docs/helm/concept.html" class="nav-list-link">What-is-Helm</a></li><li class="nav-list-item"><a href="/docs/helm/grammer.html" class="nav-list-link">How-to-write-helm-chart</a></li></ul></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="toggle items in Jekyll category" aria-pressed="false"> <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg> </button><a href="/jekyll/" class="nav-list-link">Jekyll</a><ul class="nav-list"><li class="nav-list-item"><a href="/docs/jekyll/install-jekyll.html" class="nav-list-link">How to Install Jekyll</a></li><li class="nav-list-item"><a href="/docs/jekyll/just-the-docs.html" class="nav-list-link">How to use just-the-docs docs</a></li></ul></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="toggle items in Kubernetes category" aria-pressed="false"> <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg> </button><a href="/k8s/" class="nav-list-link">Kubernetes</a><ul class="nav-list"><li class="nav-list-item"><a href="/docs/k8s/command.html" class="nav-list-link">How to use kubectl</a></li><li class="nav-list-item"><a href="/docs/k8s/concept.html" class="nav-list-link">What-is-Kubernetes</a></li><li class="nav-list-item"><a href="/docs/k8s/grammer.html" class="nav-list-link">How-to-write-helm-chart</a></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="toggle items in Kubernetes Components category" aria-pressed="false"> <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg> </button><a href="/k8s/componentes/" class="nav-list-link">Kubernetes Components</a><ul class="nav-list"><li class="nav-list-item"><a href="/docs/k8s/componentes/clusterrole.html" class="nav-list-link">ClusterRole</a></li><li class="nav-list-item"><a href="/docs/k8s/componentes/pod.html" class="nav-list-link">Pod</a></li><li class="nav-list-item"><a href="/docs/k8s/componentes/deployment.html" class="nav-list-link">Deployment</a></li><li class="nav-list-item"><a href="/docs/k8s/componentes/service.html" class="nav-list-link">Service</a></li><li class="nav-list-item"><a href="/docs/k8s/componentes/ingress.html" class="nav-list-link">Ingress</a></li><li class="nav-list-item"><a href="/docs/k8s/componentes/configmap.html" class="nav-list-link">ConfigMap</a></li><li class="nav-list-item"><a href="/docs/k8s/componentes/role.html" class="nav-list-link">Role</a></li><li class="nav-list-item"><a href="/docs/k8s/componentes/rolebinding.html" class="nav-list-link">RoleBinding</a></li><li class="nav-list-item"><a href="/docs/k8s/componentes/clusterrolebinding.html" class="nav-list-link">ClusterRoleBinding</a></li><li class="nav-list-item"><a href="/docs/k8s/componentes/serviceaccount.html" class="nav-list-link">ServiceAccount</a></li><li class="nav-list-item"><a href="/docs/k8s/componentes/statefulset.html" class="nav-list-link">StatefulSet</a></li><li class="nav-list-item"><a href="/docs/k8s/componentes/kube-system.html" class="nav-list-link">kube-system</a></li></ul></li></ul></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="toggle items in Spring category" aria-pressed="false"> <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg> </button><a href="/spring/" class="nav-list-link">Spring</a><ul class="nav-list"><li class="nav-list-item"><a href="/docs/spring/api-gateway-webflux.html" class="nav-list-link">Spring boot gateway</a></li><li class="nav-list-item"><a href="/docs/spring/overview.html" class="nav-list-link">Spring WebFlux Overview</a></li><li class="nav-list-item"><a href="/docs/spring/webflux.html" class="nav-list-link">Spring WebFlux</a></li><li class="nav-list-item"><a href="/docs/spring/flux-mono.html" class="nav-list-link">Flux와 Mono 이해하기</a></li></ul></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="toggle items in Markdown category" aria-pressed="false"> <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg> </button><a href="/diagram/" class="nav-list-link">Markdown</a><ul class="nav-list"><li class="nav-list-item"><a href="/docs/markdown/diagram.html" class="nav-list-link">How to make diagram in markdown</a></li></ul></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="toggle items in Container category" aria-pressed="false"> <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg> </button><a href="/all-container/" class="nav-list-link">Container</a><ul class="nav-list"><li class="nav-list-item"><a href="/docs/all-container/container-runtime.html" class="nav-list-link">What-is-Container-Runtime</a></li><li class="nav-list-item"><a href="/docs/all-container/container.html" class="nav-list-link">What-is-Container</a></li><li class="nav-list-item"><a href="/docs/all-container/docker.html" class="nav-list-link">All-of-docker</a></li><li class="nav-list-item"><a href="/docs/all-container/registry.html" class="nav-list-link">Docker Registry</a></li></ul></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="toggle items in Git category" aria-pressed="false"> <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg> </button><a href="/git/" class="nav-list-link">Git</a><ul class="nav-list"><li class="nav-list-item"><a href="/docs/git/command.html" class="nav-list-link">git-command</a></li><li class="nav-list-item"><a href="/docs/git/git-concepts.html" class="nav-list-link">Git 개념</a></li><li class="nav-list-item"><a href="/docs/git/git-filter-repo.html" class="nav-list-link">git-filter-repo</a></li></ul></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="toggle items in Network category" aria-pressed="false"> <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg> </button><a href="/network/" class="nav-list-link">Network</a><ul class="nav-list"><li class="nav-list-item"><a href="/docs/network/3way-handshake.html" class="nav-list-link">3-Way Handshake</a></li><li class="nav-list-item"><a href="/docs/network/tcp-udp.html" class="nav-list-link">TCP vs UDP</a></li></ul></li></ul> </nav> <footer class="site-footer"> This site uses <a href="https://github.com/just-the-docs/just-the-docs">Just the Docs</a>, a documentation theme for Jekyll. </footer> </div> <div class="main" id="top"> <div id="main-header" class="main-header"> <div class="search" role="search"> <div class="search-input-wrap"> <input type="text" id="search-input" class="search-input" tabindex="0" placeholder="Search Seungeon's blog" aria-label="Search Seungeon's blog" autocomplete="off"> <label for="search-input" class="search-label"><svg viewBox="0 0 24 24" class="search-icon"><use xlink:href="#svg-search"></use></svg></label> </div> <div id="search-results" class="search-results"></div> </div> </div> <div class="main-content-wrap"> <nav aria-label="Breadcrumb" class="breadcrumb-nav"> <ol class="breadcrumb-nav-list"> <li class="breadcrumb-nav-list-item"><a href="/spring/">Spring</a></li> <li class="breadcrumb-nav-list-item"><span>Spring WebFlux</span></li> </ol> </nav> <div id="main-content" class="main-content"> <main> <h1 id="spring-webflux"> <a href="#spring-webflux" class="anchor-heading" aria-labelledby="spring-webflux"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Spring WebFlux </h1> <h2 id="개요"> <a href="#개요" class="anchor-heading" aria-labelledby="개요"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 개요 </h2> <p>Spring WebFlux는 Spring Framework 5에서 도입된 반응형 웹 프레임워크로, 논블로킹 I/O와 리액티브 스트림을 기반으로 합니다. 이를 통해 고성능, 확장 가능한 웹 애플리케이션을 구축할 수 있으며, 특히 마이크로서비스 아키텍처에 적합합니다. WebFlux는 기존 Spring MVC와 함께 사용하거나 독립적으로 사용할 수 있습니다.</p> <h3 id="주요-특징"> <a href="#주요-특징" class="anchor-heading" aria-labelledby="주요-특징"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 주요 특징 </h3> <h4 id="1-반응형-프로그래밍"> <a href="#1-반응형-프로그래밍" class="anchor-heading" aria-labelledby="1-반응형-프로그래밍"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 1. 반응형 프로그래밍 </h4> <ul> <li>리액티브 스트림을 기반으로 하며, 비동기 및 논블로킹 방식으로 데이터를 처리합니다.</li> <li><code class="language-plaintext highlighter-rouge">Mono&lt;T&gt;</code>와 <code class="language-plaintext highlighter-rouge">Flux&lt;T&gt;</code>를 통해 0개 또는 1개, 그리고 0개 이상의 요소를 처리합니다.</li> </ul> <h4 id="2-논블로킹-io"> <a href="#2-논블로킹-io" class="anchor-heading" aria-labelledby="2-논블로킹-io"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 2. 논블로킹 I/O </h4> <ul> <li>쓰레드 풀을 효율적으로 사용하여 적은 수의 쓰레드로도 많은 요청을 처리할 수 있습니다.</li> <li>이벤트 루프 모델을 통해 높은 동시성을 달성합니다.</li> </ul> <h4 id="3-서버-지원"> <a href="#3-서버-지원" class="anchor-heading" aria-labelledby="3-서버-지원"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 3. 서버 지원 </h4> <ul> <li>Netty, Undertow, Servlet 컨테이너 등 다양한 서버를 지원합니다.</li> <li>각 서버의 특성에 맞는 최적화된 설정이 가능합니다.</li> </ul> <h4 id="4-webclient"> <a href="#4-webclient" class="anchor-heading" aria-labelledby="4-webclient"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 4. WebClient </h4> <ul> <li>비동기 HTTP 요청을 위한 클라이언트 라이브러리를 제공합니다.</li> <li>리액티브 스트림 기반의 HTTP 클라이언트입니다.</li> </ul> <h4 id="5-reactor"> <a href="#5-reactor" class="anchor-heading" aria-labelledby="5-reactor"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 5. Reactor </h4> <ul> <li>리액티브 프로그래밍을 위한 핵심 라이브러리인 Reactor를 사용합니다.</li> <li>Project Reactor는 Reactive Streams 스펙의 구현체입니다.</li> </ul> <h3 id="장점"> <a href="#장점" class="anchor-heading" aria-labelledby="장점"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 장점 </h3> <h4 id="1-높은-성능과-확장성"> <a href="#1-높은-성능과-확장성" class="anchor-heading" aria-labelledby="1-높은-성능과-확장성"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 1. 높은 성능과 확장성 </h4> <ul> <li>많은 동시 요청을 처리할 수 있어 높은 트래픽 환경에 적합합니다.</li> <li>이벤트 루프 모델로 인해 스레드당 메모리 사용량이 적습니다.</li> </ul> <h4 id="2-자원-효율성"> <a href="#2-자원-효율성" class="anchor-heading" aria-labelledby="2-자원-효율성"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 2. 자원 효율성 </h4> <ul> <li>적은 수의 쓰레드로도 효율적인 처리가 가능하여 자원 사용을 최적화합니다.</li> <li>메모리 사용량이 낮아 대용량 트래픽 처리에 유리합니다.</li> </ul> <h4 id="3-실시간-데이터-처리"> <a href="#3-실시간-데이터-처리" class="anchor-heading" aria-labelledby="3-실시간-데이터-처리"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 3. 실시간 데이터 처리 </h4> <ul> <li>반응형 스트림을 통해 실시간 데이터를 효율적으로 처리할 수 있습니다.</li> <li>Server-Sent Events, WebSocket 등을 통한 실시간 통신을 지원합니다.</li> </ul> <h3 id="단점"> <a href="#단점" class="anchor-heading" aria-labelledby="단점"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 단점 </h3> <h4 id="1-복잡성"> <a href="#1-복잡성" class="anchor-heading" aria-labelledby="1-복잡성"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 1. 복잡성 </h4> <ul> <li>기존의 동기 방식보다 학습 곡선이 높고, 디버깅이 어려울 수 있습니다.</li> <li>리액티브 프로그래밍 패러다임에 대한 이해가 필요합니다.</li> </ul> <h4 id="2-호환성"> <a href="#2-호환성" class="anchor-heading" aria-labelledby="2-호환성"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 2. 호환성 </h4> <ul> <li>모든 서드파티 라이브러리와 호환되지 않을 수 있습니다.</li> <li>블로킹 작업이 포함된 기존 코드와의 통합이 복잡할 수 있습니다.</li> </ul> <h3 id="사용-예시"> <a href="#사용-예시" class="anchor-heading" aria-labelledby="사용-예시"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 사용 예시 </h3> <ul> <li><strong>실시간 데이터 스트리밍 서비스</strong>: 센서 데이터, 주식 시세 등 실시간 정보 전송</li> <li><strong>고성능 API 서버</strong>: 대용량 트래픽을 처리하는 REST API</li> <li><strong>마이크로서비스 아키텍처</strong>: Spring Cloud Gateway의 기반 기술</li> <li><strong>IoT 데이터 처리</strong>: 센서 데이터의 실시간 수집 및 처리</li> <li><strong>실시간 채팅 시스템</strong>: WebSocket을 통한 양방향 통신</li> </ul> <h2 id="webflux-vs-spring-mvc"> <a href="#webflux-vs-spring-mvc" class="anchor-heading" aria-labelledby="webflux-vs-spring-mvc"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> WebFlux vs Spring MVC </h2> <h3 id="1-아키텍처-비교"> <a href="#1-아키텍처-비교" class="anchor-heading" aria-labelledby="1-아키텍처-비교"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 1. 아키텍처 비교 </h3><pre><code class="language-mermaid">graph TB
+    subgraph "Spring MVC (Synchronous)"
+        MVCClient[Client] --&gt; MVCServer[Tomcat/Jetty]
+        MVCServer --&gt; MVCThread[Thread Pool]
+        MVCThread --&gt; MVCController[Controller]
+        MVCController --&gt; MVCService[Service]
+        MVCService --&gt; MVCDB[Database]
+    end
+
+    subgraph "Spring WebFlux (Asynchronous)"
+        FluxClient[Client] --&gt; FluxServer[Netty]
+        FluxServer --&gt; FluxEventLoop[Event Loop]
+        FluxEventLoop --&gt; FluxController[Controller]
+        FluxController --&gt; FluxService[Service]
+        FluxService --&gt; FluxDB[Database]
+    end
+
+    style MVCThread fill:#ffcccc
+    style FluxEventLoop fill:#ccffcc
+</code></pre><h3 id="2-성능-특성-비교"> <a href="#2-성능-특성-비교" class="anchor-heading" aria-labelledby="2-성능-특성-비교"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 2. 성능 특성 비교 </h3> <div class="table-wrapper"><table> <thead> <tr> <th>특성</th> <th>Spring MVC</th> <th>Spring WebFlux</th> </tr> </thead> <tbody> <tr> <td><strong>스레드 모델</strong></td> <td>Thread-per-request</td> <td>Event Loop</td> </tr> <tr> <td><strong>동시성</strong></td> <td>제한적 (스레드 풀 크기에 의존)</td> <td>높음 (이벤트 루프)</td> </tr> <tr> <td><strong>메모리 사용량</strong></td> <td>높음 (스레드당 ~1MB)</td> <td>낮음</td> </tr> <tr> <td><strong>블로킹 작업</strong></td> <td>적합</td> <td>부적합</td> </tr> <tr> <td><strong>학습 곡선</strong></td> <td>낮음</td> <td>높음</td> </tr> <tr> <td><strong>기존 코드 호환성</strong></td> <td>높음</td> <td>제한적</td> </tr> </tbody> </table></div> <h2 id="reactive-streams-핵심-개념"> <a href="#reactive-streams-핵심-개념" class="anchor-heading" aria-labelledby="reactive-streams-핵심-개념"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Reactive Streams 핵심 개념 </h2> <h3 id="1-publisher-subscriber-subscription"> <a href="#1-publisher-subscriber-subscription" class="anchor-heading" aria-labelledby="1-publisher-subscriber-subscription"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 1. Publisher, Subscriber, Subscription </h3><pre><code class="language-mermaid">graph LR
+    Publisher[Publisher&lt;br/&gt;데이터 발행자] --&gt; Subscription[Subscription&lt;br/&gt;구독 관계]
+    Subscription --&gt; Subscriber[Subscriber&lt;br/&gt;데이터 구독자]
+
+    subgraph "Reactive Streams"
+        Backpressure[Backpressure&lt;br/&gt;흐름 제어]
+        Error[Error Handling&lt;br/&gt;에러 처리]
+        Complete[Complete&lt;br/&gt;완료 신호]
+    end
+
+    Publisher --&gt; Backpressure
+    Subscriber --&gt; Error
+    Subscription --&gt; Complete
+</code></pre><h3 id="2-mono와-flux"> <a href="#2-mono와-flux" class="anchor-heading" aria-labelledby="2-mono와-flux"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 2. Mono와 Flux </h3> <h4 id="mono---단일-요소-스트림"> <a href="#mono---단일-요소-스트림" class="anchor-heading" aria-labelledby="mono---단일-요소-스트림"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Mono<T> - 단일 요소 스트림</T> </h4> <p>Mono는 0개 또는 1개의 요소를 발행하는 리액티브 스트림입니다. 주로 단일 결과를 반환하는 작업에 사용됩니다.</p><pre><code class="language-mermaid">graph TB
+    subgraph "Mono&lt;T&gt; - 단일 요소"
+        MonoEmpty[Mono.empty()&lt;br/&gt;0개 요소 - 완료]
+        MonoJust[Mono.just(item)&lt;br/&gt;1개 요소 - 성공]
+        MonoError[Mono.error()&lt;br/&gt;에러 발생]
+        MonoDefer[Mono.defer()&lt;br/&gt;지연 실행]
+        MonoFromCallable[Mono.fromCallable()&lt;br/&gt;Callable에서 생성]
+    end
+
+    subgraph "Mono 생성 패턴"
+        MonoCreate[Mono.create()&lt;br/&gt;수동 생성]
+        MonoFromSupplier[Mono.fromSupplier()&lt;br/&gt;Supplier에서 생성]
+        MonoFromFuture[Mono.fromFuture()&lt;br/&gt;Future에서 생성]
+    end
+
+    style MonoJust fill:#e1f5fe
+    style MonoError fill:#ffebee
+    style MonoDefer fill:#f3e5f5
+</code></pre><h4 id="mono-사용-예제"> <a href="#mono-사용-예제" class="anchor-heading" aria-labelledby="mono-사용-예제"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Mono 사용 예제 </h4> <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// 1. 기본 Mono 생성</span>
+<span class="nc">Mono</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="n">mono1</span> <span class="o">=</span> <span class="nc">Mono</span><span class="o">.</span><span class="na">just</span><span class="o">(</span><span class="s">"Hello World"</span><span class="o">);</span>
+<span class="nc">Mono</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="n">mono2</span> <span class="o">=</span> <span class="nc">Mono</span><span class="o">.</span><span class="na">empty</span><span class="o">();</span>
+<span class="nc">Mono</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="n">mono3</span> <span class="o">=</span> <span class="nc">Mono</span><span class="o">.</span><span class="na">error</span><span class="o">(</span><span class="k">new</span> <span class="nc">RuntimeException</span><span class="o">(</span><span class="s">"Error"</span><span class="o">));</span>
+
+<span class="c1">// 2. 지연 실행 Mono</span>
+<span class="nc">Mono</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="n">lazyMono</span> <span class="o">=</span> <span class="nc">Mono</span><span class="o">.</span><span class="na">defer</span><span class="o">(()</span> <span class="o">-&gt;</span> <span class="o">{</span>
+    <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"Executing..."</span><span class="o">);</span>
+    <span class="k">return</span> <span class="nc">Mono</span><span class="o">.</span><span class="na">just</span><span class="o">(</span><span class="s">"Lazy result"</span><span class="o">);</span>
+<span class="o">});</span>
+
+<span class="c1">// 3. Callable에서 Mono 생성</span>
+<span class="nc">Mono</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="n">callableMono</span> <span class="o">=</span> <span class="nc">Mono</span><span class="o">.</span><span class="na">fromCallable</span><span class="o">(()</span> <span class="o">-&gt;</span> <span class="o">{</span>
+    <span class="c1">// 복잡한 계산이나 I/O 작업</span>
+    <span class="k">return</span> <span class="s">"Result from callable"</span><span class="o">;</span>
+<span class="o">});</span>
+
+<span class="c1">// 4. Supplier에서 Mono 생성</span>
+<span class="nc">Mono</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="n">supplierMono</span> <span class="o">=</span> <span class="nc">Mono</span><span class="o">.</span><span class="na">fromSupplier</span><span class="o">(()</span> <span class="o">-&gt;</span> <span class="o">{</span>
+    <span class="k">return</span> <span class="s">"Result from supplier"</span><span class="o">;</span>
+<span class="o">});</span>
+
+<span class="c1">// 5. 수동으로 Mono 생성</span>
+<span class="nc">Mono</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="n">manualMono</span> <span class="o">=</span> <span class="nc">Mono</span><span class="o">.</span><span class="na">create</span><span class="o">(</span><span class="n">sink</span> <span class="o">-&gt;</span> <span class="o">{</span>
+    <span class="c1">// 비동기 작업 수행</span>
+    <span class="nc">CompletableFuture</span><span class="o">.</span><span class="na">runAsync</span><span class="o">(()</span> <span class="o">-&gt;</span> <span class="o">{</span>
+        <span class="k">try</span> <span class="o">{</span>
+            <span class="nc">Thread</span><span class="o">.</span><span class="na">sleep</span><span class="o">(</span><span class="mi">1000</span><span class="o">);</span>
+            <span class="n">sink</span><span class="o">.</span><span class="na">success</span><span class="o">(</span><span class="s">"Manual result"</span><span class="o">);</span>
+        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="nc">InterruptedException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">sink</span><span class="o">.</span><span class="na">error</span><span class="o">(</span><span class="n">e</span><span class="o">);</span>
+        <span class="o">}</span>
+    <span class="o">});</span>
+<span class="o">});</span>
+</code></pre></div></div> <h4 id="mono-조작-메서드"> <a href="#mono-조작-메서드" class="anchor-heading" aria-labelledby="mono-조작-메서드"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Mono 조작 메서드 </h4> <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// 1. 변환 (map)</span>
+<span class="nc">Mono</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="n">original</span> <span class="o">=</span> <span class="nc">Mono</span><span class="o">.</span><span class="na">just</span><span class="o">(</span><span class="s">"Hello"</span><span class="o">);</span>
+<span class="nc">Mono</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="n">transformed</span> <span class="o">=</span> <span class="n">original</span><span class="o">.</span><span class="na">map</span><span class="o">(</span><span class="n">str</span> <span class="o">-&gt;</span> <span class="n">str</span> <span class="o">+</span> <span class="s">" World"</span><span class="o">);</span>
+
+<span class="c1">// 2. 평면화 (flatMap)</span>
+<span class="nc">Mono</span><span class="o">&lt;</span><span class="nc">User</span><span class="o">&gt;</span> <span class="n">userMono</span> <span class="o">=</span> <span class="nc">Mono</span><span class="o">.</span><span class="na">just</span><span class="o">(</span><span class="k">new</span> <span class="nc">User</span><span class="o">(</span><span class="s">"john"</span><span class="o">));</span>
+<span class="nc">Mono</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="n">emailMono</span> <span class="o">=</span> <span class="n">userMono</span><span class="o">.</span><span class="na">flatMap</span><span class="o">(</span><span class="n">user</span> <span class="o">-&gt;</span>
+    <span class="nc">Mono</span><span class="o">.</span><span class="na">just</span><span class="o">(</span><span class="n">user</span><span class="o">.</span><span class="na">getEmail</span><span class="o">()));</span>
+
+<span class="c1">// 3. 필터링 (filter)</span>
+<span class="nc">Mono</span><span class="o">&lt;</span><span class="nc">Integer</span><span class="o">&gt;</span> <span class="n">numberMono</span> <span class="o">=</span> <span class="nc">Mono</span><span class="o">.</span><span class="na">just</span><span class="o">(</span><span class="mi">10</span><span class="o">);</span>
+<span class="nc">Mono</span><span class="o">&lt;</span><span class="nc">Integer</span><span class="o">&gt;</span> <span class="n">filteredMono</span> <span class="o">=</span> <span class="n">numberMono</span><span class="o">.</span><span class="na">filter</span><span class="o">(</span><span class="n">n</span> <span class="o">-&gt;</span> <span class="n">n</span> <span class="o">&gt;</span> <span class="mi">5</span><span class="o">);</span>
+
+<span class="c1">// 4. 에러 처리</span>
+<span class="nc">Mono</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="n">errorHandledMono</span> <span class="o">=</span> <span class="nc">Mono</span><span class="o">.</span><span class="na">just</span><span class="o">(</span><span class="s">"test"</span><span class="o">)</span>
+    <span class="o">.</span><span class="na">map</span><span class="o">(</span><span class="n">str</span> <span class="o">-&gt;</span> <span class="o">{</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">str</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="s">"error"</span><span class="o">))</span> <span class="o">{</span>
+            <span class="k">throw</span> <span class="k">new</span> <span class="nf">RuntimeException</span><span class="o">(</span><span class="s">"Error occurred"</span><span class="o">);</span>
+        <span class="o">}</span>
+        <span class="k">return</span> <span class="n">str</span><span class="o">;</span>
+    <span class="o">})</span>
+    <span class="o">.</span><span class="na">onErrorReturn</span><span class="o">(</span><span class="s">"Default value"</span><span class="o">)</span>
+    <span class="o">.</span><span class="na">onErrorResume</span><span class="o">(</span><span class="n">throwable</span> <span class="o">-&gt;</span> <span class="nc">Mono</span><span class="o">.</span><span class="na">just</span><span class="o">(</span><span class="s">"Recovered"</span><span class="o">));</span>
+
+<span class="c1">// 5. 타임아웃 처리</span>
+<span class="nc">Mono</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="n">timeoutMono</span> <span class="o">=</span> <span class="nc">Mono</span><span class="o">.</span><span class="na">just</span><span class="o">(</span><span class="s">"Slow operation"</span><span class="o">)</span>
+    <span class="o">.</span><span class="na">delayElement</span><span class="o">(</span><span class="nc">Duration</span><span class="o">.</span><span class="na">ofSeconds</span><span class="o">(</span><span class="mi">5</span><span class="o">))</span>
+    <span class="o">.</span><span class="na">timeout</span><span class="o">(</span><span class="nc">Duration</span><span class="o">.</span><span class="na">ofSeconds</span><span class="o">(</span><span class="mi">3</span><span class="o">))</span>
+    <span class="o">.</span><span class="na">onErrorReturn</span><span class="o">(</span><span class="s">"Timeout occurred"</span><span class="o">);</span>
+</code></pre></div></div> <h4 id="flux---다중-요소-스트림"> <a href="#flux---다중-요소-스트림" class="anchor-heading" aria-labelledby="flux---다중-요소-스트림"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Flux<T> - 다중 요소 스트림</T> </h4> <p>Flux는 0개 이상의 요소를 발행하는 리액티브 스트림입니다. 여러 데이터를 순차적으로 처리할 때 사용됩니다.</p><pre><code class="language-mermaid">graph TB
+    subgraph "Flux&lt;T&gt; - 다중 요소"
+        FluxEmpty[Flux.empty()&lt;br/&gt;0개 요소]
+        FluxJust[Flux.just(items)&lt;br/&gt;여러 요소]
+        FluxRange[Flux.range(1,10)&lt;br/&gt;범위 생성]
+        FluxInterval[Flux.interval()&lt;br/&gt;주기적 생성]
+        FluxGenerate[Flux.generate()&lt;br/&gt;상태 기반 생성]
+    end
+
+    subgraph "Flux 생성 패턴"
+        FluxCreate[Flux.create()&lt;br/&gt;수동 생성]
+        FluxFromIterable[Flux.fromIterable()&lt;br/&gt;Iterable에서 생성]
+        FluxFromStream[Flux.fromStream()&lt;br/&gt;Stream에서 생성]
+    end
+
+    style FluxJust fill:#e8f5e8
+    style FluxInterval fill:#fff3e0
+    style FluxGenerate fill:#fce4ec
+</code></pre><h4 id="flux-사용-예제"> <a href="#flux-사용-예제" class="anchor-heading" aria-labelledby="flux-사용-예제"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Flux 사용 예제 </h4> <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// 1. 기본 Flux 생성</span>
+<span class="nc">Flux</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="n">flux1</span> <span class="o">=</span> <span class="nc">Flux</span><span class="o">.</span><span class="na">just</span><span class="o">(</span><span class="s">"A"</span><span class="o">,</span> <span class="s">"B"</span><span class="o">,</span> <span class="s">"C"</span><span class="o">);</span>
+<span class="nc">Flux</span><span class="o">&lt;</span><span class="nc">Integer</span><span class="o">&gt;</span> <span class="n">flux2</span> <span class="o">=</span> <span class="nc">Flux</span><span class="o">.</span><span class="na">range</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">10</span><span class="o">);</span>
+<span class="nc">Flux</span><span class="o">&lt;</span><span class="nc">Long</span><span class="o">&gt;</span> <span class="n">flux3</span> <span class="o">=</span> <span class="nc">Flux</span><span class="o">.</span><span class="na">interval</span><span class="o">(</span><span class="nc">Duration</span><span class="o">.</span><span class="na">ofSeconds</span><span class="o">(</span><span class="mi">1</span><span class="o">));</span>
+
+<span class="c1">// 2. Iterable에서 Flux 생성</span>
+<span class="nc">List</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="n">list</span> <span class="o">=</span> <span class="nc">Arrays</span><span class="o">.</span><span class="na">asList</span><span class="o">(</span><span class="s">"Apple"</span><span class="o">,</span> <span class="s">"Banana"</span><span class="o">,</span> <span class="s">"Cherry"</span><span class="o">);</span>
+<span class="nc">Flux</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="n">fluxFromList</span> <span class="o">=</span> <span class="nc">Flux</span><span class="o">.</span><span class="na">fromIterable</span><span class="o">(</span><span class="n">list</span><span class="o">);</span>
+
+<span class="c1">// 3. Stream에서 Flux 생성</span>
+<span class="nc">Flux</span><span class="o">&lt;</span><span class="nc">Integer</span><span class="o">&gt;</span> <span class="n">fluxFromStream</span> <span class="o">=</span> <span class="nc">Flux</span><span class="o">.</span><span class="na">fromStream</span><span class="o">(</span>
+    <span class="nc">Stream</span><span class="o">.</span><span class="na">of</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">2</span><span class="o">,</span> <span class="mi">3</span><span class="o">,</span> <span class="mi">4</span><span class="o">,</span> <span class="mi">5</span><span class="o">)</span>
+<span class="o">);</span>
+
+<span class="c1">// 4. 수동으로 Flux 생성</span>
+<span class="nc">Flux</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="n">manualFlux</span> <span class="o">=</span> <span class="nc">Flux</span><span class="o">.</span><span class="na">create</span><span class="o">(</span><span class="n">sink</span> <span class="o">-&gt;</span> <span class="o">{</span>
+    <span class="n">sink</span><span class="o">.</span><span class="na">next</span><span class="o">(</span><span class="s">"First"</span><span class="o">);</span>
+    <span class="n">sink</span><span class="o">.</span><span class="na">next</span><span class="o">(</span><span class="s">"Second"</span><span class="o">);</span>
+    <span class="n">sink</span><span class="o">.</span><span class="na">next</span><span class="o">(</span><span class="s">"Third"</span><span class="o">);</span>
+    <span class="n">sink</span><span class="o">.</span><span class="na">complete</span><span class="o">();</span>
+<span class="o">});</span>
+
+<span class="c1">// 5. 상태 기반 Flux 생성</span>
+<span class="nc">Flux</span><span class="o">&lt;</span><span class="nc">Integer</span><span class="o">&gt;</span> <span class="n">statefulFlux</span> <span class="o">=</span> <span class="nc">Flux</span><span class="o">.</span><span class="na">generate</span><span class="o">(</span>
+    <span class="o">()</span> <span class="o">-&gt;</span> <span class="mi">0</span><span class="o">,</span> <span class="c1">// 초기 상태</span>
+    <span class="o">(</span><span class="n">state</span><span class="o">,</span> <span class="n">sink</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="o">{</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">state</span> <span class="o">&lt;</span> <span class="mi">5</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">sink</span><span class="o">.</span><span class="na">next</span><span class="o">(</span><span class="n">state</span><span class="o">);</span>
+            <span class="k">return</span> <span class="n">state</span> <span class="o">+</span> <span class="mi">1</span><span class="o">;</span>
+        <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+            <span class="n">sink</span><span class="o">.</span><span class="na">complete</span><span class="o">();</span>
+            <span class="k">return</span> <span class="n">state</span><span class="o">;</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">);</span>
+</code></pre></div></div> <h4 id="mono와-flux의-차이점"> <a href="#mono와-flux의-차이점" class="anchor-heading" aria-labelledby="mono와-flux의-차이점"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Mono와 Flux의 차이점 </h4> <div class="table-wrapper"><table> <thead> <tr> <th>특성</th> <th>Mono<T></T></th> <th>Flux<T></T></th> </tr> </thead> <tbody> <tr> <td><strong>요소 개수</strong></td> <td>0개 또는 1개</td> <td>0개 이상</td> </tr> <tr> <td><strong>사용 사례</strong></td> <td>단일 결과 반환</td> <td>다중 데이터 처리</td> </tr> <tr> <td><strong>완료 신호</strong></td> <td>항상 완료</td> <td>완료 또는 무한</td> </tr> <tr> <td><strong>에러 처리</strong></td> <td>단일 에러</td> <td>스트림 중단</td> </tr> <tr> <td><strong>백프레셔</strong></td> <td>단순함</td> <td>복잡함</td> </tr> </tbody> </table></div> <h4 id="mono와-flux-변환"> <a href="#mono와-flux-변환" class="anchor-heading" aria-labelledby="mono와-flux-변환"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Mono와 Flux 변환 </h4> <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Flux에서 Mono로 변환</span>
+<span class="nc">Flux</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="n">flux</span> <span class="o">=</span> <span class="nc">Flux</span><span class="o">.</span><span class="na">just</span><span class="o">(</span><span class="s">"A"</span><span class="o">,</span> <span class="s">"B"</span><span class="o">,</span> <span class="s">"C"</span><span class="o">);</span>
+<span class="nc">Mono</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="n">firstElement</span> <span class="o">=</span> <span class="n">flux</span><span class="o">.</span><span class="na">next</span><span class="o">();</span> <span class="c1">// 첫 번째 요소만</span>
+<span class="nc">Mono</span><span class="o">&lt;</span><span class="nc">List</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;&gt;</span> <span class="n">allElements</span> <span class="o">=</span> <span class="n">flux</span><span class="o">.</span><span class="na">collectList</span><span class="o">();</span> <span class="c1">// 모든 요소를 리스트로</span>
+
+<span class="c1">// Mono에서 Flux로 변환</span>
+<span class="nc">Mono</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="n">mono</span> <span class="o">=</span> <span class="nc">Mono</span><span class="o">.</span><span class="na">just</span><span class="o">(</span><span class="s">"Hello"</span><span class="o">);</span>
+<span class="nc">Flux</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="n">fluxFromMono</span> <span class="o">=</span> <span class="n">mono</span><span class="o">.</span><span class="na">flux</span><span class="o">();</span> <span class="c1">// 단일 요소를 Flux로</span>
+
+<span class="c1">// Mono를 Flux로 확장</span>
+<span class="nc">Mono</span><span class="o">&lt;</span><span class="nc">List</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;&gt;</span> <span class="n">listMono</span> <span class="o">=</span> <span class="nc">Mono</span><span class="o">.</span><span class="na">just</span><span class="o">(</span><span class="nc">Arrays</span><span class="o">.</span><span class="na">asList</span><span class="o">(</span><span class="s">"A"</span><span class="o">,</span> <span class="s">"B"</span><span class="o">,</span> <span class="s">"C"</span><span class="o">));</span>
+<span class="nc">Flux</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="n">expandedFlux</span> <span class="o">=</span> <span class="n">listMono</span><span class="o">.</span><span class="na">flatMapMany</span><span class="o">(</span><span class="nl">Flux:</span><span class="o">:</span><span class="n">fromIterable</span><span class="o">);</span>
+</code></pre></div></div> <h4 id="실제-사용-사례---mono와-flux-컨트롤러"> <a href="#실제-사용-사례---mono와-flux-컨트롤러" class="anchor-heading" aria-labelledby="실제-사용-사례---mono와-flux-컨트롤러"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 실제 사용 사례 - Mono와 Flux 컨트롤러 </h4> <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@RestController</span>
+<span class="nd">@RequestMapping</span><span class="o">(</span><span class="s">"/api/reactive"</span><span class="o">)</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">ReactiveExamplesController</span> <span class="o">{</span>
+
+    <span class="kd">private</span> <span class="kd">final</span> <span class="nc">UserService</span> <span class="n">userService</span><span class="o">;</span>
+
+    <span class="kd">public</span> <span class="nf">ReactiveExamplesController</span><span class="o">(</span><span class="nc">UserService</span> <span class="n">userService</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">userService</span> <span class="o">=</span> <span class="n">userService</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="c1">// Mono 사용 예제 - 단일 사용자 조회</span>
+    <span class="nd">@GetMapping</span><span class="o">(</span><span class="s">"/users/{id}"</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="nc">Mono</span><span class="o">&lt;</span><span class="nc">User</span><span class="o">&gt;</span> <span class="nf">getUserById</span><span class="o">(</span><span class="nd">@PathVariable</span> <span class="nc">String</span> <span class="n">id</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">userService</span><span class="o">.</span><span class="na">findById</span><span class="o">(</span><span class="n">id</span><span class="o">)</span>
+            <span class="o">.</span><span class="na">doOnNext</span><span class="o">(</span><span class="n">user</span> <span class="o">-&gt;</span> <span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"Found user: {}"</span><span class="o">,</span> <span class="n">user</span><span class="o">.</span><span class="na">getName</span><span class="o">()))</span>
+            <span class="o">.</span><span class="na">doOnError</span><span class="o">(</span><span class="n">error</span> <span class="o">-&gt;</span> <span class="n">log</span><span class="o">.</span><span class="na">error</span><span class="o">(</span><span class="s">"Error finding user: {}"</span><span class="o">,</span> <span class="n">error</span><span class="o">.</span><span class="na">getMessage</span><span class="o">()))</span>
+            <span class="o">.</span><span class="na">switchIfEmpty</span><span class="o">(</span><span class="nc">Mono</span><span class="o">.</span><span class="na">error</span><span class="o">(</span><span class="k">new</span> <span class="nc">UserNotFoundException</span><span class="o">(</span><span class="n">id</span><span class="o">)));</span>
+    <span class="o">}</span>
+
+    <span class="c1">// Mono 사용 예제 - 사용자 생성</span>
+    <span class="nd">@PostMapping</span><span class="o">(</span><span class="s">"/users"</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="nc">Mono</span><span class="o">&lt;</span><span class="nc">User</span><span class="o">&gt;</span> <span class="nf">createUser</span><span class="o">(</span><span class="nd">@RequestBody</span> <span class="nc">User</span> <span class="n">user</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="nc">Mono</span><span class="o">.</span><span class="na">just</span><span class="o">(</span><span class="n">user</span><span class="o">)</span>
+            <span class="o">.</span><span class="na">filter</span><span class="o">(</span><span class="n">u</span> <span class="o">-&gt;</span> <span class="n">u</span><span class="o">.</span><span class="na">getEmail</span><span class="o">()</span> <span class="o">!=</span> <span class="kc">null</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="n">u</span><span class="o">.</span><span class="na">getEmail</span><span class="o">().</span><span class="na">isEmpty</span><span class="o">())</span>
+            <span class="o">.</span><span class="na">flatMap</span><span class="o">(</span><span class="n">u</span> <span class="o">-&gt;</span> <span class="n">userService</span><span class="o">.</span><span class="na">save</span><span class="o">(</span><span class="n">u</span><span class="o">))</span>
+            <span class="o">.</span><span class="na">doOnSuccess</span><span class="o">(</span><span class="n">savedUser</span> <span class="o">-&gt;</span> <span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"User created: {}"</span><span class="o">,</span> <span class="n">savedUser</span><span class="o">.</span><span class="na">getId</span><span class="o">()))</span>
+            <span class="o">.</span><span class="na">doOnError</span><span class="o">(</span><span class="n">error</span> <span class="o">-&gt;</span> <span class="n">log</span><span class="o">.</span><span class="na">error</span><span class="o">(</span><span class="s">"Error creating user: {}"</span><span class="o">,</span> <span class="n">error</span><span class="o">.</span><span class="na">getMessage</span><span class="o">()));</span>
+    <span class="o">}</span>
+
+    <span class="c1">// Flux 사용 예제 - 모든 사용자 조회</span>
+    <span class="nd">@GetMapping</span><span class="o">(</span><span class="s">"/users"</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="nc">Flux</span><span class="o">&lt;</span><span class="nc">User</span><span class="o">&gt;</span> <span class="nf">getAllUsers</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">userService</span><span class="o">.</span><span class="na">findAll</span><span class="o">()</span>
+            <span class="o">.</span><span class="na">filter</span><span class="o">(</span><span class="nl">User:</span><span class="o">:</span><span class="n">isActive</span><span class="o">)</span>
+            <span class="o">.</span><span class="na">doOnNext</span><span class="o">(</span><span class="n">user</span> <span class="o">-&gt;</span> <span class="n">log</span><span class="o">.</span><span class="na">debug</span><span class="o">(</span><span class="s">"Processing user: {}"</span><span class="o">,</span> <span class="n">user</span><span class="o">.</span><span class="na">getName</span><span class="o">()))</span>
+            <span class="o">.</span><span class="na">doOnComplete</span><span class="o">(()</span> <span class="o">-&gt;</span> <span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"All users processed"</span><span class="o">));</span>
+    <span class="o">}</span>
+
+    <span class="c1">// Flux 사용 예제 - 사용자 검색</span>
+    <span class="nd">@GetMapping</span><span class="o">(</span><span class="s">"/users/search"</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="nc">Flux</span><span class="o">&lt;</span><span class="nc">User</span><span class="o">&gt;</span> <span class="nf">searchUsers</span><span class="o">(</span><span class="nd">@RequestParam</span> <span class="nc">String</span> <span class="n">query</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">userService</span><span class="o">.</span><span class="na">findByEmailContaining</span><span class="o">(</span><span class="n">query</span><span class="o">)</span>
+            <span class="o">.</span><span class="na">take</span><span class="o">(</span><span class="mi">10</span><span class="o">)</span> <span class="c1">// 최대 10개만 반환</span>
+            <span class="o">.</span><span class="na">doOnNext</span><span class="o">(</span><span class="n">user</span> <span class="o">-&gt;</span> <span class="n">log</span><span class="o">.</span><span class="na">debug</span><span class="o">(</span><span class="s">"Found matching user: {}"</span><span class="o">,</span> <span class="n">user</span><span class="o">.</span><span class="na">getEmail</span><span class="o">()));</span>
+    <span class="o">}</span>
+
+    <span class="c1">// Mono와 Flux 조합 예제 - 사용자 통계</span>
+    <span class="nd">@GetMapping</span><span class="o">(</span><span class="s">"/users/stats"</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="nc">Mono</span><span class="o">&lt;</span><span class="nc">UserStats</span><span class="o">&gt;</span> <span class="nf">getUserStats</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">userService</span><span class="o">.</span><span class="na">findAll</span><span class="o">()</span>
+            <span class="o">.</span><span class="na">collectList</span><span class="o">()</span>
+            <span class="o">.</span><span class="na">map</span><span class="o">(</span><span class="n">users</span> <span class="o">-&gt;</span> <span class="o">{</span>
+                <span class="kt">long</span> <span class="n">activeCount</span> <span class="o">=</span> <span class="n">users</span><span class="o">.</span><span class="na">stream</span><span class="o">().</span><span class="na">filter</span><span class="o">(</span><span class="nl">User:</span><span class="o">:</span><span class="n">isActive</span><span class="o">).</span><span class="na">count</span><span class="o">();</span>
+                <span class="kt">long</span> <span class="n">inactiveCount</span> <span class="o">=</span> <span class="n">users</span><span class="o">.</span><span class="na">size</span><span class="o">()</span> <span class="o">-</span> <span class="n">activeCount</span><span class="o">;</span>
+                <span class="k">return</span> <span class="k">new</span> <span class="nf">UserStats</span><span class="o">(</span><span class="n">users</span><span class="o">.</span><span class="na">size</span><span class="o">(),</span> <span class="n">activeCount</span><span class="o">,</span> <span class="n">inactiveCount</span><span class="o">);</span>
+            <span class="o">});</span>
+    <span class="o">}</span>
+
+    <span class="c1">// Flux 스트리밍 예제 - 실시간 사용자 이벤트</span>
+    <span class="nd">@GetMapping</span><span class="o">(</span><span class="n">value</span> <span class="o">=</span> <span class="s">"/users/events"</span><span class="o">,</span> <span class="n">produces</span> <span class="o">=</span> <span class="nc">MediaType</span><span class="o">.</span><span class="na">TEXT_EVENT_STREAM_VALUE</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="nc">Flux</span><span class="o">&lt;</span><span class="nc">ServerSentEvent</span><span class="o">&lt;</span><span class="nc">UserEvent</span><span class="o">&gt;&gt;</span> <span class="nf">getUserEvents</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="nc">Flux</span><span class="o">.</span><span class="na">interval</span><span class="o">(</span><span class="nc">Duration</span><span class="o">.</span><span class="na">ofSeconds</span><span class="o">(</span><span class="mi">2</span><span class="o">))</span>
+            <span class="o">.</span><span class="na">flatMap</span><span class="o">(</span><span class="n">tick</span> <span class="o">-&gt;</span> <span class="n">userService</span><span class="o">.</span><span class="na">findRandomUser</span><span class="o">())</span>
+            <span class="o">.</span><span class="na">map</span><span class="o">(</span><span class="n">user</span> <span class="o">-&gt;</span> <span class="nc">ServerSentEvent</span><span class="o">.&lt;</span><span class="nc">UserEvent</span><span class="o">&gt;</span><span class="n">builder</span><span class="o">()</span>
+                <span class="o">.</span><span class="na">id</span><span class="o">(</span><span class="nc">String</span><span class="o">.</span><span class="na">valueOf</span><span class="o">(</span><span class="nc">System</span><span class="o">.</span><span class="na">currentTimeMillis</span><span class="o">()))</span>
+                <span class="o">.</span><span class="na">event</span><span class="o">(</span><span class="s">"user-activity"</span><span class="o">)</span>
+                <span class="o">.</span><span class="na">data</span><span class="o">(</span><span class="k">new</span> <span class="nc">UserEvent</span><span class="o">(</span><span class="n">user</span><span class="o">.</span><span class="na">getId</span><span class="o">(),</span> <span class="s">"User logged in"</span><span class="o">,</span> <span class="nc">Instant</span><span class="o">.</span><span class="na">now</span><span class="o">()))</span>
+                <span class="o">.</span><span class="na">build</span><span class="o">())</span>
+            <span class="o">.</span><span class="na">take</span><span class="o">(</span><span class="mi">10</span><span class="o">);</span> <span class="c1">// 10개 이벤트만 전송</span>
+    <span class="o">}</span>
+
+    <span class="c1">// Mono 에러 처리 예제</span>
+    <span class="nd">@GetMapping</span><span class="o">(</span><span class="s">"/users/{id}/profile"</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="nc">Mono</span><span class="o">&lt;</span><span class="nc">UserProfile</span><span class="o">&gt;</span> <span class="nf">getUserProfile</span><span class="o">(</span><span class="nd">@PathVariable</span> <span class="nc">String</span> <span class="n">id</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">userService</span><span class="o">.</span><span class="na">findById</span><span class="o">(</span><span class="n">id</span><span class="o">)</span>
+            <span class="o">.</span><span class="na">flatMap</span><span class="o">(</span><span class="n">user</span> <span class="o">-&gt;</span> <span class="n">userService</span><span class="o">.</span><span class="na">getUserProfile</span><span class="o">(</span><span class="n">user</span><span class="o">.</span><span class="na">getId</span><span class="o">()))</span>
+            <span class="o">.</span><span class="na">onErrorReturn</span><span class="o">(</span><span class="k">new</span> <span class="nc">UserProfile</span><span class="o">(</span><span class="n">id</span><span class="o">,</span> <span class="s">"Default Profile"</span><span class="o">))</span>
+            <span class="o">.</span><span class="na">onErrorResume</span><span class="o">(</span><span class="nc">UserNotFoundException</span><span class="o">.</span><span class="na">class</span><span class="o">,</span>
+                <span class="n">error</span> <span class="o">-&gt;</span> <span class="nc">Mono</span><span class="o">.</span><span class="na">just</span><span class="o">(</span><span class="k">new</span> <span class="nc">UserProfile</span><span class="o">(</span><span class="n">id</span><span class="o">,</span> <span class="s">"Profile not found"</span><span class="o">)));</span>
+    <span class="o">}</span>
+
+    <span class="c1">// Flux 백프레셔 처리 예제</span>
+    <span class="nd">@GetMapping</span><span class="o">(</span><span class="s">"/users/stream"</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="nc">Flux</span><span class="o">&lt;</span><span class="nc">User</span><span class="o">&gt;</span> <span class="nf">streamUsers</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">userService</span><span class="o">.</span><span class="na">findAll</span><span class="o">()</span>
+            <span class="o">.</span><span class="na">onBackpressureBuffer</span><span class="o">(</span><span class="mi">100</span><span class="o">)</span> <span class="c1">// 최대 100개 버퍼</span>
+            <span class="o">.</span><span class="na">doOnNext</span><span class="o">(</span><span class="n">user</span> <span class="o">-&gt;</span> <span class="n">log</span><span class="o">.</span><span class="na">debug</span><span class="o">(</span><span class="s">"Streaming user: {}"</span><span class="o">,</span> <span class="n">user</span><span class="o">.</span><span class="na">getName</span><span class="o">()))</span>
+            <span class="o">.</span><span class="na">doOnError</span><span class="o">(</span><span class="n">error</span> <span class="o">-&gt;</span> <span class="n">log</span><span class="o">.</span><span class="na">error</span><span class="o">(</span><span class="s">"Error in stream: {}"</span><span class="o">,</span> <span class="n">error</span><span class="o">.</span><span class="na">getMessage</span><span class="o">()));</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div> <h4 id="mono와-flux의-생명주기"> <a href="#mono와-flux의-생명주기" class="anchor-heading" aria-labelledby="mono와-flux의-생명주기"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Mono와 Flux의 생명주기 </h4><pre><code class="language-mermaid">graph TB
+    subgraph "Mono 생명주기"
+        MonoStart[Mono 시작] --&gt; MonoSubscribe[구독]
+        MonoSubscribe --&gt; MonoNext[요소 발행]
+        MonoNext --&gt; MonoComplete[완료]
+        MonoSubscribe --&gt; MonoError[에러]
+        MonoError --&gt; MonoComplete
+    end
+
+    subgraph "Flux 생명주기"
+        FluxStart[Flux 시작] --&gt; FluxSubscribe[구독]
+        FluxSubscribe --&gt; FluxNext[요소 발행]
+        FluxNext --&gt; FluxNext
+        FluxNext --&gt; FluxComplete[완료]
+        FluxSubscribe --&gt; FluxError[에러]
+        FluxError --&gt; FluxComplete
+    end
+
+    style MonoNext fill:#e1f5fe
+    style FluxNext fill:#e8f5e8
+    style MonoError fill:#ffebee
+    style FluxError fill:#ffebee
+</code></pre><h2 id="webflux-이벤트-루프-모델"> <a href="#webflux-이벤트-루프-모델" class="anchor-heading" aria-labelledby="webflux-이벤트-루프-모델"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> WebFlux 이벤트 루프 모델 </h2> <h3 id="1-이벤트-루프-동작-원리"> <a href="#1-이벤트-루프-동작-원리" class="anchor-heading" aria-labelledby="1-이벤트-루프-동작-원리"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 1. 이벤트 루프 동작 원리 </h3><pre><code class="language-mermaid">graph TB
+    Request[HTTP Request] --&gt; EventLoop[Event Loop Thread]
+
+    subgraph "Event Loop Processing"
+        Accept[Accept Event&lt;br/&gt;연결 수락]
+        Read[Read Event&lt;br/&gt;데이터 읽기]
+        Process[Process Event&lt;br/&gt;비즈니스 로직]
+        Write[Write Event&lt;br/&gt;응답 쓰기]
+    end
+
+    EventLoop --&gt; Accept
+    Accept --&gt; Read
+    Read --&gt; Process
+    Process --&gt; Write
+    Write --&gt; Response[HTTP Response]
+
+    subgraph "Non-blocking I/O"
+        NIO[NIO Channels]
+        Selector[Selector&lt;br/&gt;이벤트 선택]
+        Buffer[ByteBuffer&lt;br/&gt;데이터 버퍼]
+    end
+
+    EventLoop --&gt; NIO
+    NIO --&gt; Selector
+    Selector --&gt; Buffer
+</code></pre><h3 id="2-스레드-모델"> <a href="#2-스레드-모델" class="anchor-heading" aria-labelledby="2-스레드-모델"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 2. 스레드 모델 </h3><pre><code class="language-mermaid">graph TB
+    subgraph "Event Loop Threads"
+        EL1[Event Loop 1]
+        EL2[Event Loop 2]
+        EL3[Event Loop 3]
+        EL4[Event Loop 4]
+    end
+
+    subgraph "Worker Threads"
+        WT1[Worker Thread 1]
+        WT2[Worker Thread 2]
+        WT3[Worker Thread 3]
+    end
+
+    Client[Client Requests] --&gt; EL1
+    Client --&gt; EL2
+    Client --&gt; EL3
+    Client --&gt; EL4
+
+    EL1 --&gt; WT1
+    EL2 --&gt; WT2
+    EL3 --&gt; WT3
+    EL4 --&gt; WT1
+</code></pre><h2 id="webflux-컨트롤러-구현"> <a href="#webflux-컨트롤러-구현" class="anchor-heading" aria-labelledby="webflux-컨트롤러-구현"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> WebFlux 컨트롤러 구현 </h2> <h3 id="1-기본-컨트롤러-예제"> <a href="#1-기본-컨트롤러-예제" class="anchor-heading" aria-labelledby="1-기본-컨트롤러-예제"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 1. 기본 컨트롤러 예제 </h3> <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@RestController</span>
+<span class="nd">@RequestMapping</span><span class="o">(</span><span class="s">"/api"</span><span class="o">)</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">ReactiveController</span> <span class="o">{</span>
+
+    <span class="kd">private</span> <span class="kd">final</span> <span class="nc">UserService</span> <span class="n">userService</span><span class="o">;</span>
+
+    <span class="kd">public</span> <span class="nf">ReactiveController</span><span class="o">(</span><span class="nc">UserService</span> <span class="n">userService</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">userService</span> <span class="o">=</span> <span class="n">userService</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="c1">// 단일 사용자 조회</span>
+    <span class="nd">@GetMapping</span><span class="o">(</span><span class="s">"/users/{id}"</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="nc">Mono</span><span class="o">&lt;</span><span class="nc">User</span><span class="o">&gt;</span> <span class="nf">getUser</span><span class="o">(</span><span class="nd">@PathVariable</span> <span class="nc">String</span> <span class="n">id</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">userService</span><span class="o">.</span><span class="na">findById</span><span class="o">(</span><span class="n">id</span><span class="o">)</span>
+            <span class="o">.</span><span class="na">switchIfEmpty</span><span class="o">(</span><span class="nc">Mono</span><span class="o">.</span><span class="na">error</span><span class="o">(</span><span class="k">new</span> <span class="nc">UserNotFoundException</span><span class="o">(</span><span class="n">id</span><span class="o">)));</span>
+    <span class="o">}</span>
+
+    <span class="c1">// 모든 사용자 조회</span>
+    <span class="nd">@GetMapping</span><span class="o">(</span><span class="s">"/users"</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="nc">Flux</span><span class="o">&lt;</span><span class="nc">User</span><span class="o">&gt;</span> <span class="nf">getAllUsers</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">userService</span><span class="o">.</span><span class="na">findAll</span><span class="o">()</span>
+            <span class="o">.</span><span class="na">filter</span><span class="o">(</span><span class="n">user</span> <span class="o">-&gt;</span> <span class="n">user</span><span class="o">.</span><span class="na">isActive</span><span class="o">());</span>
+    <span class="o">}</span>
+
+    <span class="c1">// 사용자 생성</span>
+    <span class="nd">@PostMapping</span><span class="o">(</span><span class="s">"/users"</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="nc">Mono</span><span class="o">&lt;</span><span class="nc">User</span><span class="o">&gt;</span> <span class="nf">createUser</span><span class="o">(</span><span class="nd">@RequestBody</span> <span class="nc">User</span> <span class="n">user</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">userService</span><span class="o">.</span><span class="na">save</span><span class="o">(</span><span class="n">user</span><span class="o">)</span>
+            <span class="o">.</span><span class="na">doOnSuccess</span><span class="o">(</span><span class="n">savedUser</span> <span class="o">-&gt;</span>
+                <span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"User created: {}"</span><span class="o">,</span> <span class="n">savedUser</span><span class="o">.</span><span class="na">getId</span><span class="o">()));</span>
+    <span class="o">}</span>
+
+    <span class="c1">// 사용자 업데이트</span>
+    <span class="nd">@PutMapping</span><span class="o">(</span><span class="s">"/users/{id}"</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="nc">Mono</span><span class="o">&lt;</span><span class="nc">User</span><span class="o">&gt;</span> <span class="nf">updateUser</span><span class="o">(</span><span class="nd">@PathVariable</span> <span class="nc">String</span> <span class="n">id</span><span class="o">,</span>
+                                <span class="nd">@RequestBody</span> <span class="nc">User</span> <span class="n">user</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">userService</span><span class="o">.</span><span class="na">findById</span><span class="o">(</span><span class="n">id</span><span class="o">)</span>
+            <span class="o">.</span><span class="na">flatMap</span><span class="o">(</span><span class="n">existingUser</span> <span class="o">-&gt;</span> <span class="o">{</span>
+                <span class="n">user</span><span class="o">.</span><span class="na">setId</span><span class="o">(</span><span class="n">id</span><span class="o">);</span>
+                <span class="k">return</span> <span class="n">userService</span><span class="o">.</span><span class="na">save</span><span class="o">(</span><span class="n">user</span><span class="o">);</span>
+            <span class="o">})</span>
+            <span class="o">.</span><span class="na">switchIfEmpty</span><span class="o">(</span><span class="nc">Mono</span><span class="o">.</span><span class="na">error</span><span class="o">(</span><span class="k">new</span> <span class="nc">UserNotFoundException</span><span class="o">(</span><span class="n">id</span><span class="o">)));</span>
+    <span class="o">}</span>
+
+    <span class="c1">// 사용자 삭제</span>
+    <span class="nd">@DeleteMapping</span><span class="o">(</span><span class="s">"/users/{id}"</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="nc">Mono</span><span class="o">&lt;</span><span class="nc">Void</span><span class="o">&gt;</span> <span class="nf">deleteUser</span><span class="o">(</span><span class="nd">@PathVariable</span> <span class="nc">String</span> <span class="n">id</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">userService</span><span class="o">.</span><span class="na">findById</span><span class="o">(</span><span class="n">id</span><span class="o">)</span>
+            <span class="o">.</span><span class="na">flatMap</span><span class="o">(</span><span class="n">user</span> <span class="o">-&gt;</span> <span class="n">userService</span><span class="o">.</span><span class="na">deleteById</span><span class="o">(</span><span class="n">id</span><span class="o">))</span>
+            <span class="o">.</span><span class="na">switchIfEmpty</span><span class="o">(</span><span class="nc">Mono</span><span class="o">.</span><span class="na">error</span><span class="o">(</span><span class="k">new</span> <span class="nc">UserNotFoundException</span><span class="o">(</span><span class="n">id</span><span class="o">)));</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div> <h3 id="2-스트리밍-응답-예제"> <a href="#2-스트리밍-응답-예제" class="anchor-heading" aria-labelledby="2-스트리밍-응답-예제"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 2. 스트리밍 응답 예제 </h3> <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@RestController</span>
+<span class="nd">@RequestMapping</span><span class="o">(</span><span class="s">"/api/stream"</span><span class="o">)</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">StreamingController</span> <span class="o">{</span>
+
+    <span class="c1">// Server-Sent Events (SSE)</span>
+    <span class="nd">@GetMapping</span><span class="o">(</span><span class="n">value</span> <span class="o">=</span> <span class="s">"/events"</span><span class="o">,</span> <span class="n">produces</span> <span class="o">=</span> <span class="nc">MediaType</span><span class="o">.</span><span class="na">TEXT_EVENT_STREAM_VALUE</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="nc">Flux</span><span class="o">&lt;</span><span class="nc">ServerSentEvent</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;&gt;</span> <span class="nf">streamEvents</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="nc">Flux</span><span class="o">.</span><span class="na">interval</span><span class="o">(</span><span class="nc">Duration</span><span class="o">.</span><span class="na">ofSeconds</span><span class="o">(</span><span class="mi">1</span><span class="o">))</span>
+            <span class="o">.</span><span class="na">map</span><span class="o">(</span><span class="n">sequence</span> <span class="o">-&gt;</span> <span class="nc">ServerSentEvent</span><span class="o">.&lt;</span><span class="nc">String</span><span class="o">&gt;</span><span class="n">builder</span><span class="o">()</span>
+                <span class="o">.</span><span class="na">id</span><span class="o">(</span><span class="nc">String</span><span class="o">.</span><span class="na">valueOf</span><span class="o">(</span><span class="n">sequence</span><span class="o">))</span>
+                <span class="o">.</span><span class="na">event</span><span class="o">(</span><span class="s">"periodic-event"</span><span class="o">)</span>
+                <span class="o">.</span><span class="na">data</span><span class="o">(</span><span class="s">"SSE - "</span> <span class="o">+</span> <span class="nc">LocalTime</span><span class="o">.</span><span class="na">now</span><span class="o">().</span><span class="na">toString</span><span class="o">())</span>
+                <span class="o">.</span><span class="na">build</span><span class="o">());</span>
+    <span class="o">}</span>
+
+    <span class="c1">// 실시간 데이터 스트리밍</span>
+    <span class="nd">@GetMapping</span><span class="o">(</span><span class="n">value</span> <span class="o">=</span> <span class="s">"/data"</span><span class="o">,</span> <span class="n">produces</span> <span class="o">=</span> <span class="nc">MediaType</span><span class="o">.</span><span class="na">APPLICATION_NDJSON_VALUE</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="nc">Flux</span><span class="o">&lt;</span><span class="nc">DataPoint</span><span class="o">&gt;</span> <span class="nf">streamData</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="nc">Flux</span><span class="o">.</span><span class="na">interval</span><span class="o">(</span><span class="nc">Duration</span><span class="o">.</span><span class="na">ofMillis</span><span class="o">(</span><span class="mi">100</span><span class="o">))</span>
+            <span class="o">.</span><span class="na">map</span><span class="o">(</span><span class="n">tick</span> <span class="o">-&gt;</span> <span class="k">new</span> <span class="nc">DataPoint</span><span class="o">(</span>
+                <span class="n">tick</span><span class="o">,</span>
+                <span class="nc">Math</span><span class="o">.</span><span class="na">random</span><span class="o">()</span> <span class="o">*</span> <span class="mi">100</span><span class="o">,</span>
+                <span class="nc">Instant</span><span class="o">.</span><span class="na">now</span><span class="o">()</span>
+            <span class="o">))</span>
+            <span class="o">.</span><span class="na">take</span><span class="o">(</span><span class="mi">100</span><span class="o">);</span> <span class="c1">// 100개 데이터 포인트만 전송</span>
+    <span class="o">}</span>
+
+    <span class="c1">// 파일 업로드 처리</span>
+    <span class="nd">@PostMapping</span><span class="o">(</span><span class="s">"/upload"</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="nc">Mono</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="nf">uploadFile</span><span class="o">(</span><span class="nd">@RequestPart</span><span class="o">(</span><span class="s">"file"</span><span class="o">)</span> <span class="nc">Flux</span><span class="o">&lt;</span><span class="nc">DataBuffer</span><span class="o">&gt;</span> <span class="n">file</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">file</span>
+            <span class="o">.</span><span class="na">map</span><span class="o">(</span><span class="n">dataBuffer</span> <span class="o">-&gt;</span> <span class="o">{</span>
+                <span class="c1">// 파일 데이터 처리</span>
+                <span class="kt">byte</span><span class="o">[]</span> <span class="n">bytes</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">byte</span><span class="o">[</span><span class="n">dataBuffer</span><span class="o">.</span><span class="na">readableByteCount</span><span class="o">()];</span>
+                <span class="n">dataBuffer</span><span class="o">.</span><span class="na">read</span><span class="o">(</span><span class="n">bytes</span><span class="o">);</span>
+                <span class="nc">DataBufferUtils</span><span class="o">.</span><span class="na">release</span><span class="o">(</span><span class="n">dataBuffer</span><span class="o">);</span>
+                <span class="k">return</span> <span class="n">bytes</span><span class="o">;</span>
+            <span class="o">})</span>
+            <span class="o">.</span><span class="na">collectList</span><span class="o">()</span>
+            <span class="o">.</span><span class="na">map</span><span class="o">(</span><span class="n">bytesList</span> <span class="o">-&gt;</span> <span class="o">{</span>
+                <span class="c1">// 전체 파일 데이터 조합</span>
+                <span class="kt">byte</span><span class="o">[]</span> <span class="n">allBytes</span> <span class="o">=</span> <span class="n">bytesList</span><span class="o">.</span><span class="na">stream</span><span class="o">()</span>
+                    <span class="o">.</span><span class="na">flatMapToInt</span><span class="o">(</span><span class="n">bytes</span> <span class="o">-&gt;</span> <span class="nc">IntStream</span><span class="o">.</span><span class="na">range</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="n">bytes</span><span class="o">.</span><span class="na">length</span><span class="o">)</span>
+                        <span class="o">.</span><span class="na">map</span><span class="o">(</span><span class="n">i</span> <span class="o">-&gt;</span> <span class="n">bytes</span><span class="o">[</span><span class="n">i</span><span class="o">]))</span>
+                    <span class="o">.</span><span class="na">collect</span><span class="o">(</span><span class="nl">ByteArrayOutputStream:</span><span class="o">:</span><span class="k">new</span><span class="o">,</span>
+                           <span class="o">(</span><span class="n">baos</span><span class="o">,</span> <span class="n">b</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="n">baos</span><span class="o">.</span><span class="na">write</span><span class="o">(</span><span class="n">b</span><span class="o">),</span>
+                           <span class="o">(</span><span class="n">baos1</span><span class="o">,</span> <span class="n">baos2</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="n">baos1</span><span class="o">.</span><span class="na">write</span><span class="o">(</span><span class="n">baos2</span><span class="o">.</span><span class="na">toByteArray</span><span class="o">(),</span> <span class="mi">0</span><span class="o">,</span> <span class="n">baos2</span><span class="o">.</span><span class="na">size</span><span class="o">()))</span>
+                    <span class="o">.</span><span class="na">toByteArray</span><span class="o">();</span>
+                <span class="k">return</span> <span class="s">"File uploaded: "</span> <span class="o">+</span> <span class="n">allBytes</span><span class="o">.</span><span class="na">length</span> <span class="o">+</span> <span class="s">" bytes"</span><span class="o">;</span>
+            <span class="o">});</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div> <h2 id="reactive-service-layer"> <a href="#reactive-service-layer" class="anchor-heading" aria-labelledby="reactive-service-layer"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Reactive Service Layer </h2> <h3 id="1-서비스-구현-예제"> <a href="#1-서비스-구현-예제" class="anchor-heading" aria-labelledby="1-서비스-구현-예제"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 1. 서비스 구현 예제 </h3> <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@Service</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">ReactiveUserService</span> <span class="o">{</span>
+
+    <span class="kd">private</span> <span class="kd">final</span> <span class="nc">ReactiveUserRepository</span> <span class="n">userRepository</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="kd">final</span> <span class="nc">ReactiveMongoTemplate</span> <span class="n">mongoTemplate</span><span class="o">;</span>
+
+    <span class="kd">public</span> <span class="nf">ReactiveUserService</span><span class="o">(</span><span class="nc">ReactiveUserRepository</span> <span class="n">userRepository</span><span class="o">,</span>
+                             <span class="nc">ReactiveMongoTemplate</span> <span class="n">mongoTemplate</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">userRepository</span> <span class="o">=</span> <span class="n">userRepository</span><span class="o">;</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">mongoTemplate</span> <span class="o">=</span> <span class="n">mongoTemplate</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="c1">// 사용자 조회</span>
+    <span class="kd">public</span> <span class="nc">Mono</span><span class="o">&lt;</span><span class="nc">User</span><span class="o">&gt;</span> <span class="nf">findById</span><span class="o">(</span><span class="nc">String</span> <span class="n">id</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">userRepository</span><span class="o">.</span><span class="na">findById</span><span class="o">(</span><span class="n">id</span><span class="o">)</span>
+            <span class="o">.</span><span class="na">doOnNext</span><span class="o">(</span><span class="n">user</span> <span class="o">-&gt;</span> <span class="n">log</span><span class="o">.</span><span class="na">debug</span><span class="o">(</span><span class="s">"Found user: {}"</span><span class="o">,</span> <span class="n">user</span><span class="o">.</span><span class="na">getEmail</span><span class="o">()))</span>
+            <span class="o">.</span><span class="na">doOnError</span><span class="o">(</span><span class="n">error</span> <span class="o">-&gt;</span> <span class="n">log</span><span class="o">.</span><span class="na">error</span><span class="o">(</span><span class="s">"Error finding user: {}"</span><span class="o">,</span> <span class="n">error</span><span class="o">.</span><span class="na">getMessage</span><span class="o">()));</span>
+    <span class="o">}</span>
+
+    <span class="c1">// 사용자 검색</span>
+    <span class="kd">public</span> <span class="nc">Flux</span><span class="o">&lt;</span><span class="nc">User</span><span class="o">&gt;</span> <span class="nf">findByEmailContaining</span><span class="o">(</span><span class="nc">String</span> <span class="n">email</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">userRepository</span><span class="o">.</span><span class="na">findByEmailContainingIgnoreCase</span><span class="o">(</span><span class="n">email</span><span class="o">)</span>
+            <span class="o">.</span><span class="na">filter</span><span class="o">(</span><span class="nl">User:</span><span class="o">:</span><span class="n">isActive</span><span class="o">)</span>
+            <span class="o">.</span><span class="na">take</span><span class="o">(</span><span class="mi">10</span><span class="o">);</span> <span class="c1">// 최대 10개만 반환</span>
+    <span class="o">}</span>
+
+    <span class="c1">// 사용자 저장</span>
+    <span class="kd">public</span> <span class="nc">Mono</span><span class="o">&lt;</span><span class="nc">User</span><span class="o">&gt;</span> <span class="nf">save</span><span class="o">(</span><span class="nc">User</span> <span class="n">user</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="nc">Mono</span><span class="o">.</span><span class="na">just</span><span class="o">(</span><span class="n">user</span><span class="o">)</span>
+            <span class="o">.</span><span class="na">filter</span><span class="o">(</span><span class="n">u</span> <span class="o">-&gt;</span> <span class="n">u</span><span class="o">.</span><span class="na">getEmail</span><span class="o">()</span> <span class="o">!=</span> <span class="kc">null</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="n">u</span><span class="o">.</span><span class="na">getEmail</span><span class="o">().</span><span class="na">isEmpty</span><span class="o">())</span>
+            <span class="o">.</span><span class="na">flatMap</span><span class="o">(</span><span class="n">u</span> <span class="o">-&gt;</span> <span class="o">{</span>
+                <span class="k">if</span> <span class="o">(</span><span class="n">u</span><span class="o">.</span><span class="na">getId</span><span class="o">()</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+                    <span class="n">u</span><span class="o">.</span><span class="na">setCreatedAt</span><span class="o">(</span><span class="nc">Instant</span><span class="o">.</span><span class="na">now</span><span class="o">());</span>
+                <span class="o">}</span>
+                <span class="n">u</span><span class="o">.</span><span class="na">setUpdatedAt</span><span class="o">(</span><span class="nc">Instant</span><span class="o">.</span><span class="na">now</span><span class="o">());</span>
+                <span class="k">return</span> <span class="n">userRepository</span><span class="o">.</span><span class="na">save</span><span class="o">(</span><span class="n">u</span><span class="o">);</span>
+            <span class="o">})</span>
+            <span class="o">.</span><span class="na">doOnSuccess</span><span class="o">(</span><span class="n">savedUser</span> <span class="o">-&gt;</span>
+                <span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"User saved: {}"</span><span class="o">,</span> <span class="n">savedUser</span><span class="o">.</span><span class="na">getEmail</span><span class="o">()))</span>
+            <span class="o">.</span><span class="na">doOnError</span><span class="o">(</span><span class="n">error</span> <span class="o">-&gt;</span>
+                <span class="n">log</span><span class="o">.</span><span class="na">error</span><span class="o">(</span><span class="s">"Error saving user: {}"</span><span class="o">,</span> <span class="n">error</span><span class="o">.</span><span class="na">getMessage</span><span class="o">()));</span>
+    <span class="o">}</span>
+
+    <span class="c1">// 사용자 삭제</span>
+    <span class="kd">public</span> <span class="nc">Mono</span><span class="o">&lt;</span><span class="nc">Void</span><span class="o">&gt;</span> <span class="nf">deleteById</span><span class="o">(</span><span class="nc">String</span> <span class="n">id</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">userRepository</span><span class="o">.</span><span class="na">findById</span><span class="o">(</span><span class="n">id</span><span class="o">)</span>
+            <span class="o">.</span><span class="na">flatMap</span><span class="o">(</span><span class="n">user</span> <span class="o">-&gt;</span> <span class="n">userRepository</span><span class="o">.</span><span class="na">deleteById</span><span class="o">(</span><span class="n">id</span><span class="o">))</span>
+            <span class="o">.</span><span class="na">doOnSuccess</span><span class="o">(</span><span class="n">v</span> <span class="o">-&gt;</span> <span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"User deleted: {}"</span><span class="o">,</span> <span class="n">id</span><span class="o">))</span>
+            <span class="o">.</span><span class="na">doOnError</span><span class="o">(</span><span class="n">error</span> <span class="o">-&gt;</span> <span class="n">log</span><span class="o">.</span><span class="na">error</span><span class="o">(</span><span class="s">"Error deleting user: {}"</span><span class="o">,</span> <span class="n">error</span><span class="o">.</span><span class="na">getMessage</span><span class="o">()));</span>
+    <span class="o">}</span>
+
+    <span class="c1">// 복잡한 쿼리 예제</span>
+    <span class="kd">public</span> <span class="nc">Flux</span><span class="o">&lt;</span><span class="nc">User</span><span class="o">&gt;</span> <span class="nf">findActiveUsersByAgeRange</span><span class="o">(</span><span class="kt">int</span> <span class="n">minAge</span><span class="o">,</span> <span class="kt">int</span> <span class="n">maxAge</span><span class="o">)</span> <span class="o">{</span>
+        <span class="nc">Criteria</span> <span class="n">criteria</span> <span class="o">=</span> <span class="nc">Criteria</span><span class="o">.</span><span class="na">where</span><span class="o">(</span><span class="s">"age"</span><span class="o">).</span><span class="na">gte</span><span class="o">(</span><span class="n">minAge</span><span class="o">).</span><span class="na">lte</span><span class="o">(</span><span class="n">maxAge</span><span class="o">)</span>
+            <span class="o">.</span><span class="na">and</span><span class="o">(</span><span class="s">"active"</span><span class="o">).</span><span class="na">is</span><span class="o">(</span><span class="kc">true</span><span class="o">);</span>
+
+        <span class="nc">Query</span> <span class="n">query</span> <span class="o">=</span> <span class="nc">Query</span><span class="o">.</span><span class="na">query</span><span class="o">(</span><span class="n">criteria</span><span class="o">);</span>
+        <span class="n">query</span><span class="o">.</span><span class="na">with</span><span class="o">(</span><span class="nc">Sort</span><span class="o">.</span><span class="na">by</span><span class="o">(</span><span class="nc">Sort</span><span class="o">.</span><span class="na">Direction</span><span class="o">.</span><span class="na">DESC</span><span class="o">,</span> <span class="s">"createdAt"</span><span class="o">));</span>
+
+        <span class="k">return</span> <span class="n">mongoTemplate</span><span class="o">.</span><span class="na">find</span><span class="o">(</span><span class="n">query</span><span class="o">,</span> <span class="nc">User</span><span class="o">.</span><span class="na">class</span><span class="o">)</span>
+            <span class="o">.</span><span class="na">onBackpressureBuffer</span><span class="o">(</span><span class="mi">100</span><span class="o">)</span> <span class="c1">// 백프레셔 처리</span>
+            <span class="o">.</span><span class="na">doOnNext</span><span class="o">(</span><span class="n">user</span> <span class="o">-&gt;</span> <span class="n">log</span><span class="o">.</span><span class="na">debug</span><span class="o">(</span><span class="s">"Found user in age range: {}"</span><span class="o">,</span> <span class="n">user</span><span class="o">.</span><span class="na">getEmail</span><span class="o">()));</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div> <h3 id="2-에러-처리"> <a href="#2-에러-처리" class="anchor-heading" aria-labelledby="2-에러-처리"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 2. 에러 처리 </h3> <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@Component</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">ReactiveErrorHandler</span> <span class="o">{</span>
+
+    <span class="nd">@ExceptionHandler</span><span class="o">(</span><span class="nc">UserNotFoundException</span><span class="o">.</span><span class="na">class</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="nc">Mono</span><span class="o">&lt;</span><span class="nc">ResponseEntity</span><span class="o">&lt;</span><span class="nc">ErrorResponse</span><span class="o">&gt;&gt;</span> <span class="nf">handleUserNotFound</span><span class="o">(</span>
+            <span class="nc">UserNotFoundException</span> <span class="n">ex</span><span class="o">,</span> <span class="nc">ServerWebExchange</span> <span class="n">exchange</span><span class="o">)</span> <span class="o">{</span>
+
+        <span class="nc">ErrorResponse</span> <span class="n">error</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">ErrorResponse</span><span class="o">(</span>
+            <span class="s">"USER_NOT_FOUND"</span><span class="o">,</span>
+            <span class="n">ex</span><span class="o">.</span><span class="na">getMessage</span><span class="o">(),</span>
+            <span class="n">exchange</span><span class="o">.</span><span class="na">getRequest</span><span class="o">().</span><span class="na">getPath</span><span class="o">().</span><span class="na">value</span><span class="o">()</span>
+        <span class="o">);</span>
+
+        <span class="k">return</span> <span class="nc">Mono</span><span class="o">.</span><span class="na">just</span><span class="o">(</span><span class="nc">ResponseEntity</span><span class="o">.</span><span class="na">status</span><span class="o">(</span><span class="nc">HttpStatus</span><span class="o">.</span><span class="na">NOT_FOUND</span><span class="o">)</span>
+            <span class="o">.</span><span class="na">body</span><span class="o">(</span><span class="n">error</span><span class="o">));</span>
+    <span class="o">}</span>
+
+    <span class="nd">@ExceptionHandler</span><span class="o">(</span><span class="nc">ValidationException</span><span class="o">.</span><span class="na">class</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="nc">Mono</span><span class="o">&lt;</span><span class="nc">ResponseEntity</span><span class="o">&lt;</span><span class="nc">ErrorResponse</span><span class="o">&gt;&gt;</span> <span class="nf">handleValidation</span><span class="o">(</span>
+            <span class="nc">ValidationException</span> <span class="n">ex</span><span class="o">,</span> <span class="nc">ServerWebExchange</span> <span class="n">exchange</span><span class="o">)</span> <span class="o">{</span>
+
+        <span class="nc">ErrorResponse</span> <span class="n">error</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">ErrorResponse</span><span class="o">(</span>
+            <span class="s">"VALIDATION_ERROR"</span><span class="o">,</span>
+            <span class="n">ex</span><span class="o">.</span><span class="na">getMessage</span><span class="o">(),</span>
+            <span class="n">exchange</span><span class="o">.</span><span class="na">getRequest</span><span class="o">().</span><span class="na">getPath</span><span class="o">().</span><span class="na">value</span><span class="o">()</span>
+        <span class="o">);</span>
+
+        <span class="k">return</span> <span class="nc">Mono</span><span class="o">.</span><span class="na">just</span><span class="o">(</span><span class="nc">ResponseEntity</span><span class="o">.</span><span class="na">status</span><span class="o">(</span><span class="nc">HttpStatus</span><span class="o">.</span><span class="na">BAD_REQUEST</span><span class="o">)</span>
+            <span class="o">.</span><span class="na">body</span><span class="o">(</span><span class="n">error</span><span class="o">));</span>
+    <span class="o">}</span>
+
+    <span class="nd">@ExceptionHandler</span><span class="o">(</span><span class="nc">Exception</span><span class="o">.</span><span class="na">class</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="nc">Mono</span><span class="o">&lt;</span><span class="nc">ResponseEntity</span><span class="o">&lt;</span><span class="nc">ErrorResponse</span><span class="o">&gt;&gt;</span> <span class="nf">handleGeneric</span><span class="o">(</span>
+            <span class="nc">Exception</span> <span class="n">ex</span><span class="o">,</span> <span class="nc">ServerWebExchange</span> <span class="n">exchange</span><span class="o">)</span> <span class="o">{</span>
+
+        <span class="nc">ErrorResponse</span> <span class="n">error</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">ErrorResponse</span><span class="o">(</span>
+            <span class="s">"INTERNAL_ERROR"</span><span class="o">,</span>
+            <span class="s">"An unexpected error occurred"</span><span class="o">,</span>
+            <span class="n">exchange</span><span class="o">.</span><span class="na">getRequest</span><span class="o">().</span><span class="na">getPath</span><span class="o">().</span><span class="na">value</span><span class="o">()</span>
+        <span class="o">);</span>
+
+        <span class="k">return</span> <span class="nc">Mono</span><span class="o">.</span><span class="na">just</span><span class="o">(</span><span class="nc">ResponseEntity</span><span class="o">.</span><span class="na">status</span><span class="o">(</span><span class="nc">HttpStatus</span><span class="o">.</span><span class="na">INTERNAL_SERVER_ERROR</span><span class="o">)</span>
+            <span class="o">.</span><span class="na">body</span><span class="o">(</span><span class="n">error</span><span class="o">));</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div> <h2 id="백프레셔-backpressure-처리"> <a href="#백프레셔-backpressure-처리" class="anchor-heading" aria-labelledby="백프레셔-backpressure-처리"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 백프레셔 (Backpressure) 처리 </h2> <h3 id="1-백프레셔-전략"> <a href="#1-백프레셔-전략" class="anchor-heading" aria-labelledby="1-백프레셔-전략"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 1. 백프레셔 전략 </h3><pre><code class="language-mermaid">graph TB
+    FastPublisher[빠른 Publisher] --&gt; SlowSubscriber[느린 Subscriber]
+
+    subgraph "Backpressure Strategies"
+        Buffer[onBackpressureBuffer&lt;br/&gt;버퍼링]
+        Drop[onBackpressureDrop&lt;br/&gt;드롭]
+        Error[onBackpressureError&lt;br/&gt;에러]
+        Latest[onBackpressureLatest&lt;br/&gt;최신만 유지]
+    end
+
+    FastPublisher --&gt; Buffer
+    FastPublisher --&gt; Drop
+    FastPublisher --&gt; Error
+    FastPublisher --&gt; Latest
+</code></pre><h3 id="2-백프레셔-처리-예제"> <a href="#2-백프레셔-처리-예제" class="anchor-heading" aria-labelledby="2-백프레셔-처리-예제"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 2. 백프레셔 처리 예제 </h3> <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@Service</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">BackpressureService</span> <span class="o">{</span>
+
+    <span class="c1">// 버퍼링 전략</span>
+    <span class="kd">public</span> <span class="nc">Flux</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="nf">bufferStrategy</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="nc">Flux</span><span class="o">.</span><span class="na">interval</span><span class="o">(</span><span class="nc">Duration</span><span class="o">.</span><span class="na">ofMillis</span><span class="o">(</span><span class="mi">10</span><span class="o">))</span>
+            <span class="o">.</span><span class="na">map</span><span class="o">(</span><span class="n">i</span> <span class="o">-&gt;</span> <span class="s">"Item-"</span> <span class="o">+</span> <span class="n">i</span><span class="o">)</span>
+            <span class="o">.</span><span class="na">onBackpressureBuffer</span><span class="o">(</span><span class="mi">1000</span><span class="o">)</span> <span class="c1">// 최대 1000개 버퍼</span>
+            <span class="o">.</span><span class="na">doOnNext</span><span class="o">(</span><span class="n">item</span> <span class="o">-&gt;</span> <span class="n">log</span><span class="o">.</span><span class="na">debug</span><span class="o">(</span><span class="s">"Processing: {}"</span><span class="o">,</span> <span class="n">item</span><span class="o">));</span>
+    <span class="o">}</span>
+
+    <span class="c1">// 드롭 전략</span>
+    <span class="kd">public</span> <span class="nc">Flux</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="nf">dropStrategy</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="nc">Flux</span><span class="o">.</span><span class="na">interval</span><span class="o">(</span><span class="nc">Duration</span><span class="o">.</span><span class="na">ofMillis</span><span class="o">(</span><span class="mi">10</span><span class="o">))</span>
+            <span class="o">.</span><span class="na">map</span><span class="o">(</span><span class="n">i</span> <span class="o">-&gt;</span> <span class="s">"Item-"</span> <span class="o">+</span> <span class="n">i</span><span class="o">)</span>
+            <span class="o">.</span><span class="na">onBackpressureDrop</span><span class="o">(</span><span class="n">item</span> <span class="o">-&gt;</span>
+                <span class="n">log</span><span class="o">.</span><span class="na">warn</span><span class="o">(</span><span class="s">"Dropped item: {}"</span><span class="o">,</span> <span class="n">item</span><span class="o">))</span>
+            <span class="o">.</span><span class="na">doOnNext</span><span class="o">(</span><span class="n">item</span> <span class="o">-&gt;</span> <span class="n">log</span><span class="o">.</span><span class="na">debug</span><span class="o">(</span><span class="s">"Processing: {}"</span><span class="o">,</span> <span class="n">item</span><span class="o">));</span>
+    <span class="o">}</span>
+
+    <span class="c1">// 에러 전략</span>
+    <span class="kd">public</span> <span class="nc">Flux</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="nf">errorStrategy</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="nc">Flux</span><span class="o">.</span><span class="na">interval</span><span class="o">(</span><span class="nc">Duration</span><span class="o">.</span><span class="na">ofMillis</span><span class="o">(</span><span class="mi">10</span><span class="o">))</span>
+            <span class="o">.</span><span class="na">map</span><span class="o">(</span><span class="n">i</span> <span class="o">-&gt;</span> <span class="s">"Item-"</span> <span class="o">+</span> <span class="n">i</span><span class="o">)</span>
+            <span class="o">.</span><span class="na">onBackpressureError</span><span class="o">()</span>
+            <span class="o">.</span><span class="na">doOnNext</span><span class="o">(</span><span class="n">item</span> <span class="o">-&gt;</span> <span class="n">log</span><span class="o">.</span><span class="na">debug</span><span class="o">(</span><span class="s">"Processing: {}"</span><span class="o">,</span> <span class="n">item</span><span class="o">))</span>
+            <span class="o">.</span><span class="na">onErrorReturn</span><span class="o">(</span><span class="s">"Error occurred due to backpressure"</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="c1">// 최신만 유지 전략</span>
+    <span class="kd">public</span> <span class="nc">Flux</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="nf">latestStrategy</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="nc">Flux</span><span class="o">.</span><span class="na">interval</span><span class="o">(</span><span class="nc">Duration</span><span class="o">.</span><span class="na">ofMillis</span><span class="o">(</span><span class="mi">10</span><span class="o">))</span>
+            <span class="o">.</span><span class="na">map</span><span class="o">(</span><span class="n">i</span> <span class="o">-&gt;</span> <span class="s">"Item-"</span> <span class="o">+</span> <span class="n">i</span><span class="o">)</span>
+            <span class="o">.</span><span class="na">onBackpressureLatest</span><span class="o">()</span>
+            <span class="o">.</span><span class="na">doOnNext</span><span class="o">(</span><span class="n">item</span> <span class="o">-&gt;</span> <span class="n">log</span><span class="o">.</span><span class="na">debug</span><span class="o">(</span><span class="s">"Processing: {}"</span><span class="o">,</span> <span class="n">item</span><span class="o">));</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div> <h2 id="webflux-설정-및-최적화"> <a href="#webflux-설정-및-최적화" class="anchor-heading" aria-labelledby="webflux-설정-및-최적화"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> WebFlux 설정 및 최적화 </h2> <h3 id="1-applicationyml-설정"> <a href="#1-applicationyml-설정" class="anchor-heading" aria-labelledby="1-applicationyml-설정"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 1. application.yml 설정 </h3> <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">spring</span><span class="pi">:</span>
+  <span class="na">webflux</span><span class="pi">:</span>
+    <span class="na">base-path</span><span class="pi">:</span> <span class="s">/api</span>
+    <span class="na">static-path-pattern</span><span class="pi">:</span> <span class="s">/static/**</span>
+
+  <span class="c1"># Netty 설정</span>
+  <span class="na">netty</span><span class="pi">:</span>
+    <span class="na">connection-timeout</span><span class="pi">:</span> <span class="s">30s</span>
+    <span class="na">read-timeout</span><span class="pi">:</span> <span class="s">30s</span>
+    <span class="na">write-timeout</span><span class="pi">:</span> <span class="s">30s</span>
+
+  <span class="c1"># 로깅 설정</span>
+<span class="na">logging</span><span class="pi">:</span>
+  <span class="na">level</span><span class="pi">:</span>
+    <span class="na">org.springframework.web.reactive</span><span class="pi">:</span> <span class="s">DEBUG</span>
+    <span class="na">reactor.netty</span><span class="pi">:</span> <span class="s">DEBUG</span>
+    <span class="na">io.netty</span><span class="pi">:</span> <span class="s">DEBUG</span>
+
+<span class="c1"># 메트릭 설정</span>
+<span class="na">management</span><span class="pi">:</span>
+  <span class="na">endpoints</span><span class="pi">:</span>
+    <span class="na">web</span><span class="pi">:</span>
+      <span class="na">exposure</span><span class="pi">:</span>
+        <span class="na">include</span><span class="pi">:</span> <span class="s">health,info,metrics,prometheus</span>
+  <span class="na">metrics</span><span class="pi">:</span>
+    <span class="na">export</span><span class="pi">:</span>
+      <span class="na">prometheus</span><span class="pi">:</span>
+        <span class="na">enabled</span><span class="pi">:</span> <span class="no">true</span>
+</code></pre></div></div> <h3 id="2-성능-최적화-설정"> <a href="#2-성능-최적화-설정" class="anchor-heading" aria-labelledby="2-성능-최적화-설정"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 2. 성능 최적화 설정 </h3> <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@Configuration</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">WebFluxConfig</span> <span class="o">{</span>
+
+    <span class="nd">@Bean</span>
+    <span class="kd">public</span> <span class="nc">NettyReactiveWebServerFactory</span> <span class="nf">nettyReactiveWebServerFactory</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="nf">NettyReactiveWebServerFactory</span><span class="o">()</span> <span class="o">{</span>
+            <span class="nd">@Override</span>
+            <span class="kd">public</span> <span class="nc">WebServer</span> <span class="nf">getWebServer</span><span class="o">(</span><span class="nc">HttpHandler</span> <span class="n">httpHandler</span><span class="o">)</span> <span class="o">{</span>
+                <span class="nc">HttpServer</span> <span class="n">httpServer</span> <span class="o">=</span> <span class="nc">HttpServer</span><span class="o">.</span><span class="na">create</span><span class="o">()</span>
+                    <span class="o">.</span><span class="na">port</span><span class="o">(</span><span class="mi">8080</span><span class="o">)</span>
+                    <span class="o">.</span><span class="na">option</span><span class="o">(</span><span class="nc">ChannelOption</span><span class="o">.</span><span class="na">SO_BACKLOG</span><span class="o">,</span> <span class="mi">1000</span><span class="o">)</span>
+                    <span class="o">.</span><span class="na">option</span><span class="o">(</span><span class="nc">ChannelOption</span><span class="o">.</span><span class="na">SO_REUSEADDR</span><span class="o">,</span> <span class="kc">true</span><span class="o">)</span>
+                    <span class="o">.</span><span class="na">childOption</span><span class="o">(</span><span class="nc">ChannelOption</span><span class="o">.</span><span class="na">SO_KEEPALIVE</span><span class="o">,</span> <span class="kc">true</span><span class="o">)</span>
+                    <span class="o">.</span><span class="na">childOption</span><span class="o">(</span><span class="nc">ChannelOption</span><span class="o">.</span><span class="na">TCP_NODELAY</span><span class="o">,</span> <span class="kc">true</span><span class="o">);</span>
+
+                <span class="k">return</span> <span class="kd">super</span><span class="o">.</span><span class="na">getWebServer</span><span class="o">(</span><span class="n">httpHandler</span><span class="o">);</span>
+            <span class="o">}</span>
+        <span class="o">};</span>
+    <span class="o">}</span>
+
+    <span class="nd">@Bean</span>
+    <span class="kd">public</span> <span class="nc">WebFilter</span> <span class="nf">corsFilter</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="o">(</span><span class="n">exchange</span><span class="o">,</span> <span class="n">chain</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="o">{</span>
+            <span class="nc">ServerHttpResponse</span> <span class="n">response</span> <span class="o">=</span> <span class="n">exchange</span><span class="o">.</span><span class="na">getResponse</span><span class="o">();</span>
+            <span class="n">response</span><span class="o">.</span><span class="na">getHeaders</span><span class="o">().</span><span class="na">add</span><span class="o">(</span><span class="s">"Access-Control-Allow-Origin"</span><span class="o">,</span> <span class="s">"*"</span><span class="o">);</span>
+            <span class="n">response</span><span class="o">.</span><span class="na">getHeaders</span><span class="o">().</span><span class="na">add</span><span class="o">(</span><span class="s">"Access-Control-Allow-Methods"</span><span class="o">,</span> <span class="s">"GET,POST,PUT,DELETE,OPTIONS"</span><span class="o">);</span>
+            <span class="n">response</span><span class="o">.</span><span class="na">getHeaders</span><span class="o">().</span><span class="na">add</span><span class="o">(</span><span class="s">"Access-Control-Allow-Headers"</span><span class="o">,</span> <span class="s">"Content-Type,Authorization"</span><span class="o">);</span>
+
+            <span class="k">return</span> <span class="n">chain</span><span class="o">.</span><span class="na">filter</span><span class="o">(</span><span class="n">exchange</span><span class="o">);</span>
+        <span class="o">};</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div> <h2 id="모니터링-및-관찰성"> <a href="#모니터링-및-관찰성" class="anchor-heading" aria-labelledby="모니터링-및-관찰성"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 모니터링 및 관찰성 </h2> <h3 id="1-메트릭-수집"> <a href="#1-메트릭-수집" class="anchor-heading" aria-labelledby="1-메트릭-수집"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 1. 메트릭 수집 </h3> <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@Component</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">WebFluxMetrics</span> <span class="o">{</span>
+
+    <span class="kd">private</span> <span class="kd">final</span> <span class="nc">MeterRegistry</span> <span class="n">meterRegistry</span><span class="o">;</span>
+
+    <span class="kd">public</span> <span class="nf">WebFluxMetrics</span><span class="o">(</span><span class="nc">MeterRegistry</span> <span class="n">meterRegistry</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">meterRegistry</span> <span class="o">=</span> <span class="n">meterRegistry</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="nd">@EventListener</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">handleHttpRequest</span><span class="o">(</span><span class="nc">HttpRequestEvent</span> <span class="n">event</span><span class="o">)</span> <span class="o">{</span>
+        <span class="nc">Timer</span><span class="o">.</span><span class="na">Sample</span> <span class="n">sample</span> <span class="o">=</span> <span class="nc">Timer</span><span class="o">.</span><span class="na">start</span><span class="o">(</span><span class="n">meterRegistry</span><span class="o">);</span>
+
+        <span class="n">event</span><span class="o">.</span><span class="na">getExchange</span><span class="o">().</span><span class="na">getResponse</span><span class="o">()</span>
+            <span class="o">.</span><span class="na">beforeCommit</span><span class="o">(()</span> <span class="o">-&gt;</span> <span class="o">{</span>
+                <span class="n">sample</span><span class="o">.</span><span class="na">stop</span><span class="o">(</span><span class="nc">Timer</span><span class="o">.</span><span class="na">builder</span><span class="o">(</span><span class="s">"http.server.requests"</span><span class="o">)</span>
+                    <span class="o">.</span><span class="na">tag</span><span class="o">(</span><span class="s">"method"</span><span class="o">,</span> <span class="n">event</span><span class="o">.</span><span class="na">getMethod</span><span class="o">())</span>
+                    <span class="o">.</span><span class="na">tag</span><span class="o">(</span><span class="s">"uri"</span><span class="o">,</span> <span class="n">event</span><span class="o">.</span><span class="na">getUri</span><span class="o">())</span>
+                    <span class="o">.</span><span class="na">tag</span><span class="o">(</span><span class="s">"status"</span><span class="o">,</span> <span class="n">event</span><span class="o">.</span><span class="na">getStatus</span><span class="o">().</span><span class="na">toString</span><span class="o">())</span>
+                    <span class="o">.</span><span class="na">register</span><span class="o">(</span><span class="n">meterRegistry</span><span class="o">));</span>
+                <span class="k">return</span> <span class="nc">Mono</span><span class="o">.</span><span class="na">empty</span><span class="o">();</span>
+            <span class="o">});</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div> <h3 id="2-분산-추적"> <a href="#2-분산-추적" class="anchor-heading" aria-labelledby="2-분산-추적"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 2. 분산 추적 </h3> <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@Component</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">TracingFilter</span> <span class="kd">implements</span> <span class="nc">WebFilter</span> <span class="o">{</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="nc">Mono</span><span class="o">&lt;</span><span class="nc">Void</span><span class="o">&gt;</span> <span class="nf">filter</span><span class="o">(</span><span class="nc">ServerWebExchange</span> <span class="n">exchange</span><span class="o">,</span> <span class="nc">WebFilterChain</span> <span class="n">chain</span><span class="o">)</span> <span class="o">{</span>
+        <span class="nc">String</span> <span class="n">traceId</span> <span class="o">=</span> <span class="n">generateTraceId</span><span class="o">();</span>
+        <span class="nc">String</span> <span class="n">spanId</span> <span class="o">=</span> <span class="n">generateSpanId</span><span class="o">();</span>
+
+        <span class="k">return</span> <span class="n">chain</span><span class="o">.</span><span class="na">filter</span><span class="o">(</span><span class="n">exchange</span><span class="o">)</span>
+            <span class="o">.</span><span class="na">doFirst</span><span class="o">(()</span> <span class="o">-&gt;</span> <span class="o">{</span>
+                <span class="n">exchange</span><span class="o">.</span><span class="na">getAttributes</span><span class="o">().</span><span class="na">put</span><span class="o">(</span><span class="s">"traceId"</span><span class="o">,</span> <span class="n">traceId</span><span class="o">);</span>
+                <span class="n">exchange</span><span class="o">.</span><span class="na">getAttributes</span><span class="o">().</span><span class="na">put</span><span class="o">(</span><span class="s">"spanId"</span><span class="o">,</span> <span class="n">spanId</span><span class="o">);</span>
+
+                <span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"Request started - TraceId: {}, SpanId: {}, Path: {}"</span><span class="o">,</span>
+                    <span class="n">traceId</span><span class="o">,</span> <span class="n">spanId</span><span class="o">,</span> <span class="n">exchange</span><span class="o">.</span><span class="na">getRequest</span><span class="o">().</span><span class="na">getPath</span><span class="o">());</span>
+            <span class="o">})</span>
+            <span class="o">.</span><span class="na">doFinally</span><span class="o">(</span><span class="n">signalType</span> <span class="o">-&gt;</span> <span class="o">{</span>
+                <span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"Request completed - TraceId: {}, SpanId: {}, Signal: {}"</span><span class="o">,</span>
+                    <span class="n">traceId</span><span class="o">,</span> <span class="n">spanId</span><span class="o">,</span> <span class="n">signalType</span><span class="o">);</span>
+            <span class="o">});</span>
+    <span class="o">}</span>
+
+    <span class="kd">private</span> <span class="nc">String</span> <span class="nf">generateTraceId</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="no">UUID</span><span class="o">.</span><span class="na">randomUUID</span><span class="o">().</span><span class="na">toString</span><span class="o">();</span>
+    <span class="o">}</span>
+
+    <span class="kd">private</span> <span class="nc">String</span> <span class="nf">generateSpanId</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="no">UUID</span><span class="o">.</span><span class="na">randomUUID</span><span class="o">().</span><span class="na">toString</span><span class="o">().</span><span class="na">substring</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="mi">8</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div> <h2 id="webclient-사용법"> <a href="#webclient-사용법" class="anchor-heading" aria-labelledby="webclient-사용법"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> WebClient 사용법 </h2> <h3 id="1-webclient-기본-사용법"> <a href="#1-webclient-기본-사용법" class="anchor-heading" aria-labelledby="1-webclient-기본-사용법"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 1. WebClient 기본 사용법 </h3> <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@RestController</span>
+<span class="nd">@RequestMapping</span><span class="o">(</span><span class="s">"/api/client"</span><span class="o">)</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">WebClientController</span> <span class="o">{</span>
+
+    <span class="kd">private</span> <span class="kd">final</span> <span class="nc">WebClient</span> <span class="n">webClient</span><span class="o">;</span>
+
+    <span class="kd">public</span> <span class="nf">WebClientController</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">webClient</span> <span class="o">=</span> <span class="nc">WebClient</span><span class="o">.</span><span class="na">builder</span><span class="o">()</span>
+            <span class="o">.</span><span class="na">baseUrl</span><span class="o">(</span><span class="s">"https://api.example.com"</span><span class="o">)</span>
+            <span class="o">.</span><span class="na">defaultHeader</span><span class="o">(</span><span class="nc">HttpHeaders</span><span class="o">.</span><span class="na">CONTENT_TYPE</span><span class="o">,</span> <span class="nc">MediaType</span><span class="o">.</span><span class="na">APPLICATION_JSON_VALUE</span><span class="o">)</span>
+            <span class="o">.</span><span class="na">defaultHeader</span><span class="o">(</span><span class="nc">HttpHeaders</span><span class="o">.</span><span class="na">USER_AGENT</span><span class="o">,</span> <span class="s">"WebFlux-Client"</span><span class="o">)</span>
+            <span class="o">.</span><span class="na">build</span><span class="o">();</span>
+    <span class="o">}</span>
+
+    <span class="c1">// GET 요청 예제</span>
+    <span class="nd">@GetMapping</span><span class="o">(</span><span class="s">"/users/{id}"</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="nc">Mono</span><span class="o">&lt;</span><span class="nc">User</span><span class="o">&gt;</span> <span class="nf">getUser</span><span class="o">(</span><span class="nd">@PathVariable</span> <span class="nc">String</span> <span class="n">id</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">webClient</span><span class="o">.</span><span class="na">get</span><span class="o">()</span>
+            <span class="o">.</span><span class="na">uri</span><span class="o">(</span><span class="s">"/users/{id}"</span><span class="o">,</span> <span class="n">id</span><span class="o">)</span>
+            <span class="o">.</span><span class="na">retrieve</span><span class="o">()</span>
+            <span class="o">.</span><span class="na">bodyToMono</span><span class="o">(</span><span class="nc">User</span><span class="o">.</span><span class="na">class</span><span class="o">)</span>
+            <span class="o">.</span><span class="na">doOnSuccess</span><span class="o">(</span><span class="n">user</span> <span class="o">-&gt;</span> <span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"User retrieved: {}"</span><span class="o">,</span> <span class="n">user</span><span class="o">.</span><span class="na">getName</span><span class="o">()))</span>
+            <span class="o">.</span><span class="na">doOnError</span><span class="o">(</span><span class="n">error</span> <span class="o">-&gt;</span> <span class="n">log</span><span class="o">.</span><span class="na">error</span><span class="o">(</span><span class="s">"Error retrieving user: {}"</span><span class="o">,</span> <span class="n">error</span><span class="o">.</span><span class="na">getMessage</span><span class="o">()));</span>
+    <span class="o">}</span>
+
+    <span class="c1">// POST 요청 예제</span>
+    <span class="nd">@PostMapping</span><span class="o">(</span><span class="s">"/users"</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="nc">Mono</span><span class="o">&lt;</span><span class="nc">User</span><span class="o">&gt;</span> <span class="nf">createUser</span><span class="o">(</span><span class="nd">@RequestBody</span> <span class="nc">User</span> <span class="n">user</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">webClient</span><span class="o">.</span><span class="na">post</span><span class="o">()</span>
+            <span class="o">.</span><span class="na">uri</span><span class="o">(</span><span class="s">"/users"</span><span class="o">)</span>
+            <span class="o">.</span><span class="na">bodyValue</span><span class="o">(</span><span class="n">user</span><span class="o">)</span>
+            <span class="o">.</span><span class="na">retrieve</span><span class="o">()</span>
+            <span class="o">.</span><span class="na">bodyToMono</span><span class="o">(</span><span class="nc">User</span><span class="o">.</span><span class="na">class</span><span class="o">)</span>
+            <span class="o">.</span><span class="na">doOnSuccess</span><span class="o">(</span><span class="n">savedUser</span> <span class="o">-&gt;</span> <span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"User created: {}"</span><span class="o">,</span> <span class="n">savedUser</span><span class="o">.</span><span class="na">getId</span><span class="o">()));</span>
+    <span class="o">}</span>
+
+    <span class="c1">// PUT 요청 예제</span>
+    <span class="nd">@PutMapping</span><span class="o">(</span><span class="s">"/users/{id}"</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="nc">Mono</span><span class="o">&lt;</span><span class="nc">User</span><span class="o">&gt;</span> <span class="nf">updateUser</span><span class="o">(</span><span class="nd">@PathVariable</span> <span class="nc">String</span> <span class="n">id</span><span class="o">,</span> <span class="nd">@RequestBody</span> <span class="nc">User</span> <span class="n">user</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">webClient</span><span class="o">.</span><span class="na">put</span><span class="o">()</span>
+            <span class="o">.</span><span class="na">uri</span><span class="o">(</span><span class="s">"/users/{id}"</span><span class="o">,</span> <span class="n">id</span><span class="o">)</span>
+            <span class="o">.</span><span class="na">bodyValue</span><span class="o">(</span><span class="n">user</span><span class="o">)</span>
+            <span class="o">.</span><span class="na">retrieve</span><span class="o">()</span>
+            <span class="o">.</span><span class="na">bodyToMono</span><span class="o">(</span><span class="nc">User</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="c1">// DELETE 요청 예제</span>
+    <span class="nd">@DeleteMapping</span><span class="o">(</span><span class="s">"/users/{id}"</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="nc">Mono</span><span class="o">&lt;</span><span class="nc">Void</span><span class="o">&gt;</span> <span class="nf">deleteUser</span><span class="o">(</span><span class="nd">@PathVariable</span> <span class="nc">String</span> <span class="n">id</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">webClient</span><span class="o">.</span><span class="na">delete</span><span class="o">()</span>
+            <span class="o">.</span><span class="na">uri</span><span class="o">(</span><span class="s">"/users/{id}"</span><span class="o">,</span> <span class="n">id</span><span class="o">)</span>
+            <span class="o">.</span><span class="na">retrieve</span><span class="o">()</span>
+            <span class="o">.</span><span class="na">bodyToMono</span><span class="o">(</span><span class="nc">Void</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div> <h3 id="2-webclient-고급-기능"> <a href="#2-webclient-고급-기능" class="anchor-heading" aria-labelledby="2-webclient-고급-기능"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 2. WebClient 고급 기능 </h3> <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@Component</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">AdvancedWebClient</span> <span class="o">{</span>
+
+    <span class="kd">private</span> <span class="kd">final</span> <span class="nc">WebClient</span> <span class="n">webClient</span><span class="o">;</span>
+
+    <span class="kd">public</span> <span class="nf">AdvancedWebClient</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">webClient</span> <span class="o">=</span> <span class="nc">WebClient</span><span class="o">.</span><span class="na">builder</span><span class="o">()</span>
+            <span class="o">.</span><span class="na">baseUrl</span><span class="o">(</span><span class="s">"https://api.example.com"</span><span class="o">)</span>
+            <span class="o">.</span><span class="na">defaultHeader</span><span class="o">(</span><span class="nc">HttpHeaders</span><span class="o">.</span><span class="na">CONTENT_TYPE</span><span class="o">,</span> <span class="nc">MediaType</span><span class="o">.</span><span class="na">APPLICATION_JSON_VALUE</span><span class="o">)</span>
+            <span class="o">.</span><span class="na">filter</span><span class="o">((</span><span class="n">request</span><span class="o">,</span> <span class="n">next</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="o">{</span>
+                <span class="c1">// 요청 로깅</span>
+                <span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"Request: {} {}"</span><span class="o">,</span> <span class="n">request</span><span class="o">.</span><span class="na">method</span><span class="o">(),</span> <span class="n">request</span><span class="o">.</span><span class="na">url</span><span class="o">());</span>
+                <span class="k">return</span> <span class="n">next</span><span class="o">.</span><span class="na">exchange</span><span class="o">(</span><span class="n">request</span><span class="o">)</span>
+                    <span class="o">.</span><span class="na">doOnNext</span><span class="o">(</span><span class="n">response</span> <span class="o">-&gt;</span>
+                        <span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"Response: {} {}"</span><span class="o">,</span> <span class="n">response</span><span class="o">.</span><span class="na">statusCode</span><span class="o">(),</span> <span class="n">request</span><span class="o">.</span><span class="na">url</span><span class="o">()));</span>
+            <span class="o">})</span>
+            <span class="o">.</span><span class="na">filter</span><span class="o">(</span><span class="nc">ExchangeFilterFunction</span><span class="o">.</span><span class="na">ofRequestProcessor</span><span class="o">(</span><span class="n">clientRequest</span> <span class="o">-&gt;</span> <span class="o">{</span>
+                <span class="c1">// 인증 토큰 추가</span>
+                <span class="k">return</span> <span class="nc">Mono</span><span class="o">.</span><span class="na">just</span><span class="o">(</span><span class="nc">ClientRequest</span><span class="o">.</span><span class="na">from</span><span class="o">(</span><span class="n">clientRequest</span><span class="o">)</span>
+                    <span class="o">.</span><span class="na">header</span><span class="o">(</span><span class="s">"Authorization"</span><span class="o">,</span> <span class="s">"Bearer "</span> <span class="o">+</span> <span class="n">getAuthToken</span><span class="o">())</span>
+                    <span class="o">.</span><span class="na">build</span><span class="o">());</span>
+            <span class="o">}))</span>
+            <span class="o">.</span><span class="na">build</span><span class="o">();</span>
+    <span class="o">}</span>
+
+    <span class="c1">// 타임아웃 설정</span>
+    <span class="kd">public</span> <span class="nc">Mono</span><span class="o">&lt;</span><span class="nc">User</span><span class="o">&gt;</span> <span class="nf">getUserWithTimeout</span><span class="o">(</span><span class="nc">String</span> <span class="n">id</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">webClient</span><span class="o">.</span><span class="na">get</span><span class="o">()</span>
+            <span class="o">.</span><span class="na">uri</span><span class="o">(</span><span class="s">"/users/{id}"</span><span class="o">,</span> <span class="n">id</span><span class="o">)</span>
+            <span class="o">.</span><span class="na">retrieve</span><span class="o">()</span>
+            <span class="o">.</span><span class="na">bodyToMono</span><span class="o">(</span><span class="nc">User</span><span class="o">.</span><span class="na">class</span><span class="o">)</span>
+            <span class="o">.</span><span class="na">timeout</span><span class="o">(</span><span class="nc">Duration</span><span class="o">.</span><span class="na">ofSeconds</span><span class="o">(</span><span class="mi">5</span><span class="o">))</span>
+            <span class="o">.</span><span class="na">onErrorMap</span><span class="o">(</span><span class="nc">TimeoutException</span><span class="o">.</span><span class="na">class</span><span class="o">,</span>
+                <span class="n">ex</span> <span class="o">-&gt;</span> <span class="k">new</span> <span class="nc">RuntimeException</span><span class="o">(</span><span class="s">"Request timeout"</span><span class="o">));</span>
+    <span class="o">}</span>
+
+    <span class="c1">// 재시도 로직</span>
+    <span class="kd">public</span> <span class="nc">Mono</span><span class="o">&lt;</span><span class="nc">User</span><span class="o">&gt;</span> <span class="nf">getUserWithRetry</span><span class="o">(</span><span class="nc">String</span> <span class="n">id</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">webClient</span><span class="o">.</span><span class="na">get</span><span class="o">()</span>
+            <span class="o">.</span><span class="na">uri</span><span class="o">(</span><span class="s">"/users/{id}"</span><span class="o">,</span> <span class="n">id</span><span class="o">)</span>
+            <span class="o">.</span><span class="na">retrieve</span><span class="o">()</span>
+            <span class="o">.</span><span class="na">bodyToMono</span><span class="o">(</span><span class="nc">User</span><span class="o">.</span><span class="na">class</span><span class="o">)</span>
+            <span class="o">.</span><span class="na">retryWhen</span><span class="o">(</span><span class="nc">Retry</span><span class="o">.</span><span class="na">backoff</span><span class="o">(</span><span class="mi">3</span><span class="o">,</span> <span class="nc">Duration</span><span class="o">.</span><span class="na">ofSeconds</span><span class="o">(</span><span class="mi">1</span><span class="o">))</span>
+                <span class="o">.</span><span class="na">filter</span><span class="o">(</span><span class="n">throwable</span> <span class="o">-&gt;</span> <span class="n">throwable</span> <span class="k">instanceof</span> <span class="nc">WebClientResponseException</span><span class="o">)</span>
+                <span class="o">.</span><span class="na">onRetryExhaustedThrow</span><span class="o">((</span><span class="n">retryBackoffSpec</span><span class="o">,</span> <span class="n">retrySignal</span><span class="o">)</span> <span class="o">-&gt;</span>
+                    <span class="k">new</span> <span class="nf">RuntimeException</span><span class="o">(</span><span class="s">"Max retries exceeded"</span><span class="o">)));</span>
+    <span class="o">}</span>
+
+    <span class="c1">// 스트리밍 응답 처리</span>
+    <span class="kd">public</span> <span class="nc">Flux</span><span class="o">&lt;</span><span class="nc">User</span><span class="o">&gt;</span> <span class="nf">streamUsers</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">webClient</span><span class="o">.</span><span class="na">get</span><span class="o">()</span>
+            <span class="o">.</span><span class="na">uri</span><span class="o">(</span><span class="s">"/users/stream"</span><span class="o">)</span>
+            <span class="o">.</span><span class="na">retrieve</span><span class="o">()</span>
+            <span class="o">.</span><span class="na">bodyToFlux</span><span class="o">(</span><span class="nc">User</span><span class="o">.</span><span class="na">class</span><span class="o">)</span>
+            <span class="o">.</span><span class="na">doOnNext</span><span class="o">(</span><span class="n">user</span> <span class="o">-&gt;</span> <span class="n">log</span><span class="o">.</span><span class="na">debug</span><span class="o">(</span><span class="s">"Received user: {}"</span><span class="o">,</span> <span class="n">user</span><span class="o">.</span><span class="na">getName</span><span class="o">()));</span>
+    <span class="o">}</span>
+
+    <span class="c1">// 파일 업로드</span>
+    <span class="kd">public</span> <span class="nc">Mono</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="nf">uploadFile</span><span class="o">(</span><span class="nc">Flux</span><span class="o">&lt;</span><span class="nc">DataBuffer</span><span class="o">&gt;</span> <span class="n">fileData</span><span class="o">,</span> <span class="nc">String</span> <span class="n">filename</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">webClient</span><span class="o">.</span><span class="na">post</span><span class="o">()</span>
+            <span class="o">.</span><span class="na">uri</span><span class="o">(</span><span class="s">"/upload"</span><span class="o">)</span>
+            <span class="o">.</span><span class="na">contentType</span><span class="o">(</span><span class="nc">MediaType</span><span class="o">.</span><span class="na">MULTIPART_FORM_DATA</span><span class="o">)</span>
+            <span class="o">.</span><span class="na">body</span><span class="o">(</span><span class="nc">BodyInserters</span><span class="o">.</span><span class="na">fromMultipartData</span><span class="o">(</span><span class="s">"file"</span><span class="o">,</span>
+                <span class="k">new</span> <span class="nf">HttpHeaders</span><span class="o">(),</span> <span class="n">fileData</span><span class="o">))</span>
+            <span class="o">.</span><span class="na">retrieve</span><span class="o">()</span>
+            <span class="o">.</span><span class="na">bodyToMono</span><span class="o">(</span><span class="nc">String</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="kd">private</span> <span class="nc">String</span> <span class="nf">getAuthToken</span><span class="o">()</span> <span class="o">{</span>
+        <span class="c1">// 실제 구현에서는 토큰 관리 로직</span>
+        <span class="k">return</span> <span class="s">"your-auth-token"</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div> <h3 id="3-webclient-설정"> <a href="#3-webclient-설정" class="anchor-heading" aria-labelledby="3-webclient-설정"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 3. WebClient 설정 </h3> <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@Configuration</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">WebClientConfig</span> <span class="o">{</span>
+
+    <span class="nd">@Bean</span>
+    <span class="kd">public</span> <span class="nc">WebClient</span> <span class="nf">webClient</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="nc">WebClient</span><span class="o">.</span><span class="na">builder</span><span class="o">()</span>
+            <span class="o">.</span><span class="na">baseUrl</span><span class="o">(</span><span class="s">"https://api.example.com"</span><span class="o">)</span>
+            <span class="o">.</span><span class="na">defaultHeader</span><span class="o">(</span><span class="nc">HttpHeaders</span><span class="o">.</span><span class="na">CONTENT_TYPE</span><span class="o">,</span> <span class="nc">MediaType</span><span class="o">.</span><span class="na">APPLICATION_JSON_VALUE</span><span class="o">)</span>
+            <span class="o">.</span><span class="na">codecs</span><span class="o">(</span><span class="n">configurer</span> <span class="o">-&gt;</span> <span class="n">configurer</span>
+                <span class="o">.</span><span class="na">defaultCodecs</span><span class="o">()</span>
+                <span class="o">.</span><span class="na">maxInMemorySize</span><span class="o">(</span><span class="mi">2</span> <span class="o">*</span> <span class="mi">1024</span> <span class="o">*</span> <span class="mi">1024</span><span class="o">))</span> <span class="c1">// 2MB</span>
+            <span class="o">.</span><span class="na">filter</span><span class="o">(</span><span class="nc">ExchangeFilterFunction</span><span class="o">.</span><span class="na">ofRequestProcessor</span><span class="o">(</span><span class="n">clientRequest</span> <span class="o">-&gt;</span> <span class="o">{</span>
+                <span class="c1">// 요청 전처리</span>
+                <span class="k">return</span> <span class="nc">Mono</span><span class="o">.</span><span class="na">just</span><span class="o">(</span><span class="n">clientRequest</span><span class="o">);</span>
+            <span class="o">}))</span>
+            <span class="o">.</span><span class="na">filter</span><span class="o">(</span><span class="nc">ExchangeFilterFunction</span><span class="o">.</span><span class="na">ofResponseProcessor</span><span class="o">(</span><span class="n">clientResponse</span> <span class="o">-&gt;</span> <span class="o">{</span>
+                <span class="c1">// 응답 후처리</span>
+                <span class="k">return</span> <span class="nc">Mono</span><span class="o">.</span><span class="na">just</span><span class="o">(</span><span class="n">clientResponse</span><span class="o">);</span>
+            <span class="o">}))</span>
+            <span class="o">.</span><span class="na">build</span><span class="o">();</span>
+    <span class="o">}</span>
+
+    <span class="nd">@Bean</span>
+    <span class="kd">public</span> <span class="nc">HttpClient</span> <span class="nf">httpClient</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="nc">HttpClient</span><span class="o">.</span><span class="na">create</span><span class="o">()</span>
+            <span class="o">.</span><span class="na">option</span><span class="o">(</span><span class="nc">ChannelOption</span><span class="o">.</span><span class="na">CONNECT_TIMEOUT_MILLIS</span><span class="o">,</span> <span class="mi">5000</span><span class="o">)</span>
+            <span class="o">.</span><span class="na">responseTimeout</span><span class="o">(</span><span class="nc">Duration</span><span class="o">.</span><span class="na">ofSeconds</span><span class="o">(</span><span class="mi">10</span><span class="o">))</span>
+            <span class="o">.</span><span class="na">doOnConnected</span><span class="o">(</span><span class="n">conn</span> <span class="o">-&gt;</span>
+                <span class="n">conn</span><span class="o">.</span><span class="na">addHandlerLast</span><span class="o">(</span><span class="k">new</span> <span class="nc">ReadTimeoutHandler</span><span class="o">(</span><span class="mi">10</span><span class="o">))</span>
+                    <span class="o">.</span><span class="na">addHandlerLast</span><span class="o">(</span><span class="k">new</span> <span class="nc">WriteTimeoutHandler</span><span class="o">(</span><span class="mi">10</span><span class="o">)));</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div> <h2 id="실제-사용-사례"> <a href="#실제-사용-사례" class="anchor-heading" aria-labelledby="실제-사용-사례"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 실제 사용 사례 </h2> <h3 id="1-실시간-채팅-시스템"> <a href="#1-실시간-채팅-시스템" class="anchor-heading" aria-labelledby="1-실시간-채팅-시스템"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 1. 실시간 채팅 시스템 </h3> <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@RestController</span>
+<span class="nd">@RequestMapping</span><span class="o">(</span><span class="s">"/chat"</span><span class="o">)</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">ChatController</span> <span class="o">{</span>
+
+    <span class="kd">private</span> <span class="kd">final</span> <span class="nc">FluxSink</span><span class="o">&lt;</span><span class="nc">ChatMessage</span><span class="o">&gt;</span> <span class="n">messageSink</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="kd">final</span> <span class="nc">Flux</span><span class="o">&lt;</span><span class="nc">ChatMessage</span><span class="o">&gt;</span> <span class="n">messageFlux</span><span class="o">;</span>
+
+    <span class="kd">public</span> <span class="nf">ChatController</span><span class="o">()</span> <span class="o">{</span>
+        <span class="nc">Flux</span><span class="o">&lt;</span><span class="nc">ChatMessage</span><span class="o">&gt;</span> <span class="n">flux</span> <span class="o">=</span> <span class="nc">Flux</span><span class="o">.</span><span class="na">create</span><span class="o">(</span><span class="n">sink</span> <span class="o">-&gt;</span> <span class="o">{</span>
+            <span class="k">this</span><span class="o">.</span><span class="na">messageSink</span> <span class="o">=</span> <span class="n">sink</span><span class="o">;</span>
+        <span class="o">});</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">messageFlux</span> <span class="o">=</span> <span class="n">flux</span><span class="o">.</span><span class="na">publish</span><span class="o">().</span><span class="na">autoConnect</span><span class="o">();</span>
+    <span class="o">}</span>
+
+    <span class="nd">@PostMapping</span><span class="o">(</span><span class="s">"/send"</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="nc">Mono</span><span class="o">&lt;</span><span class="nc">Void</span><span class="o">&gt;</span> <span class="nf">sendMessage</span><span class="o">(</span><span class="nd">@RequestBody</span> <span class="nc">ChatMessage</span> <span class="n">message</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="nc">Mono</span><span class="o">.</span><span class="na">fromRunnable</span><span class="o">(()</span> <span class="o">-&gt;</span> <span class="o">{</span>
+            <span class="n">message</span><span class="o">.</span><span class="na">setTimestamp</span><span class="o">(</span><span class="nc">Instant</span><span class="o">.</span><span class="na">now</span><span class="o">());</span>
+            <span class="n">messageSink</span><span class="o">.</span><span class="na">next</span><span class="o">(</span><span class="n">message</span><span class="o">);</span>
+        <span class="o">});</span>
+    <span class="o">}</span>
+
+    <span class="nd">@GetMapping</span><span class="o">(</span><span class="n">value</span> <span class="o">=</span> <span class="s">"/messages"</span><span class="o">,</span> <span class="n">produces</span> <span class="o">=</span> <span class="nc">MediaType</span><span class="o">.</span><span class="na">TEXT_EVENT_STREAM_VALUE</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="nc">Flux</span><span class="o">&lt;</span><span class="nc">ServerSentEvent</span><span class="o">&lt;</span><span class="nc">ChatMessage</span><span class="o">&gt;&gt;</span> <span class="nf">getMessages</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">messageFlux</span>
+            <span class="o">.</span><span class="na">map</span><span class="o">(</span><span class="n">message</span> <span class="o">-&gt;</span> <span class="nc">ServerSentEvent</span><span class="o">.&lt;</span><span class="nc">ChatMessage</span><span class="o">&gt;</span><span class="n">builder</span><span class="o">()</span>
+                <span class="o">.</span><span class="na">data</span><span class="o">(</span><span class="n">message</span><span class="o">)</span>
+                <span class="o">.</span><span class="na">build</span><span class="o">());</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div> <h3 id="2-데이터-스트리밍-api"> <a href="#2-데이터-스트리밍-api" class="anchor-heading" aria-labelledby="2-데이터-스트리밍-api"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 2. 데이터 스트리밍 API </h3> <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@RestController</span>
+<span class="nd">@RequestMapping</span><span class="o">(</span><span class="s">"/stream"</span><span class="o">)</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">DataStreamController</span> <span class="o">{</span>
+
+    <span class="nd">@GetMapping</span><span class="o">(</span><span class="n">value</span> <span class="o">=</span> <span class="s">"/sensor-data"</span><span class="o">,</span> <span class="n">produces</span> <span class="o">=</span> <span class="nc">MediaType</span><span class="o">.</span><span class="na">APPLICATION_NDJSON_VALUE</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="nc">Flux</span><span class="o">&lt;</span><span class="nc">SensorData</span><span class="o">&gt;</span> <span class="nf">streamSensorData</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="nc">Flux</span><span class="o">.</span><span class="na">interval</span><span class="o">(</span><span class="nc">Duration</span><span class="o">.</span><span class="na">ofMillis</span><span class="o">(</span><span class="mi">100</span><span class="o">))</span>
+            <span class="o">.</span><span class="na">map</span><span class="o">(</span><span class="n">tick</span> <span class="o">-&gt;</span> <span class="k">new</span> <span class="nc">SensorData</span><span class="o">(</span>
+                <span class="s">"sensor-"</span> <span class="o">+</span> <span class="o">(</span><span class="n">tick</span> <span class="o">%</span> <span class="mi">5</span><span class="o">),</span>
+                <span class="nc">Math</span><span class="o">.</span><span class="na">random</span><span class="o">()</span> <span class="o">*</span> <span class="mi">100</span><span class="o">,</span>
+                <span class="nc">Math</span><span class="o">.</span><span class="na">random</span><span class="o">()</span> <span class="o">*</span> <span class="mi">50</span><span class="o">,</span>
+                <span class="nc">Instant</span><span class="o">.</span><span class="na">now</span><span class="o">()</span>
+            <span class="o">))</span>
+            <span class="o">.</span><span class="na">onBackpressureBuffer</span><span class="o">(</span><span class="mi">1000</span><span class="o">)</span>
+            <span class="o">.</span><span class="na">doOnNext</span><span class="o">(</span><span class="n">data</span> <span class="o">-&gt;</span> <span class="n">log</span><span class="o">.</span><span class="na">debug</span><span class="o">(</span><span class="s">"Streaming sensor data: {}"</span><span class="o">,</span> <span class="n">data</span><span class="o">));</span>
+    <span class="o">}</span>
+
+    <span class="nd">@PostMapping</span><span class="o">(</span><span class="s">"/process-batch"</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="nc">Mono</span><span class="o">&lt;</span><span class="nc">ProcessingResult</span><span class="o">&gt;</span> <span class="nf">processBatch</span><span class="o">(</span><span class="nd">@RequestBody</span> <span class="nc">Flux</span><span class="o">&lt;</span><span class="nc">DataItem</span><span class="o">&gt;</span> <span class="n">items</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">items</span>
+            <span class="o">.</span><span class="na">buffer</span><span class="o">(</span><span class="mi">100</span><span class="o">)</span> <span class="c1">// 100개씩 배치 처리</span>
+            <span class="o">.</span><span class="na">flatMap</span><span class="o">(</span><span class="n">batch</span> <span class="o">-&gt;</span> <span class="n">processBatch</span><span class="o">(</span><span class="n">batch</span><span class="o">))</span>
+            <span class="o">.</span><span class="na">collectList</span><span class="o">()</span>
+            <span class="o">.</span><span class="na">map</span><span class="o">(</span><span class="n">results</span> <span class="o">-&gt;</span> <span class="k">new</span> <span class="nc">ProcessingResult</span><span class="o">(</span><span class="n">results</span><span class="o">));</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div> <h2 id="결론"> <a href="#결론" class="anchor-heading" aria-labelledby="결론"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 결론 </h2> <p>Spring WebFlux는 현대적인 웹 애플리케이션에서 높은 성능과 확장성을 요구하는 시스템에 적합한 프레임워크입니다. 특히 다음과 같은 상황에서 큰 장점을 보입니다:</p> <h3 id="적합한-사용-사례"> <a href="#적합한-사용-사례" class="anchor-heading" aria-labelledby="적합한-사용-사례"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 적합한 사용 사례 </h3> <ul> <li><strong>대용량 트래픽 처리</strong>: 이벤트 루프 모델로 높은 동시성 지원</li> <li><strong>실시간 데이터 스트리밍</strong>: Server-Sent Events, WebSocket 지원</li> <li><strong>마이크로서비스 게이트웨이</strong>: Spring Cloud Gateway의 기반</li> <li><strong>IoT 데이터 처리</strong>: 센서 데이터의 실시간 처리</li> <li><strong>실시간 채팅 시스템</strong>: WebSocket을 통한 양방향 통신</li> <li><strong>고성능 API 서버</strong>: 대용량 트래픽을 처리하는 REST API</li> </ul> <h3 id="기술-선택-가이드"> <a href="#기술-선택-가이드" class="anchor-heading" aria-labelledby="기술-선택-가이드"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 기술 선택 가이드 </h3> <h4 id="webflux를-선택해야-하는-경우"> <a href="#webflux를-선택해야-하는-경우" class="anchor-heading" aria-labelledby="webflux를-선택해야-하는-경우"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> WebFlux를 선택해야 하는 경우: </h4> <ul> <li><strong>높은 동시성 요구</strong>: 초당 수만 개의 요청을 처리해야 하는 경우</li> <li><strong>실시간 데이터 처리</strong>: 실시간 스트리밍이나 이벤트 기반 아키텍처</li> <li><strong>마이크로서비스 환경</strong>: Spring Cloud Gateway와 함께 사용</li> <li><strong>메모리 효율성</strong>: 제한된 리소스 환경에서 최대 성능 필요</li> </ul> <h4 id="spring-mvc를-선택해야-하는-경우"> <a href="#spring-mvc를-선택해야-하는-경우" class="anchor-heading" aria-labelledby="spring-mvc를-선택해야-하는-경우"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Spring MVC를 선택해야 하는 경우: </h4> <ul> <li><strong>기존 코드베이스</strong>: 이미 동기식 코드로 구성된 프로젝트</li> <li><strong>간단한 CRUD 애플리케이션</strong>: 복잡한 비동기 처리가 필요 없는 경우</li> <li><strong>팀 역량</strong>: 리액티브 프로그래밍 경험이 부족한 팀</li> <li><strong>서드파티 라이브러리 의존성</strong>: 블로킹 라이브러리를 많이 사용하는 경우</li> </ul> <h3 id="성능-고려사항"> <a href="#성능-고려사항" class="anchor-heading" aria-labelledby="성능-고려사항"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 성능 고려사항 </h3><pre><code class="language-mermaid">graph TB
+    subgraph "성능 비교"
+        MVC[Spring MVC&lt;br/&gt;Thread-per-request]
+        WebFlux[WebFlux&lt;br/&gt;Event Loop]
+    end
+
+    subgraph "메모리 사용량"
+        MVCMemory[높음&lt;br/&gt;스레드당 ~1MB]
+        WebFluxMemory[낮음&lt;br/&gt;이벤트 루프]
+    end
+
+    subgraph "동시성"
+        MVCConcurrency[제한적&lt;br/&gt;스레드 풀 크기]
+        WebFluxConcurrency[높음&lt;br/&gt;이벤트 루프]
+    end
+
+    MVC --&gt; MVCMemory
+    WebFlux --&gt; WebFluxMemory
+    MVC --&gt; MVCConcurrency
+    WebFlux --&gt; WebFluxConcurrency
+</code></pre><h3 id="학습-로드맵"> <a href="#학습-로드맵" class="anchor-heading" aria-labelledby="학습-로드맵"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 학습 로드맵 </h3> <ol> <li> <p><strong>기초 단계</strong></p> <ul> <li>Reactive Streams 스펙 이해</li> <li>Mono와 Flux 개념 학습</li> <li>기본적인 리액티브 프로그래밍 패턴</li> </ul> </li> <li> <p><strong>중급 단계</strong></p> <ul> <li>WebFlux 컨트롤러 구현</li> <li>WebClient 사용법</li> <li>백프레셔 처리 방법</li> </ul> </li> <li> <p><strong>고급 단계</strong></p> <ul> <li>복잡한 리액티브 스트림 조합</li> <li>성능 최적화 및 모니터링</li> <li>마이크로서비스 아키텍처 적용</li> </ul> </li> </ol> <h3 id="마이그레이션-전략"> <a href="#마이그레이션-전략" class="anchor-heading" aria-labelledby="마이그레이션-전략"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 마이그레이션 전략 </h3> <p>기존 Spring MVC 애플리케이션을 WebFlux로 마이그레이션할 때는 점진적 접근이 권장됩니다:</p> <ol> <li><strong>하이브리드 접근</strong>: MVC와 WebFlux를 함께 사용</li> <li><strong>새로운 기능</strong>: 새로운 기능은 WebFlux로 구현</li> <li><strong>점진적 전환</strong>: 기존 코드를 단계적으로 리팩토링</li> <li><strong>성능 테스트</strong>: 각 단계에서 성능 측정 및 검증</li> </ol> <p>WebFlux의 학습 곡선이 높고, 모든 상황에서 적합하지 않을 수 있으므로, 프로젝트의 요구사항을 잘 분석하여 적절한 기술을 선택하는 것이 중요합니다. 특히 팀의 기술 역량과 프로젝트의 복잡성을 고려한 신중한 결정이 필요합니다.</p> </main> </div> </div> <div class="search-overlay"></div> </div> <script type="module"> import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10.6.1/dist/mermaid.esm.min.mjs'; var config = {} ; mermaid.initialize(config); mermaid.run({ querySelector: '.language-mermaid', }); </script> </body> </html>
