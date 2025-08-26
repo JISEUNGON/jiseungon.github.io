@@ -16,6 +16,7 @@ RoleBinding은 Kubernetes에서 Role과 사용자/그룹/서비스 계정을 연
 2. **네임스페이스 범위**: 특정 네임스페이스 내에서만 유효
 3. **다중 주체**: 하나의 Role을 여러 주체에게 할당 가능
 4. **동적 권한**: Role 변경 시 바인딩된 모든 주체에게 자동 적용
+5. **RBAC 핵심**: Role과 ServiceAccount를 연결하는 필수 컴포넌트
 
 ---
 
@@ -116,6 +117,70 @@ roleRef:
   name: admin
   apiGroup: rbac.authorization.k8s.io
 ```
+
+---
+
+## RBAC 컴포넌트 간 상호작용
+
+### RoleBinding의 역할과 중요성
+
+RoleBinding은 RBAC 시스템에서 **중간 다리 역할**을 하며, Role과 ServiceAccount/User/Group을 연결합니다.
+
+```mermaid
+graph LR
+    A[Role] --> B[RoleBinding]
+    B --> C[ServiceAccount]
+    B --> D[User]
+    B --> E[Group]
+
+    F[Pod] --> C
+    C --> G[API Server]
+
+    style A fill:#e1f5fe
+    style B fill:#f3e5f5
+    style C fill:#e8f5e8
+    style D fill:#fff3e0
+    style E fill:#fff3e0
+```
+
+### 함께 사용되어야 하는 이유
+
+1. **권한 활성화**: Role만으로는 실제 권한이 작동하지 않음
+2. **인증 연결**: ServiceAccount의 인증을 Role의 권한과 연결
+3. **보안 체계**: 세 컴포넌트가 함께 완전한 보안 체계 구성
+4. **운영 관리**: 명확한 권한 분리와 책임 소재 명확화
+
+### RBAC 권한 부여 프로세스
+
+```mermaid
+sequenceDiagram
+    participant Admin
+    participant Role
+    participant RoleBinding
+    participant ServiceAccount
+    participant Pod
+    participant API Server
+
+    Admin->>Role: 권한 정의
+    Admin->>ServiceAccount: 계정 생성
+    Admin->>RoleBinding: 연결 설정
+    RoleBinding->>Role: 권한 참조
+    RoleBinding->>ServiceAccount: 주체 연결
+    Pod->>ServiceAccount: 인증 요청
+    ServiceAccount->>API Server: 토큰 전송
+    API Server->>RoleBinding: 권한 확인
+    RoleBinding->>Role: 권한 조회
+    API Server->>Pod: 접근 허용
+```
+
+### RBAC 컴포넌트 의존성
+
+| 컴포넌트           | 의존성         | 역할           |
+| ------------------ | -------------- | -------------- |
+| **Role**           | 독립적         | 권한 정의      |
+| **RoleBinding**    | Role + Subject | 권한 연결      |
+| **ServiceAccount** | 독립적         | Pod 인증       |
+| **Pod**            | ServiceAccount | 실제 권한 사용 |
 
 ---
 
@@ -423,6 +488,58 @@ roleRef:
   kind: Role
   name: production-admin
   apiGroup: rbac.authorization.k8s.io
+```
+
+---
+
+## RBAC 통합 관리
+
+### RBAC 컴포넌트 생성 순서
+
+```bash
+# 1. ServiceAccount 생성
+kubectl create serviceaccount app-sa -n production
+
+# 2. Role 생성
+kubectl apply -f role.yaml
+
+# 3. RoleBinding 생성
+kubectl apply -f rolebinding.yaml
+
+# 4. Pod에서 ServiceAccount 사용
+kubectl apply -f deployment.yaml
+```
+
+### RBAC 상태 확인
+
+```bash
+# 전체 RBAC 상태 확인
+kubectl get serviceaccounts,roles,rolebindings -n production
+
+# 권한 테스트
+kubectl auth can-i get pods --as=system:serviceaccount:production:app-sa
+
+# RoleBinding 상세 정보
+kubectl describe rolebinding app-binding -n production
+
+# ServiceAccount 토큰 확인
+kubectl get secret app-sa-token-xxxxx -n production -o yaml
+```
+
+### RBAC 문제 해결
+
+```bash
+# 권한 문제 진단
+kubectl auth can-i --list --as=system:serviceaccount:production:app-sa
+
+# RoleBinding 연결 확인
+kubectl get rolebinding app-binding -n production -o yaml
+
+# ServiceAccount 확인
+kubectl get serviceaccount app-sa -n production -o yaml
+
+# 이벤트 확인
+kubectl get events -n production --sort-by='.lastTimestamp'
 ```
 
 ---

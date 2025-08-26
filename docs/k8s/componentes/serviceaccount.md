@@ -19,6 +19,7 @@ ServiceAccount는 Kubernetes에서 Pod가 클러스터 내에서 인증할 때 �
 - **네임스페이스 스코프**: 기본적으로 네임스페이스 내에서만 유효
 - **RBAC 연동**: Role/ClusterRole과 결합하여 세밀한 권한 제어
 - **토큰 기반**: JWT 토큰을 통한 인증
+- **RoleBinding 필요**: 권한을 받으려면 RoleBinding을 통해 Role과 연결되어야 함
 
 ## 구조
 
@@ -44,6 +45,57 @@ graph TB
 
     API --> Auth[인증]
     Auth --> RB
+```
+
+## RBAC 컴포넌트 간 상호작용
+
+### ServiceAccount의 역할과 중요성
+
+ServiceAccount는 RBAC 시스템에서 **인증 주체** 역할을 하며, Pod가 API 서버에 접근할 때 사용하는 신원을 제공합니다.
+
+```mermaid
+graph TD
+    A[Pod] --> B[ServiceAccount]
+    B --> C[토큰 생성]
+    C --> D[API 서버 인증]
+
+    E[Role] --> F[권한 정의]
+    G[RoleBinding] --> H[권한 연결]
+
+    B --> G
+    F --> G
+    D --> H
+
+    style A fill:#e3f2fd
+    style B fill:#e8f5e8
+    style E fill:#e1f5fe
+    style G fill:#f3e5f5
+```
+
+### 함께 사용되어야 하는 이유
+
+1. **인증 기반**: ServiceAccount 없이는 Pod가 API 서버에 인증할 수 없음
+2. **권한 연결**: RoleBinding을 통해 Role의 권한을 ServiceAccount에 연결
+3. **보안 체계**: 인증(ServiceAccount) + 권한(Role) + 연결(RoleBinding)의 완전한 보안 체계
+4. **운영 관리**: 각 애플리케이션별로 독립적인 권한 관리 가능
+
+### RBAC 인증 프로세스
+
+```mermaid
+sequenceDiagram
+    participant Pod
+    participant ServiceAccount
+    participant RoleBinding
+    participant Role
+    participant API Server
+
+    Pod->>ServiceAccount: 토큰 요청
+    ServiceAccount->>Pod: JWT 토큰 제공
+    Pod->>API Server: API 요청 + 토큰
+    API Server->>RoleBinding: ServiceAccount 권한 확인
+    RoleBinding->>Role: 권한 조회
+    Role->>API Server: 권한 반환
+    API Server->>Pod: 요청 처리 결과
 ```
 
 ## 예시
@@ -229,7 +281,68 @@ metadata:
   namespace: database
 ```
 
-### 2. CI/CD 파이프라인
+### 2. 완전한 RBAC 설정 예시
+
+```yaml
+# ServiceAccount
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: app-sa
+  namespace: production
+
+---
+# Role
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  namespace: production
+  name: app-role
+rules:
+  - apiGroups: [""]
+    resources: ["pods", "services", "configmaps"]
+    verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+
+---
+# RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: app-binding
+  namespace: production
+subjects:
+  - kind: ServiceAccount
+    name: app-sa
+    namespace: production
+roleRef:
+  kind: Role
+  name: app-role
+  apiGroup: rbac.authorization.k8s.io
+
+---
+# Deployment에서 사용
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-deployment
+  namespace: production
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: myapp
+  template:
+    metadata:
+      labels:
+        app: myapp
+    spec:
+      serviceAccountName: app-sa
+      containers:
+        - name: app
+          image: myapp:1.0
+```
+
+### 3. CI/CD 파이프라인
 
 ```yaml
 apiVersion: v1
@@ -239,7 +352,7 @@ metadata:
   namespace: ci-cd
 ```
 
-### 3. 모니터링 시스템
+### 4. 모니터링 시스템
 
 ```yaml
 apiVersion: v1
@@ -320,6 +433,40 @@ kubectl auth can-i --as=system:serviceaccount:default:my-sa --namespace=kube-sys
 | **토큰**   | 자동 생성      | 수동 관리   |
 | **권한**   | RBAC 기반      | RBAC 기반   |
 | **사용**   | Pod 인증       | 사용자 인증 |
+
+## RBAC 통합 관리
+
+### RBAC 컴포넌트 생성 및 관리
+
+```bash
+# 1. ServiceAccount 생성
+kubectl create serviceaccount app-sa -n production
+
+# 2. Role 생성
+kubectl apply -f role.yaml
+
+# 3. RoleBinding 생성
+kubectl apply -f rolebinding.yaml
+
+# 4. 권한 테스트
+kubectl auth can-i get pods --as=system:serviceaccount:production:app-sa
+```
+
+### RBAC 상태 모니터링
+
+```bash
+# 전체 RBAC 상태 확인
+kubectl get serviceaccounts,roles,rolebindings -n production
+
+# ServiceAccount별 권한 확인
+kubectl auth can-i --list --as=system:serviceaccount:production:app-sa
+
+# 토큰 정보 확인
+kubectl get secret app-sa-token-xxxxx -n production -o yaml
+
+# Pod에서 ServiceAccount 사용 확인
+kubectl get pods -n production -o jsonpath='{range .items[*]}{.spec.serviceAccountName}{"\n"}{end}' | sort | uniq -c
+```
 
 ## 주의사항
 

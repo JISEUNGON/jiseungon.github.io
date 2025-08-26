@@ -16,6 +16,7 @@ Role은 Kubernetes에서 네임스페이스 범위의 권한을 정의하는 리
 2. **세밀한 권한 제어**: 리소스별, 동작별 권한 정의
 3. **RBAC 기반**: Role-Based Access Control 시스템의 일부
 4. **조합 가능**: 여러 Role을 하나의 사용자에게 할당 가능
+5. **RoleBinding 필요**: 권한을 실제 주체에게 할당하려면 RoleBinding이 필요
 
 ---
 
@@ -193,6 +194,59 @@ rules:
   - apiGroups: [""]
     resources: ["events"]
     verbs: ["get", "list", "watch"]
+```
+
+---
+
+## RBAC 컴포넌트 간 상호작용
+
+### Role, RoleBinding, ServiceAccount의 관계
+
+RBAC 시스템은 Role, RoleBinding, ServiceAccount가 함께 작동하여 완전한 권한 관리 시스템을 구성합니다.
+
+```mermaid
+graph TD
+    A[Role] --> B[권한 정의]
+    B --> C[리소스별 권한]
+    B --> D[동작별 권한]
+
+    E[RoleBinding] --> F[권한 연결]
+    F --> G[Role과 주체 연결]
+
+    H[ServiceAccount] --> I[Pod 인증]
+    I --> J[API 서버 접근]
+
+    A --> E
+    H --> E
+
+    style A fill:#e1f5fe
+    style E fill:#f3e5f5
+    style H fill:#e8f5e8
+```
+
+### 함께 사용되어야 하는 이유
+
+1. **완전한 권한 체계**: Role만으로는 실제 권한이 부여되지 않음
+2. **Pod 인증**: ServiceAccount 없이는 Pod가 API 서버에 접근할 수 없음
+3. **보안 강화**: 세 컴포넌트가 함께 작동하여 세밀한 보안 제어 가능
+4. **운영 효율성**: 명확한 권한 분리와 관리 가능
+
+### RBAC 워크플로우
+
+```mermaid
+sequenceDiagram
+    participant Pod
+    participant ServiceAccount
+    participant RoleBinding
+    participant Role
+    participant API Server
+
+    Pod->>ServiceAccount: 인증 요청
+    ServiceAccount->>API Server: 토큰 전송
+    API Server->>RoleBinding: 권한 확인
+    RoleBinding->>Role: 권한 조회
+    Role->>API Server: 권한 반환
+    API Server->>Pod: 접근 허용/거부
 ```
 
 ---
@@ -461,6 +515,141 @@ rules:
   - apiGroups: [""]
     resources: ["services"]
     verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+```
+
+---
+
+## RBAC 통합 예시
+
+### 완전한 RBAC 설정
+
+```yaml
+# 1. ServiceAccount 생성
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: app-service-account
+  namespace: production
+
+---
+# 2. Role 생성
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  namespace: production
+  name: app-role
+rules:
+  - apiGroups: [""]
+    resources: ["pods", "services", "configmaps"]
+    verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+  - apiGroups: ["apps"]
+    resources: ["deployments"]
+    verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+
+---
+# 3. RoleBinding 생성
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: app-binding
+  namespace: production
+subjects:
+  - kind: ServiceAccount
+    name: app-service-account
+    namespace: production
+roleRef:
+  kind: Role
+  name: app-role
+  apiGroup: rbac.authorization.k8s.io
+
+---
+# 4. Pod에서 ServiceAccount 사용
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-deployment
+  namespace: production
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: myapp
+  template:
+    metadata:
+      labels:
+        app: myapp
+    spec:
+      serviceAccountName: app-service-account
+      containers:
+        - name: app
+          image: myapp:1.0
+```
+
+### 마이크로서비스별 RBAC 분리
+
+```yaml
+# Frontend Service
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: frontend-sa
+  namespace: frontend
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  namespace: frontend
+  name: frontend-role
+rules:
+  - apiGroups: [""]
+    resources: ["pods", "services"]
+    verbs: ["get", "list", "watch"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: frontend-binding
+  namespace: frontend
+subjects:
+  - kind: ServiceAccount
+    name: frontend-sa
+    namespace: frontend
+roleRef:
+  kind: Role
+  name: frontend-role
+  apiGroup: rbac.authorization.k8s.io
+
+---
+# Backend Service
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: backend-sa
+  namespace: backend
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  namespace: backend
+  name: backend-role
+rules:
+  - apiGroups: [""]
+    resources: ["pods", "services", "configmaps", "secrets"]
+    verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: backend-binding
+  namespace: backend
+subjects:
+  - kind: ServiceAccount
+    name: backend-sa
+    namespace: backend
+roleRef:
+  kind: Role
+  name: backend-role
+  apiGroup: rbac.authorization.k8s.io
 ```
 
 ---

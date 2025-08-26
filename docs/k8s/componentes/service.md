@@ -16,6 +16,7 @@ Service는 Kubernetes에서 Pod 집합에 대한 네트워크 엔드포인트를
 2. **로드 밸런싱**: 여러 Pod에 트래픽을 분산
 3. **서비스 디스커버리**: DNS를 통한 자동 서비스 발견
 4. **다양한 타입**: ClusterIP, NodePort, LoadBalancer, ExternalName
+5. **Pod 셀렉터**: 라벨 기반으로 트래픽을 받을 Pod 선택
 
 ---
 
@@ -44,6 +45,100 @@ graph TD
     style G fill:#fff3e0
     style H fill:#fff3e0
     style I fill:#e1f5fe
+```
+
+---
+
+## Service 셀렉터
+
+### Pod 셀렉터 (Pod Selector)
+
+Service는 `selector` 필드를 통해 트래픽을 받을 Pod를 선택합니다. 셀렉터는 라벨을 기반으로 하며, 해당 라벨을 가진 Pod들이 Service의 백엔드가 됩니다.
+
+#### 기본 셀렉터 구조
+
+```yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-service
+spec:
+  selector:
+    app: myapp
+    tier: frontend
+  ports:
+    - port: 80
+      targetPort: 8080
+```
+
+#### 고급 셀렉터 (Set-based)
+
+```yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: advanced-service
+spec:
+  selector:
+    matchExpressions:
+      - key: app
+        operator: In
+        values: ["web", "api"]
+      - key: environment
+        operator: NotIn
+        values: ["test"]
+      - key: version
+        operator: Exists
+  ports:
+    - port: 80
+      targetPort: 8080
+```
+
+### 셀렉터 없는 Service
+
+셀렉터가 없는 Service는 수동으로 Endpoints를 생성해야 합니다.
+
+```yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: external-service
+spec:
+  ports:
+    - port: 80
+      targetPort: 8080
+---
+apiVersion: v1
+kind: Endpoints
+metadata:
+  name: external-service
+subsets:
+  - addresses:
+      - ip: 192.168.1.100
+    ports:
+      - port: 8080
+```
+
+### 셀렉터 규칙
+
+1. **라벨 매칭**: Service 셀렉터와 Pod 라벨이 일치해야 함
+2. **동적 업데이트**: Pod 라벨이 변경되면 자동으로 Endpoints 업데이트
+3. **네임스페이스**: 셀렉터는 동일한 네임스페이스 내의 Pod만 선택
+
+### 셀렉터 디버깅
+
+```bash
+# 셀렉터로 Pod 확인
+kubectl get pods -l app=myapp
+
+# Service의 Endpoints 확인
+kubectl get endpoints my-service
+
+# 셀렉터 매칭 확인
+kubectl get pods --show-labels -l app=myapp
+
+# Service 연결 테스트
+kubectl run test --image=busybox --rm -it --restart=Never -- wget -O- my-service:80
 ```
 
 ---

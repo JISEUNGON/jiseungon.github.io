@@ -16,6 +16,7 @@ Pod는 Kubernetes에서 가장 작은 배포 가능한 컴퓨팅 단위입니다
 2. **컨테이너 그룹**: 하나 이상의 컨테이너를 포함
 3. **공유 리소스**: 네트워크, 스토리지, IPC 공유
 4. **수명 주기**: 생성, 실행, 종료의 생명주기를 가짐
+5. **라벨링 시스템**: 라벨을 통해 분류 및 선택 가능
 
 ---
 
@@ -42,6 +43,86 @@ graph TD
     style E fill:#e8f5e8
     style F fill:#e8f5e8
     style G fill:#e8f5e8
+```
+
+---
+
+## Pod 라벨과 셀렉터
+
+### 라벨 (Labels)
+
+라벨은 Pod를 식별하고 분류하는 데 사용되는 키-값 쌍입니다. 라벨을 통해 Pod를 논리적으로 그룹화하고 선택할 수 있습니다.
+
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx-pod
+  labels:
+    app: nginx
+    environment: production
+    tier: frontend
+    version: v1.0.0
+spec:
+  containers:
+    - name: nginx
+      image: nginx:1.14.2
+```
+
+### 셀렉터 (Selectors)
+
+셀렉터는 라벨을 기반으로 Pod를 선택하는 방법입니다. 다른 리소스(Service, Deployment 등)에서 특정 Pod를 타겟팅할 때 사용됩니다.
+
+#### 라벨 셀렉터 종류
+
+1. **Equality-based selectors** (등호 기반)
+
+   ```yaml
+   selector:
+     matchLabels:
+       app: nginx
+       environment: production
+   ```
+
+2. **Set-based selectors** (집합 기반)
+   ```yaml
+   selector:
+     matchExpressions:
+       - key: app
+         operator: In
+         values: ["nginx", "web"]
+       - key: environment
+         operator: NotIn
+         values: ["test"]
+       - key: tier
+         operator: Exists
+   ```
+
+#### 셀렉터 연산자
+
+| 연산자         | 설명                             | 예시                           |
+| -------------- | -------------------------------- | ------------------------------ |
+| `In`           | 값이 지정된 집합에 포함됨        | `app In (nginx,web)`           |
+| `NotIn`        | 값이 지정된 집합에 포함되지 않음 | `environment NotIn (test,dev)` |
+| `Exists`       | 라벨 키가 존재함                 | `tier Exists`                  |
+| `DoesNotExist` | 라벨 키가 존재하지 않음          | `tier DoesNotExist`            |
+
+### 라벨 관리 명령어
+
+```bash
+# Pod에 라벨 추가
+kubectl label pod nginx-pod tier=frontend
+
+# Pod에서 라벨 제거
+kubectl label pod nginx-pod tier-
+
+# 라벨로 Pod 필터링
+kubectl get pods -l app=nginx
+kubectl get pods -l 'app in (nginx,web)'
+kubectl get pods -l 'environment!=test'
+
+# 라벨로 Pod 삭제
+kubectl delete pods -l app=nginx
 ```
 
 ---

@@ -16,6 +16,7 @@ Deployment는 Kubernetes에서 가장 일반적으로 사용되는 워크로드 
 2. **롤링 업데이트**: 무중단 배포를 위한 점진적 업데이트
 3. **롤백 기능**: 이전 버전으로 쉽게 되돌릴 수 있음
 4. **스케일링**: Pod 개수를 쉽게 조정 가능
+5. **Pod 셀렉터**: 라벨 기반으로 관리할 Pod를 선택
 
 ---
 
@@ -52,6 +53,91 @@ graph TD
     style K fill:#e8f5e8
     style L fill:#e8f5e8
     style M fill:#e8f5e8
+```
+
+---
+
+## Deployment 셀렉터
+
+### Pod 셀렉터 (Pod Selector)
+
+Deployment는 `selector` 필드를 통해 관리할 Pod를 선택합니다. 셀렉터는 라벨을 기반으로 하며, 해당 라벨을 가진 Pod들을 Deployment가 관리합니다.
+
+#### 기본 셀렉터 구조
+
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: nginx
+      tier: frontend
+  template:
+    metadata:
+      labels:
+        app: nginx
+        tier: frontend
+    spec:
+      containers:
+        - name: nginx
+          image: nginx:1.14.2
+```
+
+#### 고급 셀렉터 (Set-based)
+
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: advanced-deployment
+spec:
+  replicas: 3
+  selector:
+    matchExpressions:
+      - key: app
+        operator: In
+        values: ["nginx", "web"]
+      - key: environment
+        operator: NotIn
+        values: ["test", "dev"]
+      - key: tier
+        operator: Exists
+  template:
+    metadata:
+      labels:
+        app: nginx
+        environment: production
+        tier: frontend
+    spec:
+      containers:
+        - name: nginx
+          image: nginx:1.14.2
+```
+
+### 셀렉터 규칙
+
+1. **라벨 일치**: `template.metadata.labels`는 반드시 `selector`와 일치해야 함
+2. **불변성**: Deployment 생성 후 `selector`는 변경할 수 없음
+3. **고유성**: 동일한 네임스페이스에서 셀렉터가 겹치면 안 됨
+
+### 셀렉터 디버깅
+
+```bash
+# 셀렉터로 Pod 확인
+kubectl get pods -l app=nginx
+
+# 셀렉터 매칭 확인
+kubectl get pods --show-labels -l app=nginx
+
+# 셀렉터가 매칭하는 Pod 수 확인
+kubectl get pods -l app=nginx --no-headers | wc -l
+
+# 셀렉터 문제 진단
+kubectl describe deployment nginx-deployment
 ```
 
 ---
